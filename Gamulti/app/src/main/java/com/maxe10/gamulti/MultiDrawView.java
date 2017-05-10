@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.util.SparseArray;
@@ -20,6 +21,7 @@ import java.util.HashSet;
 public class MultiDrawView extends View
 {
   private static final int CIRCLE_SIZE = 75;
+  private static final int MAX_DELTA_ALLOWED = 100;
 
   private SparseArray<PointF> mActivePointers;
   private SparseArray<Path> mActivePaths;
@@ -79,10 +81,40 @@ public class MultiDrawView extends View
     for (int i = 0; i < mActivePaths.size(); i++)
     {
       Path p = mActivePaths.get(i);
-      if (p.equals(templatePath))
+
+      PathMeasure templatePathMeasure = new PathMeasure(templatePath, false);
+      PathMeasure pathMeasure = new PathMeasure(p, false);
+      float fDistance = 0.0f;
+
+      float fSmallerLength = Math.min(templatePathMeasure.getLength(), pathMeasure.getLength());
+      float fBiggerLength = Math.max(templatePathMeasure.getLength(), pathMeasure.getLength());
+
+      if (fBiggerLength - fSmallerLength > MAX_DELTA_ALLOWED)
       {
-        System.out.println("EQUALS");
+        System.out.println("NOT EQUALS: ONE PATH IS LONGER");
+        continue;
       }
+
+      float[] posTemplate = new float[2];
+      float[] posPath = new float[2];
+      float[] tanTemplate = new float[2];
+      float[] tanPath = new float[2];
+
+      while (fDistance <= fSmallerLength)
+      {
+        templatePathMeasure.getPosTan(fDistance, posTemplate, tanTemplate);
+        pathMeasure.getPosTan(fDistance, posPath, tanPath);
+
+        if (Math.abs(posTemplate[0] - posPath[0]) > MAX_DELTA_ALLOWED || Math.abs(posTemplate[1] - posPath[1]) > MAX_DELTA_ALLOWED)
+        {
+          System.out.println("NOT EQUALS: PATH ARE NOT CLOSE ENOUGH");
+          return;
+        }
+
+        fDistance += 1.0f;
+      }
+
+      System.out.println("Paths are nearly equals");
     }
   }
 
@@ -134,9 +166,9 @@ public class MultiDrawView extends View
       case MotionEvent.ACTION_UP:
       case MotionEvent.ACTION_POINTER_UP:
       case MotionEvent.ACTION_CANCEL:
-        mActivePointers.remove(pointerId);
 
         comparePaths();
+        mActivePointers.remove(pointerId);
         mActivePaths.remove(pointerId);
         break;
     }
