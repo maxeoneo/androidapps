@@ -105,7 +105,11 @@ public class MultiDrawView extends View
         templatePathMeasure.getPosTan(fDistance, posTemplate, tanTemplate);
         pathMeasure.getPosTan(fDistance, posPath, tanPath);
 
-        if (Math.abs(posTemplate[0] - posPath[0]) > MAX_DELTA_ALLOWED || Math.abs(posTemplate[1] - posPath[1]) > MAX_DELTA_ALLOWED)
+        float fDiffX = Math.abs(posTemplate[0] - posPath[0]);
+        float fDiffY = Math.abs(posTemplate[1] - posPath[1]);
+        double diffPos = Math.sqrt(fDiffX * fDiffX + fDiffY * fDiffY);
+
+        if (diffPos > MAX_DELTA_ALLOWED)
         {
           System.out.println("NOT EQUALS: PATH ARE NOT CLOSE ENOUGH");
           return;
