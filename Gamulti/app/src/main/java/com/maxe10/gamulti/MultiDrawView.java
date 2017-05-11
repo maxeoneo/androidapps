@@ -7,8 +7,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.graphics.PointF;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -20,24 +23,29 @@ import java.util.HashSet;
 
 public class MultiDrawView extends View
 {
+  private static boolean mDrawMode = true;
+
   private static final int CIRCLE_SIZE = 75;
   private static final int MAX_DELTA_ALLOWED = 100;
+
+  private GestureDetector gestureDetector;
 
   private SparseArray<PointF> mActivePointers;
   private SparseArray<Path> mActivePaths;
 
   private HashSet<Path> mTemplatePaths;
+  private HashSet<Path> mCorrectPaths;
+  private HashSet<Path> mWrongPaths;
+
   private Paint mPaint;
-  private int[] colors = {Color.BLUE, Color.GREEN
-        , Color.MAGENTA, Color.CYAN
-        , Color.GRAY, Color.RED, Color.DKGRAY
-        , Color.LTGRAY, Color.YELLOW };
+  private int[] colors = { Color.BLUE, Color.CYAN, Color.GRAY, Color.DKGRAY, Color.LTGRAY, Color.YELLOW, Color.MAGENTA };
 
   private Paint textPaint;
 
   public MultiDrawView(Context context, AttributeSet attrs)
   {
     super(context);
+    gestureDetector = new GestureDetector(context, new GestureListener());
     initView();
   }
 
@@ -52,6 +60,9 @@ public class MultiDrawView extends View
     mPaint.setStrokeJoin(Paint.Join.ROUND);
     mPaint.setStrokeWidth(6f);
 
+    mCorrectPaths = new HashSet<Path>();
+    mWrongPaths = new HashSet<Path>();
+
 
     textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     textPaint.setTextSize(20);
@@ -63,68 +74,113 @@ public class MultiDrawView extends View
   {
     mTemplatePaths = new HashSet<Path>();
 
-    Path p = new Path();
+    Path tempPath1 = new Path();
+    tempPath1.moveTo(100, 100);
+    tempPath1.lineTo(200, 1600);
+    mTemplatePaths.add(tempPath1);
 
-    p.moveTo(100, 100);
-    p.lineTo(200, 200);
-    p.lineTo(200, 1600);
-    p.lineTo(1100, 200);
-    p.lineTo(500, 600);
-
-    mTemplatePaths.add(p);
+    Path tempPath2 = new Path();
+    tempPath2.moveTo(800, 800);
+    tempPath2.lineTo(800, 250);
+    mTemplatePaths.add(tempPath2);
   }
 
-  private void comparePaths()
+
+
+  private boolean comparePaths()
   {
-    Path[] pathArray = new Path[]{};
-    Path templatePath = mTemplatePaths.toArray(pathArray)[0];
+    // create new set of paths containing all path which should be compared with the drawn paths
+    HashSet<Path> templatePathsToCompare = new HashSet<Path>();
+    for (Path tempPath : mTemplatePaths)
+    {
+      templatePathsToCompare.add(tempPath);
+    }
+
     for (int i = 0; i < mActivePaths.size(); i++)
     {
-      Path p = mActivePaths.get(i);
+      Path correspondingTemplatePath = null;
+      Path userPath = mActivePaths.get(i);
 
-      PathMeasure templatePathMeasure = new PathMeasure(templatePath, false);
-      PathMeasure pathMeasure = new PathMeasure(p, false);
-      float fDistance = 0.0f;
-
-      float fSmallerLength = Math.min(templatePathMeasure.getLength(), pathMeasure.getLength());
-      float fBiggerLength = Math.max(templatePathMeasure.getLength(), pathMeasure.getLength());
-
-      if (fBiggerLength - fSmallerLength > MAX_DELTA_ALLOWED)
+      for (Path templatePath : templatePathsToCompare)
       {
-        System.out.println("NOT EQUALS: ONE PATH IS LONGER");
-        continue;
-      }
-
-      float[] posTemplate = new float[2];
-      float[] posPath = new float[2];
-      float[] tanTemplate = new float[2];
-      float[] tanPath = new float[2];
-
-      while (fDistance <= fSmallerLength)
-      {
-        templatePathMeasure.getPosTan(fDistance, posTemplate, tanTemplate);
-        pathMeasure.getPosTan(fDistance, posPath, tanPath);
-
-        float fDiffX = Math.abs(posTemplate[0] - posPath[0]);
-        float fDiffY = Math.abs(posTemplate[1] - posPath[1]);
-        double diffPos = Math.sqrt(fDiffX * fDiffX + fDiffY * fDiffY);
-
-        if (diffPos > MAX_DELTA_ALLOWED)
+        if (comparePaths(userPath, templatePath))
         {
-          System.out.println("NOT EQUALS: PATH ARE NOT CLOSE ENOUGH");
-          return;
+          correspondingTemplatePath = templatePath;
+          break;
         }
-
-        fDistance += 1.0f;
       }
 
-      System.out.println("Paths are nearly equals");
+      if (correspondingTemplatePath != null)
+      {
+        System.out.println("Paths are nearly equals");
+        mCorrectPaths.add(userPath);
+        templatePathsToCompare.remove(correspondingTemplatePath);
+      }
+      else
+      {
+        System.out.println("No corresponding path found");
+        mWrongPaths.add(userPath);
+      }
     }
+
+    if (!templatePathsToCompare.isEmpty() && mWrongPaths.isEmpty())
+    {
+      System.out.println("You did not draw enough paths");
+    }
+
+    return mWrongPaths.isEmpty() && templatePathsToCompare.isEmpty();
+  }
+
+  @Nullable
+  private Boolean comparePaths(Path userPath, Path templatePath)
+  {
+    PathMeasure templatePathMeasure = new PathMeasure(templatePath, false);
+    PathMeasure pathMeasure = new PathMeasure(userPath, false);
+    float fDistance = 0.0f;
+
+    float fSmallerLength = Math.min(templatePathMeasure.getLength(), pathMeasure.getLength());
+    float fBiggerLength = Math.max(templatePathMeasure.getLength(), pathMeasure.getLength());
+
+    if (fBiggerLength - fSmallerLength > MAX_DELTA_ALLOWED)
+    {
+      System.out.println("NOT EQUALS: ONE PATH IS LONGER");
+      return false;
+    }
+
+    float[] posTemplate = new float[2];
+    float[] posPath = new float[2];
+    float[] tanTemplate = new float[2];
+    float[] tanPath = new float[2];
+
+    while (fDistance <= fSmallerLength)
+    {
+      templatePathMeasure.getPosTan(fDistance, posTemplate, tanTemplate);
+      pathMeasure.getPosTan(fDistance, posPath, tanPath);
+
+      float fDiffX = Math.abs(posTemplate[0] - posPath[0]);
+      float fDiffY = Math.abs(posTemplate[1] - posPath[1]);
+      double diffPos = Math.sqrt(fDiffX * fDiffX + fDiffY * fDiffY);
+
+      if (diffPos > MAX_DELTA_ALLOWED)
+      {
+        System.out.println("NOT EQUALS: PATH ARE NOT CLOSE ENOUGH");
+        return false;
+      }
+
+      fDistance += 1.0f;
+    }
+    return true;
   }
 
   @Override
   public boolean onTouchEvent(MotionEvent event)
   {
+    if (!mDrawMode)
+    {
+      // delegate the event to the gesture detector
+      return gestureDetector.onTouchEvent(event);
+    }
+
     // get pointer index from the event object
     int pointerIndex = event.getActionIndex();
 
@@ -174,6 +230,11 @@ public class MultiDrawView extends View
         comparePaths();
         mActivePointers.remove(pointerId);
         mActivePaths.remove(pointerId);
+
+        if (mActivePointers.size() == 0)
+        {
+          mDrawMode = false;
+        }
         break;
     }
 
@@ -205,10 +266,67 @@ public class MultiDrawView extends View
       canvas.drawText("Total pointers: " + mActivePointers.size(), 10, 40, textPaint);
     }
 
+    // draw template paths
     mPaint.setColor(Color.BLACK);
     for (Path p : mTemplatePaths)
     {
       canvas.drawPath(p, mPaint);
+    }
+
+    // draw correct paths
+    mPaint.setColor(Color.GREEN);
+    for (Path p : mCorrectPaths)
+    {
+      canvas.drawPath(p, mPaint);
+    }
+
+    // draw wrong paths
+    mPaint.setColor(Color.RED);
+    for (Path p : mWrongPaths)
+    {
+      if (p != null)
+      {
+        canvas.drawPath(p, mPaint);
+      }
+    }
+  }
+
+  private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e)
+    {
+      float x = e.getX();
+      float y = e.getY();
+
+      // reset
+      MultiDrawView.mDrawMode = true;
+      mActivePaths.clear();
+      mActivePointers.clear();
+      mCorrectPaths.clear();
+      mWrongPaths.clear();
+
+      invalidate();
+
+      Log.d("Double Tap", "Tapped at: (" + x + ", " + y + ")");
+
+      return true;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+      super.onLongPress(e);
+
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+      return true;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+      return true;
     }
   }
 }
