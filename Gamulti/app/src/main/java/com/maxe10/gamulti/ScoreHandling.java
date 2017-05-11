@@ -70,7 +70,7 @@ public class ScoreHandling
 
     return bSameDirectionEquals || bOppositeDirectionEquals;
   }
-  
+
   private static Boolean checkAllPathsPoints(PathMeasure templatePathMeasure, PathMeasure pathMeasure, boolean bSameDirection)
   {
     float fSmallerLength = Math.min(templatePathMeasure.getLength(), pathMeasure.getLength());
