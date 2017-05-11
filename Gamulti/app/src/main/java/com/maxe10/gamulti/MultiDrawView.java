@@ -338,12 +338,16 @@ public class MultiDrawView extends View
 
   public void reset()
   {
+    // reset the paths and pointers
     mActivePaths.clear();
     mActivePointers.clear();
     mCorrectPaths.clear();
     mWrongPaths.clear();
+
+    // reset draw mode
     mDrawMode = true;
 
+    // refill paths to compare for next round
     for (Path tempPath : mTemplatePaths)
     {
       templatePathsToCompare.add(tempPath);
