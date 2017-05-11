@@ -5,10 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PathMeasure;
 import android.graphics.PointF;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.GestureDetector;
@@ -26,8 +23,6 @@ public class MultiDrawView extends View
   private static boolean mDrawMode = true;
 
   private static final int CIRCLE_SIZE = 75;
-  private static final int MAX_DELTA_ALLOWED = 100;
-  private static final int STEPS_SIZE_FOR_PATH_CHECKING = 1;
 
   private GestureDetector gestureDetector;
 
@@ -69,7 +64,7 @@ public class MultiDrawView extends View
     textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     textPaint.setTextSize(20);
 
-    createTemplatePaths();
+    mTemplatePaths = ScoreHandling.createTemplatePaths();
 
     for (Path tempPath : mTemplatePaths)
     {
@@ -77,145 +72,24 @@ public class MultiDrawView extends View
     }
   }
 
-  private void createTemplatePaths()
+  public void reset()
   {
-    mTemplatePaths = new HashSet<Path>();
+    // reset the paths and pointers
+    mActivePaths.clear();
+    mActivePointers.clear();
+    mCorrectPaths.clear();
+    mWrongPaths.clear();
 
-    Path tempPath1 = new Path();
-    tempPath1.moveTo(100, 100);
-    tempPath1.lineTo(200, 1600);
-    mTemplatePaths.add(tempPath1);
+    // reset draw mode
+    mDrawMode = true;
 
-    Path tempPath2 = new Path();
-    tempPath2.moveTo(800, 800);
-    tempPath2.lineTo(800, 250);
-    mTemplatePaths.add(tempPath2);
-  }
-
-
-
-  private void checkUserPath(Path userPath)
-  {
-    Path correspondingTemplatePath = null;
-
-    for (Path templatePath : templatePathsToCompare)
+    // refill paths to compare for next round
+    for (Path tempPath : mTemplatePaths)
     {
-      if (comparePaths(userPath, templatePath))
-      {
-        correspondingTemplatePath = templatePath;
-        break;
-      }
+      templatePathsToCompare.add(tempPath);
     }
 
-    if (correspondingTemplatePath != null)
-    {
-      System.out.println("Paths are nearly equals");
-      mCorrectPaths.add(userPath);
-      templatePathsToCompare.remove(correspondingTemplatePath);
-    }
-    else
-    {
-      System.out.println("No corresponding path found");
-      mWrongPaths.add(userPath);
-    }
-  }
-
-  @Nullable
-  private Boolean comparePaths(Path userPath, Path templatePath)
-  {
-    PathMeasure templatePathMeasure = new PathMeasure(templatePath, false);
-    PathMeasure pathMeasure = new PathMeasure(userPath, false);
-
-    System.out.println("templatePathMeasure.getLength(): " + templatePathMeasure.getLength());
-    System.out.println("pathMeasure.getLength(): " + pathMeasure.getLength());
-    System.out.println("Math.abs(templatePathMeasure.getLength() - pathMeasure.getLength()): " + Math.abs(templatePathMeasure.getLength() - pathMeasure.getLength()));
-
-    if (Math.abs(templatePathMeasure.getLength() - pathMeasure.getLength()) > MAX_DELTA_ALLOWED)
-    {
-      System.out.println("NOT EQUALS: ONE PATH IS LONGER");
-      return false;
-    }
-
-    float[] posTemplate = new float[2];
-    float[] posPath = new float[2];
-    float[] tanTemplate = new float[2];
-    float[] tanPath = new float[2];
-
-    boolean bSameDirectionEquals = false;
-    boolean bOppositeDirectionEquals = false;
-
-    // check if path could have same direction --> start points should be near
-    templatePathMeasure.getPosTan(0.0f, posTemplate, tanTemplate);
-    pathMeasure.getPosTan(0.0f, posPath, tanPath);
-    if (checkPositionsCloseEnough(posPath, posTemplate))
-    {
-      bSameDirectionEquals = checkAllPathsPoints(templatePathMeasure, pathMeasure, true);
-    }
-
-    // check if path could have the opposite direction --> start and end point should be near
-    templatePathMeasure.getPosTan(templatePathMeasure.getLength(), posTemplate, tanTemplate);
-    pathMeasure.getPosTan(0.0f, posPath, tanPath);
-    if (checkPositionsCloseEnough(posPath, posTemplate))
-    {
-      bOppositeDirectionEquals = checkAllPathsPoints(templatePathMeasure, pathMeasure, false);
-    }
-
-    return bSameDirectionEquals || bOppositeDirectionEquals;
-  }
-
-  @NonNull
-  private Boolean checkAllPathsPoints(PathMeasure templatePathMeasure, PathMeasure pathMeasure, boolean bSameDirection)
-  {
-    float fSmallerLength = Math.min(templatePathMeasure.getLength(), pathMeasure.getLength());
-    float fUserPathDistance = 0.0f;
-    float fTemplatePathDistance = 0.0f;
-    if (!bSameDirection)
-    {
-      fTemplatePathDistance = templatePathMeasure.getLength();
-    }
-
-    float[] posTemplate = new float[2];
-    float[] posPath = new float[2];
-    float[] tanTemplate = new float[2];
-    float[] tanPath = new float[2];
-
-    // check all points of the path
-    while (fUserPathDistance <= fSmallerLength)
-    {
-      templatePathMeasure.getPosTan(fTemplatePathDistance, posTemplate, tanTemplate);
-      pathMeasure.getPosTan(fUserPathDistance, posPath, tanPath);
-
-      if (!checkPositionsCloseEnough(posPath, posTemplate))
-      {
-        System.out.println("NOT EQUALS: PATH ARE NOT CLOSE ENOUGH");
-        return false;
-      }
-      fUserPathDistance += STEPS_SIZE_FOR_PATH_CHECKING;
-      if (bSameDirection)
-      {
-        fTemplatePathDistance += STEPS_SIZE_FOR_PATH_CHECKING;
-      }
-      else
-      {
-        fTemplatePathDistance -= STEPS_SIZE_FOR_PATH_CHECKING;
-      }
-    }
-    return true;
-  }
-
-  private boolean checkPositionsCloseEnough(float[] userPosition, float[] templatePos)
-  {
-    if (userPosition.length < 2 || templatePos.length < 2)
-    {
-      System.out.println("to few parameters for position check");
-      return false;
-    }
-
-    float fDiffX = Math.abs(templatePos[0] - userPosition[0]);
-    float fDiffY = Math.abs(templatePos[1] - userPosition[1]);
-    double diffPos = Math.sqrt(fDiffX * fDiffX + fDiffY * fDiffY);
-
-    return diffPos < MAX_DELTA_ALLOWED;
+    invalidate();
   }
 
   @Override
@@ -336,23 +210,29 @@ public class MultiDrawView extends View
     }
   }
 
-  public void reset()
+  private void checkUserPath(Path userPath)
   {
-    // reset the paths and pointers
-    mActivePaths.clear();
-    mActivePointers.clear();
-    mCorrectPaths.clear();
-    mWrongPaths.clear();
+    Path correspondingTemplatePath = null;
 
-    // reset draw mode
-    mDrawMode = true;
-
-    // refill paths to compare for next round
-    for (Path tempPath : mTemplatePaths)
+    for (Path templatePath : templatePathsToCompare)
     {
-      templatePathsToCompare.add(tempPath);
+      if (ScoreHandling.comparePaths(userPath, templatePath))
+      {
+        correspondingTemplatePath = templatePath;
+        break;
+      }
     }
 
-    invalidate();
+    if (correspondingTemplatePath != null)
+    {
+      System.out.println("Paths are nearly equals");
+      mCorrectPaths.add(userPath);
+      templatePathsToCompare.remove(correspondingTemplatePath);
+    }
+    else
+    {
+      System.out.println("No corresponding path found");
+      mWrongPaths.add(userPath);
+    }
   }
 }
