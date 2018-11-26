@@ -1,0 +1,4 @@
+#Mon Nov 26 21:39:09 CET 2018
+base.0=/home/axe/git/androidapps/Calculator/app/build/intermediates/transforms/dexMerger/debug/5
+path.0=classes.dex
+renamed.0=classes.dex
