@@ -1,0 +1,191 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".CalculatorActivity" >
+	
+     <LinearLayout
+        android:weightSum="105"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+ 
+    	<TextView
+    	    android:layout_weight="25"
+    	    android:id="@+id/tvFormula"
+    	    android:layout_height="0dp"
+        	android:layout_width="fill_parent" 
+        	android:textSize="20sp"
+        	android:maxLength="50"
+        	android:gravity="right|bottom"/>
+	        	    
+	    <LinearLayout
+	        android:layout_weight="20"
+	        android:weightSum="100"
+	        android:layout_height="0dp"
+	        android:layout_width="fill_parent"
+	        android:orientation="horizontal">
+			
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bSeven"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/seven" />
+	   		
+	   		<Button
+	   		    android:layout_weight="20" 
+	         	android:id="@+id/bEight"
+		        android:layout_height="fill_parent"
+		        android:layout_width="0dp"
+		        android:text="@string/eight" />     
+	   		
+	   		<Button 
+	   		    android:layout_weight="20"
+	         	android:id="@+id/bNine"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/nine" />
+	   		
+	   		<Button 
+	   		    android:layout_weight="20"
+	   		    android:id="@+id/bDel" 
+	   		    android:layout_height="fill_parent"
+	   		    android:layout_width="0dp"
+	   		    android:textSize="15sp"
+	   		   	android:text="@string/del" />
+	   		
+	   		<Button 
+	   		    android:layout_weight="20"
+	         	android:id="@+id/bC"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/c" />
+	   		
+			
+		</LinearLayout>
+		
+	    <LinearLayout
+	        android:layout_weight="20"
+	        android:weightSum="100"
+	        android:layout_height="0dp"
+	        android:layout_width="fill_parent"
+	        android:orientation="horizontal">
+	    	
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bFour"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/four" />
+	        
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bFive"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/five" />
+	        
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bSix"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/six" />
+	        
+	        <Button 
+	            android:layout_weight="40"
+	         	android:id="@+id/bEquals"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/equals" />
+		</LinearLayout>
+		
+	    <LinearLayout
+	        android:layout_weight="20"
+	        android:weightSum="100"
+	        android:layout_height="0dp"
+	        android:layout_width="fill_parent"
+	        android:orientation="horizontal">
+	    	
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bOne"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/one" />
+	        
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bTwo"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/two" />
+	        
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bThree"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/three" />
+	        
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bPlus"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/plus" />
+	        
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bMinus"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/minus" />
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:layout_weight="20"
+		    android:weightSum="100"
+		    android:layout_height="0dp"
+	        android:layout_width="fill_parent"
+	        android:orientation="horizontal">
+	    	
+	        <Button 
+	            android:layout_weight="40"
+	         	android:id="@+id/bZero"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/zero" />
+	        
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bPoint"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/point" />
+	        
+	        <Button 
+	            android:layout_weight="20"
+	         	android:id="@+id/bMulti"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/multi" />
+	        
+	        <Button
+	            android:layout_weight="20"
+	         	android:id="@+id/bDiv"
+	         	android:layout_height="fill_parent"
+	         	android:layout_width="0dp"
+		        android:text="@string/div" />
+	        
+
+		</LinearLayout>
+   	</LinearLayout>
+</RelativeLayout>
