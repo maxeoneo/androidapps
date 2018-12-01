@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    
+    <EditText
+        android:id="@+id/oldPwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="62dp"
+        android:ems="10"
+        android:hint="@string/oldPwd"
+        android:inputType="numberPassword" />
+
+	<EditText
+	    android:id="@+id/newPwd"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:ems="10"
+	    android:hint="@string/newPwd"
+	    android:inputType="numberPassword" />
+
+   	<EditText
+   	    android:id="@+id/repeatNewPwd"
+   	    android:layout_width="match_parent"
+   	    android:layout_height="wrap_content"
+   	    android:ems="10"
+   	    android:hint="@string/repeatNewPwd"
+   	    android:inputType="numberPassword" />
+   	
+   	<ToggleButton
+        android:id="@+id/tSendLoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textOff="@string/tSendLocOFF"
+        android:textOn="@string/tSendLocON" />
+   	
+   	<EditText
+   	    android:id="@+id/phoneNumber"
+   	    android:layout_width="match_parent"
+   	    android:layout_height="wrap_content"
+   	    android:ems="10"
+   	    android:hint="@string/phoneNumber"
+   	    android:inputType="phone"
+   	    android:digits="0123456789+"  />
+
+   	<Button
+        android:id="@+id/bSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="86dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/bSave" />
+   	
+</LinearLayout>

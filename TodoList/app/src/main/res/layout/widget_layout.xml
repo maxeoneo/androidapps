@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dip"
+    android:orientation="vertical"
+    android:background="@drawable/widget_background" >
+	
+	<!-- widget contains two textviews 
+		 (the first one shows a headline and 
+		 the second one show the next item)		
+	 -->
+	<TextView
+        android:id="@+id/headline"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="4sp"
+        android:text="@string/widgetHeader" />
+	
+    <TextView
+        android:id="@+id/nextItem"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="4sp"
+        android:text="@string/empty" />
+</LinearLayout> 

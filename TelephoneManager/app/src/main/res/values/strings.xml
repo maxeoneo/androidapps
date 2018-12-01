@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Telephone Manager</string>
+    <string name="action_settings">Settings</string>
+    <string name="description">Here you can enable or disable the Telephone Manager. 
+        When it is enabled it looks in your calendar if you are busy and mutes the 
+        telephone if so.</string>
+</resources>

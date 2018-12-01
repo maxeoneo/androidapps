@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">To-Do List Manager</string>
+    <string name="action_settings">Settings</string>
+    <string name="add">Add new Item</string>
+    <string name="newItem">Create new Item</string>
+    <string name="editItem">Edit this Item</string>
+    <string name="save">Save</string>
+    <string name="nameHint">Enter Name of new Item</string>
+    <string name="deadline">Set a deadline for this Item</string>
+    <string name="done">already done</string>
+    <string name="addDeadline">Add a deadline</string>
+    <string name="removeDeadline">Remove the deadline</string>
+    <string name="empty">No item found</string>
+    <string name="widgetHeader">Next item of ToDo-List-Manager:</string>
+    <string name="refresh">refresh</string>
+    <string name="reached_deadline">Deadline reached</string>
+    
+</resources>

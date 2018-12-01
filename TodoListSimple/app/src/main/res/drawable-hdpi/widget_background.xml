@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <!-- define the background of the widget -->
+    
+    <stroke
+        android:width="2dp"
+        android:color="#12345678" />
+
+    <gradient
+        android:angle="225"
+        android:endColor="#DD334455"
+        android:startColor="#EE667788" />
+
+    <corners
+        android:bottomLeftRadius="7dp"
+        android:bottomRightRadius="7dp"
+        android:topLeftRadius="7dp"
+        android:topRightRadius="7dp" />
+
+</shape> 
