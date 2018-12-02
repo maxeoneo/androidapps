@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 'Google Inc.:Google APIs:14'
-    buildToolsVersion "28.0.3"
-
+    compileSdkVersion 28
     defaultConfig {
-        applicationId "androidlab.exercise4_1"
-        minSdkVersion 14
-        targetSdkVersion 14
+        applicationId "com.maxeoneo.TodoWhenAndWhere"
+        minSdkVersion 22
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
