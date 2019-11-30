@@ -6,14 +6,17 @@ build:
   stage: build
   script:
     - echo "Building"
-    - mkdir build
-    - touch build/info.txt
+    - mkdir output
+    - cd GradleTest
+    - ./gradlew assemble
+    - cd ../output
+    - mv GradleTest/app/build/outputs/apk/debug/app-debug.apk ./GradleTest-debug.apk
   artifacts:
     paths:
-      - build/    
+      - output/
 
 test:
   stage: test
   script:
     - echo "Testing"
-    - test -f "build/info.txt"
+    - test -f "output/GradleTest-debug.apk"
