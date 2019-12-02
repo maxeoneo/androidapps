@@ -1,24 +1,52 @@
 image: jangrewe/gitlab-ci-android
 
+before_script:
+- export GRADLE_USER_HOME=$(pwd)/.gradle
+- chmod +x ./gradlew
+
+cache:
+  key: ${CI_PROJECT_ID}
+  paths:
+  - .gradle/
+
 stages:
   - build
   - test
-  
-build:
+  - release
+  - deploy
+
+lintDebug:
   stage: build
   script:
-    - echo "Building"
-    - mkdir output
-    - cd GradleTest
-    - ./gradlew assemble
-    - cd ../output
-    - mv ../GradleTest/app/build/outputs/apk/debug/app-debug.apk ./GradleTest-debug.apk
-  artifacts:
-    paths:
-      - output/
+  - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
-test:
+assembleDebug:
+  stage: build
+  script:
+  - ./gradlew assembleDebug
+
+testDebug:
   stage: test
   script:
-    - echo "Testing"
-    - test -f "output/GradleTest-debug.apk"
+  - ./gradlew -Pci --console=plain :app:testDebug
+
+
+
+# build:
+#   stage: build
+#   script:
+#     - echo "Building"
+#     - mkdir output
+#     - cd GradleTest
+#     - ./gradlew assemble
+#     - cd ../output
+#     - mv ../GradleTest/app/build/outputs/apk/debug/app-debug.apk ./GradleTest-debug.apk
+#   artifacts:
+#     paths:
+#       - output/
+#
+# test:
+#   stage: test
+#   script:
+#     - echo "Testing"
+#     - test -f "output/GradleTest-debug.apk"
