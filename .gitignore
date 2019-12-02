@@ -2,7 +2,14 @@
 
 .gradle/
 .idea/
-
 build/
 
-local.properties
+/.gradle/
+/.idea/
+/build/
+
+*/.gradle/
+*/.idea/
+*/build/
+
+*/local.properties
