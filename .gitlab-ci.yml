@@ -1,55 +1,55 @@
 image: jangrewe/gitlab-ci-android
 
-before_script:
-  - export GRADLE_USER_HOME=$(pwd)/Calculator/.gradle
-  - chmod +x ./Calculator/gradlew
-
-# cache:
-#   key: ${CI_PROJECT_ID}
-#   paths:
-#     - .gradle/
-
-stages:
-  - build
-  - test
-  - release
-  - deploy
-
-lintDebug:
-  stage: build
-  script:
-    - cd Calculator
-    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
-
-assembleDebug:
-  stage: build
-  script:
-    - cd Calculator
-    - ./gradlew assembleDebug
-
-testDebug:
-  stage: test
-  script:
-    - cd Calculator
-    - ./gradlew -Pci --console=plain :app:testDebug
-
-
-
-# build:
+# before_script:
+#   - export GRADLE_USER_HOME=$(pwd)/Calculator/.gradle
+#   - chmod +x ./Calculator/gradlew
+#
+# # cache:
+# #   key: ${CI_PROJECT_ID}
+# #   paths:
+# #     - .gradle/
+#
+# stages:
+#   - build
+#   - test
+#   - release
+#   - deploy
+#
+# lintDebug:
 #   stage: build
 #   script:
-#     - echo "Building"
-#     - mkdir output
-#     - cd GradleTest
-#     - ./gradlew assemble
-#     - cd ../output
-#     - mv ../GradleTest/app/build/outputs/apk/debug/app-debug.apk ./GradleTest-debug.apk
-#   artifacts:
-#     paths:
-#       - output/
+#     - cd Calculator
+#     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 #
-# test:
+# assembleDebug:
+#   stage: build
+#   script:
+#     - cd Calculator
+#     - ./gradlew assembleDebug
+#
+# testDebug:
 #   stage: test
 #   script:
-#     - echo "Testing"
-#     - test -f "output/GradleTest-debug.apk"
+#     - cd Calculator
+#     - ./gradlew -Pci --console=plain :app:testDebug
+
+
+
+build:
+  stage: build
+  script:
+    - echo "Building"
+    - mkdir output
+    - cd Calculator
+    - ./gradlew assemble
+    - cd ../output
+    - mv ../Calculator/app/build/outputs/apk/debug/app-debug.apk ./Calculator-debug.apk
+  artifacts:
+    paths:
+      - output/
+
+test:
+  stage: test
+  script:
+    - echo "Testing"
+    - test -f "output/Calculator-debug.apk"
