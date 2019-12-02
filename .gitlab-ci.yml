@@ -1,13 +1,13 @@
 image: jangrewe/gitlab-ci-android
 
-before_script:
-- export GRADLE_USER_HOME=$(pwd)/.gradle
-- chmod +x ./gradlew
+# before_script:
+# - export GRADLE_USER_HOME=$(pwd)/.gradle
+# - chmod +x ./gradlew
 
-cache:
-  key: ${CI_PROJECT_ID}
-  paths:
-  - .gradle/
+# cache:
+#   key: ${CI_PROJECT_ID}
+#   paths:
+#     - .gradle/
 
 stages:
   - build
@@ -18,17 +18,20 @@ stages:
 lintDebug:
   stage: build
   script:
-  - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+    - cd Calculator
+    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
 assembleDebug:
   stage: build
   script:
-  - ./gradlew assembleDebug
+    - cd Calculator
+    - ./gradlew assembleDebug
 
 testDebug:
   stage: test
   script:
-  - ./gradlew -Pci --console=plain :app:testDebug
+    - cd Calculator
+    - ./gradlew -Pci --console=plain :app:testDebug
 
 
 
