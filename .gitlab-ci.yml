@@ -27,11 +27,11 @@ assembleDebug:
     - cd Calculator
     - ./gradlew assembleDebug
 
-testDebug:
-  stage: test
-  script:
-    - cd Calculator
-    - ./gradlew -Pci --console=plain :app:testDebug
+# testDebug:
+#   stage: test
+#   script:
+#     - cd Calculator
+#     - ./gradlew -Pci --console=plain :app:testDebug
 
 assembleRelease:
   stage: release
