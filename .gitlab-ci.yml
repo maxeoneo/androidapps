@@ -33,7 +33,20 @@ testDebug:
     - cd Calculator
     - ./gradlew -Pci --console=plain :app:testDebug
 
-
+assembleRelease:
+  stage: release
+  script:
+    - cd Calculator
+    - echo $KEYSTORE_FILE | base64 -d > my.keystore
+    - ./gradlew assembleRelease
+      -Pandroid.injected.signing.store.file=$(pwd)/my.keystore
+      -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD
+      -Pandroid.injected.signing.key.alias=$KEY_ALIAS
+      # -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+  artifacts:
+    paths:
+    - app/build/outputs/apk/release
+    - CHANGELOG
 
 # build:
 #   stage: build
