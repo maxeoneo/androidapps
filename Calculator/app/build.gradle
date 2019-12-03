@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 26
     buildToolsVersion "28.0.3"
 
     defaultConfig {
@@ -19,6 +19,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:21.0.0'
+    implementation 'com.android.support:support-v4:26.0.0'
     compile files('libs/exp4j-0.3.10.jar')
 }
