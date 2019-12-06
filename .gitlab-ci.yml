@@ -20,27 +20,33 @@ stages:
 lintDebugCalculator:
   stage: build
   script:
-    - ./Calculator/gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+    - cd Calculator
+    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
 assembleDebugCalculator:
   stage: build
   script:
-    - ./Calculator/gradlew assembleDebug
+    - cd Calculator
+    - ./gradlew assembleDebug
 
 testDebugCalculator:
   stage: test
   script:
-    - ./Calculator/gradlew -Pci --console=plain :app:testDebug
+    - cd Calculator
+    - ./gradlew -Pci --console=plain :app:testDebug
 
 assembleReleaseCalculator:
   stage: release
   script:
+    - cd Calculator
     - echo $KEYSTORE_FILE | base64 -d > my.keystore
-    - ./Calculator/gradlew assembleRelease
+    - ./gradlew assembleRelease
       -Pandroid.injected.signing.store.file=$(pwd)/my.keystore
       -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD
       -Pandroid.injected.signing.key.alias=$KEY_ALIAS
       # -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+
+    - cd ..
     - mv ./Calculator/app/build/outputs/apk/release/app-release-unsigned.apk ./outputs/Calculator.apk
   artifacts:
     paths:
@@ -51,27 +57,32 @@ assembleReleaseCalculator:
 lintDebugRollingDice:
   stage: build
   script:
-    - ./RollingDice/gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+    - cd RollingDice
+    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
 assembleDebugRollingDice:
   stage: build
   script:
-    - ./RollingDice/gradlew assembleDebug
+    - cd RollingDice
+    - ./gradlew assembleDebug
 
 testDebugRollingDice:
   stage: test
   script:
-    - ./RollingDice/gradlew -Pci --console=plain :app:testDebug
+    - cd RollingDice
+    - ./gradlew -Pci --console=plain :app:testDebug
 
 assembleReleaseRollingDice:
   stage: release
   script:
+    - cd RollingDice
     - echo $KEYSTORE_FILE | base64 -d > my.keystore
-    - ./RollingDice/gradlew assembleRelease
+    - ./gradlew assembleRelease
       -Pandroid.injected.signing.store.file=$(pwd)/my.keystore
       -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD
       -Pandroid.injected.signing.key.alias=$KEY_ALIAS
       # -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+    - cd ..
     - mv ./RollingDice/app/build/outputs/apk/release/app-release-unsigned.apk ./outputs/RollingDice.apk
   artifacts:
     paths:
