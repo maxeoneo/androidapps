@@ -1,4 +1,4 @@
-package androidlab.exercise7_2;
+package com.maxeoneo.antitheftprotector;
 
 import android.content.Context;
 import android.database.Cursor;

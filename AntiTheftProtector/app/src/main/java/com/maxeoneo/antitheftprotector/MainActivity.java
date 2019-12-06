@@ -1,4 +1,4 @@
-package androidlab.exercise7_2;
+package com.maxeoneo.antitheftprotector;
 
 import android.app.Activity;
 import android.app.Dialog;
