@@ -1,4 +1,4 @@
-package androidlab.exercise5_1;
+package com.maxeoneo.rollingdice;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

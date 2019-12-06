@@ -1,4 +1,4 @@
-package androidlab.exercise5_1;
+package com.maxeoneo.rollingdice;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
