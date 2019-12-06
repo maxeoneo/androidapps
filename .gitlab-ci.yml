@@ -16,7 +16,7 @@ stages:
   - release
   - deploy
 
-/* Calculator *****************************************************************/
+# Calculator *****************************************************************/
 lintDebugCalculator:
   stage: build
   script:
@@ -47,7 +47,7 @@ assembleReleaseCalculator:
       - ./outputs
     # - CHANGELOG
 
-/* RollingDice *****************************************************************/
+# RollingDice *****************************************************************/
 lintDebugRollingDice:
   stage: build
   script:
