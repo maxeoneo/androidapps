@@ -46,8 +46,9 @@ assembleRelease:
       # -Pandroid.injected.signing.key.password=$KEY_PASSWORD
 
     - cd ..
-    - mv ./$CI_COMMIT_REF_NAME/app/build/outputs/apk/release/app-release-unsigned.apk ./outputs/$CI_COMMIT_REF_NAME.apk
+    # - mv ./$CI_COMMIT_REF_NAME/app/build/outputs/apk/release/app-release-unsigned.apk ./outputs/$CI_COMMIT_REF_NAME.apk
   artifacts:
     paths:
-      - ./outputs
+      # - ./
+      - ./$CI_COMMIT_REF_NAME/app/build/outputs/apk/release/
     # - CHANGELOG
