@@ -1,7 +1,9 @@
 image: jangrewe/gitlab-ci-android
 
 before_script:
-  - mkdir outputs
+  - mkdir output
+
+
 #   - export GRADLE_USER_HOME=$(pwd)/RollingDice/.gradle
 #   - chmod +x ./RollingDice/gradlew
 
