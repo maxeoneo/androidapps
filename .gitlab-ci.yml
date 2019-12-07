@@ -2,8 +2,7 @@ image: jangrewe/gitlab-ci-android
 
 before_script:
   - mkdir output
-  - echo "branch:
-  - echo $CI_COMMIT_REF_NAME
+
 #   - export GRADLE_USER_HOME=$(pwd)/RollingDice/.gradle
 #   - chmod +x ./RollingDice/gradlew
 
@@ -22,6 +21,8 @@ stages:
 lintDebugCalculator:
   stage: build
   script:
+    - echo "branch:
+  - echo $CI_COMMIT_REF_NAME
     - cd Calculator
     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
