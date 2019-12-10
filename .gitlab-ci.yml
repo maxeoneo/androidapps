@@ -82,6 +82,8 @@ assembleRelease:
       # - ./$CI_COMMIT_REF_NAME/app/build/outputs/apk/release/
     # - CHANGELOG
 
+    expire_in: 1 week
+
 
 
 # app branches #################################################################
@@ -123,8 +125,7 @@ assembleReleaseApp:
       -Pandroid.injected.signing.key.alias=$KEY_ALIAS
       # -Pandroid.injected.signing.key.password=$KEY_PASSWORD
 
-    - cd ..
-    # - mv ./$CI_COMMIT_REF_NAME/app/build/outputs/apk/release/app-release-unsigned.apk ./outputs/$CI_COMMIT_REF_NAME.apk
+    - mv ./app/build/outputs/apk/release/app-release-unsigned.apk ../outputs/$CI_COMMIT_REF_NAME.apk
   except:
     refs:
       - master
@@ -133,3 +134,5 @@ assembleReleaseApp:
       # - ./
       - ./$CI_COMMIT_REF_NAME/app/build/outputs/apk/release/
     # - CHANGELOG
+
+    expire_in: 1 week
