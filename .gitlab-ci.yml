@@ -25,8 +25,12 @@ stages:
 lintDebug:
   stage: build
   script:
-    - cd $CI_COMMIT_REF_NAME
-    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+    - >
+      for FOLDER in $BUILD_APPS; do
+        cd $FOLDER
+        ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+        cd ..
+      done
   only:
     refs:
       - master
@@ -34,8 +38,12 @@ lintDebug:
 assembleDebug:
   stage: build
   script:
-    - cd $CI_COMMIT_REF_NAME
-    - ./gradlew assembleDebug
+    - >
+      for FOLDER in $BUILD_APPS; do
+        cd $FOLDER
+        ./gradlew assembleDebug
+        cd ..
+      done
   only:
     refs:
       - master
@@ -43,8 +51,12 @@ assembleDebug:
 testDebug:
   stage: test
   script:
-    - cd $CI_COMMIT_REF_NAME
-    - ./gradlew -Pci --console=plain :app:testDebug
+    - >
+      for FOLDER in $BUILD_APPS; do
+        cd $FOLDER
+        ./gradlew -Pci --console=plain :app:testDebug
+        cd ..
+      done
   only:
     refs:
       - master
