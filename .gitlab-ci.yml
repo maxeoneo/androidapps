@@ -1,7 +1,10 @@
 image: jangrewe/gitlab-ci-android
 
+variables:
+  BUILD_APPS: "calculator rollingdice"
+
 before_script:
-  - mkdir output
+  - mkdir outputs
 
 
 #   - export GRADLE_USER_HOME=$(pwd)/RollingDice/.gradle
@@ -18,25 +21,86 @@ stages:
   - release
   - deploy
 
+# master #######################################################################
 lintDebug:
   stage: build
   script:
     - cd $CI_COMMIT_REF_NAME
     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+  only:
+    refs:
+      - master
 
 assembleDebug:
   stage: build
   script:
     - cd $CI_COMMIT_REF_NAME
     - ./gradlew assembleDebug
+  only:
+    refs:
+      - master
 
 testDebug:
   stage: test
   script:
     - cd $CI_COMMIT_REF_NAME
     - ./gradlew -Pci --console=plain :app:testDebug
+  only:
+    refs:
+      - master
 
 assembleRelease:
+  stage: release
+  script:
+    - >
+      for FOLDER in $BUILD_APPS; do
+        cd $FOLDER
+        echo $KEYSTORE_FILE | base64 -d > my.keystore
+        ./gradlew assembleRelease
+        mv ./app/build/outputs/apk/release/app-release-unsigned.apk ../outputs/$FOLDER.apk
+        cd ..
+      done
+
+  only:
+    refs:
+      - master
+  artifacts:
+    paths:
+      - ./outputs
+      # - ./$CI_COMMIT_REF_NAME/app/build/outputs/apk/release/
+    # - CHANGELOG
+
+
+
+# app branches #################################################################
+lintDebugApp:
+  stage: build
+  script:
+    - cd $CI_COMMIT_REF_NAME
+    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+  except:
+    refs:
+      - master
+
+assembleDebugApp:
+  stage: build
+  script:
+    - cd $CI_COMMIT_REF_NAME
+    - ./gradlew assembleDebug
+  except:
+    refs:
+      - master
+
+testDebugApp:
+  stage: test
+  script:
+    - cd $CI_COMMIT_REF_NAME
+    - ./gradlew -Pci --console=plain :app:testDebug
+  except:
+    refs:
+      - master
+
+assembleReleaseApp:
   stage: release
   script:
     - cd $CI_COMMIT_REF_NAME
@@ -49,6 +113,9 @@ assembleRelease:
 
     - cd ..
     # - mv ./$CI_COMMIT_REF_NAME/app/build/outputs/apk/release/app-release-unsigned.apk ./outputs/$CI_COMMIT_REF_NAME.apk
+  except:
+    refs:
+      - master
   artifacts:
     paths:
       # - ./
