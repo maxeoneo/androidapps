@@ -1,7 +1,7 @@
 image: jangrewe/gitlab-ci-android
 
 variables:
-  BUILD_APPS: "calculator rollingdice"
+  BUILD_APPS: "antitheftprotector calculator rollingdice"
 
 before_script:
   - mkdir outputs
