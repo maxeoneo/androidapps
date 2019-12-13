@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="androidlab.exercise7_2"
+    package="com.maxeoneo.antitheftprotector"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -29,7 +29,7 @@
 
         <!-- register activity -->
         <activity
-            android:name="androidlab.exercise7_2.MainActivity"
+            android:name="com.maxeoneo.antitheftprotector.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +40,7 @@
 
         <!-- register receiver waiting for disconnect usb cable -->
         <receiver
-            android:name="androidlab.exercise7_2.UsbReceiver"
+            android:name="com.maxeoneo.antitheftprotector.UsbReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>
