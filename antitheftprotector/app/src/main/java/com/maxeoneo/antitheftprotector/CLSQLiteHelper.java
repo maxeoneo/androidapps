@@ -41,7 +41,7 @@ public class CLSQLiteHelper extends SQLiteOpenHelper
         "Upgrading database from version " + oldVersion + " to "
             + newVersion + ", no data will be saved");
 
-    // deleta the table
+    // delete the table
     db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 
     // create a new table
