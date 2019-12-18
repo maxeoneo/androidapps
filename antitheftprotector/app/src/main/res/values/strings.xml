@@ -17,9 +17,10 @@
     <string name="emOldPinNotRight">old pwd is wrong</string>
     <string name="emWrongPin">wrong pin</string>
     <string name="tOnOffON">Cellphone Lock is ON!</string>
-	<string name="tOnOffOFF">Cellphone Lock is OFF!</string>
-	<string name="tSendLocON">Send Location is ON!</string>
-	<string name="tSendLocOFF">Send Location is OFF!</string>
-	<string name="phoneNumber">Send sms to which number?</string>
-    
+    <string name="tOnOffOFF">Cellphone Lock is OFF!</string>
+    <string name="tSendLocON">Send Location is ON!</string>
+    <string name="tSendLocOFF">Send Location is OFF!</string>
+    <string name="phoneNumber">Send sms to which number?</string>
+    <string name="emNoPermissions">We need the locations permissions to activate the lock</string>
+
 </resources>

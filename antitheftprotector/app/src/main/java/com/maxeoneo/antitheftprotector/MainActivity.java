@@ -1,9 +1,14 @@
 package com.maxeoneo.antitheftprotector;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.View;
@@ -15,288 +20,213 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity
+{
 
-	private final Context context = this;
-	private ToggleButton tOnOff;
-	private Button bSetPwd;
-	private CLDataSource dataSource;
+  private final Context context = this;
+  private ToggleButton tOnOff;
+  private Button bSetPwd;
+  private CLDataSource dataSource;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+  @Override
+  protected void onCreate(Bundle savedInstanceState)
+  {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
-		// Database connection and get saved state of lock
-		dataSource = new CLDataSource(context);
-		dataSource.open();
-		boolean active = dataSource.isLockActive();
-		dataSource.close();
+    dataSource = new CLDataSource(context);
 
-		// set toggleButton to state from database
-		tOnOff = (ToggleButton) findViewById(R.id.tOnOff);
-		tOnOff.setChecked(active);
+    boolean active = isLockActive();
 
-		// button set pwd
-		bSetPwd = (Button) findViewById(R.id.bSetPwd);
-		// hide set pwd button when active
-		if (active) {
-			bSetPwd.setVisibility(View.GONE);
-		}
-		bSetPwd.setOnClickListener(new OnClickListener() {
+    // set toggleButton to state from database
+    tOnOff = (ToggleButton) findViewById(R.id.tOnOff);
+    tOnOff.setChecked(active);
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				// custom dialog
-				final Dialog dialog = new Dialog(context);
-				dialog.setContentView(R.layout.options_dialog);
-				dialog.setTitle(R.string.bOptions);
+    // button set pwd
+    bSetPwd = (Button) findViewById(R.id.bSetPwd);
+    // hide set pwd button when active
+    if (active)
+    {
+      bSetPwd.setVisibility(View.GONE);
+    }
+    bSetPwd.setOnClickListener(new OptionsOnClickListener(this));
+  }
 
-				// set the custom dialog components
-				final EditText oldPwd = (EditText) dialog
-						.findViewById(R.id.oldPwd);
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu)
+  {
+    // Inflate the menu; this adds items to the action bar if it is present.
+    getMenuInflater().inflate(R.menu.main, menu);
+    return true;
+  }
 
-				final EditText newPwd = (EditText) dialog
-						.findViewById(R.id.newPwd);
-				final EditText repeatNewPwd = (EditText) dialog
-						.findViewById(R.id.repeatNewPwd);
+  /**
+   * Method is called when toggle button is clicked
+   */
+  public void onToggleClicked(View view)
+  {
+    // Is the toggle on?
+    boolean on = ((ToggleButton) view).isChecked();
 
-				final ToggleButton tSendLoc = (ToggleButton) dialog
-						.findViewById(R.id.tSendLoc);
-				final EditText phoneNumber = (EditText) dialog
-						.findViewById(R.id.phoneNumber);
+    if (on)
+    {
+      String pwd = getPassword();
 
-				// get old PWD from Database
-				dataSource.open();
-				final String oldPwdString = dataSource.getPwd();
-				final String pNumber = dataSource.getPhonenumber();
-				final boolean sendLoc = dataSource.isSendLocation();
-				dataSource.close();
+      if (pwd != "")
+      {
+        // cellphone lock is on
 
-				if (oldPwdString != null) {
-					oldPwd.setVisibility(View.VISIBLE);
-				} else {
-					oldPwd.setVisibility(View.GONE);
-				}
+        dataSource.open();
+        final boolean sendLocation = dataSource.isLockActive();
+        dataSource.close();
 
-				// get options from database
-				phoneNumber.setText(pNumber);
-				tSendLoc.setChecked(sendLoc);
-				if (sendLoc) {
-					phoneNumber.setVisibility(View.VISIBLE);
-				} else {
-					phoneNumber.setVisibility(View.GONE);
-				}
+        if (!sendLocation || locationPermissionsGranted())
+        {
+          activateLock();
+        }
+        else
+        {
+          tOnOff.setChecked(false);
 
-				// set method which is called when user clicks toggle button
-				tSendLoc.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+          // Show message
+          Toast toast = Toast.makeText(context, R.string.emNoPermissions, Toast.LENGTH_SHORT);
+          toast.show();
+        }
+      }
+      else
+      {
+        // old pwd is not right
+        tOnOff.setChecked(false);
 
-					public void onCheckedChanged(CompoundButton buttonView,
-							boolean isChecked) {
+        // Show message
+        Toast toast = Toast.makeText(context, R.string.emSetPwd, Toast.LENGTH_SHORT);
+        toast.show();
+      }
 
-						if (isChecked) {
-							phoneNumber.setVisibility(View.VISIBLE);
-						} else {
-							phoneNumber.setVisibility(View.GONE);
-						}
-					}
-				});
+    }
+    else
+    {
+      // cellphone off
 
-				Button bSave = (Button) dialog.findViewById(R.id.bSave);
+      // custom dialog
+      final Dialog dialog = new Dialog(context);
+      dialog.setContentView(R.layout.enter_pwd_dialog);
+      dialog.setTitle(R.string.enterPwd);
+      dialog.setCancelable(false);
 
-				// if button is clicked, close the custom dialog
-				bSave.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
+      // set the custom dialog components
+      final EditText pwd = (EditText) dialog.findViewById(R.id.enterPwd);
 
-						// oldPwd must be right
-						if (oldPwdString == null
-								|| oldPwdString.equals(oldPwd.getText()
-										.toString())) {
+      // get old PWD from Database
+      final String savedPwd = getPassword();
 
-							// min 4 numbers
-							if (newPwd.getText().length() >= 4) {
+      Button submit = (Button) dialog.findViewById(R.id.bSubmitPwd);
+      submit.setOnClickListener(new OnClickListener()
+      {
 
-								// newPwd and repeatNewPwd must be the same and
-								if (newPwd
-										.getText()
-										.toString()
-										.equals(repeatNewPwd.getText()
-												.toString())) {
+        @Override
+        public void onClick(View v)
+        {
+          if (pwd.getText().toString().equals(savedPwd))
+          {
+            // show Button
+            bSetPwd.setVisibility(View.VISIBLE);
 
-									// save options
-									dataSource.open();
+            // stop cellphone lock
+            // save not running to data base
+            setLockActive(false);
 
-									// save all options (also when phonenumber
-									// is "")
+          }
+          else
+          {
+            // can't stop cellphone lock
+            tOnOff.setChecked(true);
 
-									String number = PhoneNumberUtils
-											.formatNumber(phoneNumber.getText()
-													.toString());
-									dataSource.saveOptions(newPwd.getText()
-											.toString(), tSendLoc.isChecked(),
-											number);
+            System.out.println("Wrong old pin. The right one is "
+                + savedPwd);
 
-									dataSource.close();
+            // Show message
+            Toast toast = Toast.makeText(context,
+                R.string.emWrongPin, Toast.LENGTH_SHORT);
+            toast.show();
+          }
+          // close dialog
+          dialog.dismiss();
+        }
+      });
+      dialog.show();
+    }
+  }
 
-									// close dialog
-									dialog.dismiss();
+  private void activateLock()
+  {
+    // hide Button
+    bSetPwd.setVisibility(View.GONE);
 
-								} else {
-									// pwds are not the same
-									System.out.println("PWDS are not the same");
-									// Show message
-									Toast toast = Toast.makeText(context,
-											R.string.emNewAndRepeatedEquals,
-											Toast.LENGTH_SHORT);
-									toast.show();
-								}
-							} else {
+    // start cellphone lock
+    // set running to database
+    setLockActive(true);
+  }
 
-								// when new pwd and repeated new pwd are empty
-								// save only the other two things
-								if (newPwd.getText().toString().equals("")
-										|| repeatNewPwd.getText().toString()
-												.equals("")) {
+  private boolean locationPermissionsGranted()
+  {
+    boolean granted = false;
 
-									String number = PhoneNumberUtils
-											.formatNumber(phoneNumber.getText()
-													.toString());
-									
-									dataSource.open();
-									dataSource.setSendLocation(tSendLoc
-											.isChecked());
-									dataSource.setPhonenumber(number);
-									dataSource.close();
+    final boolean fineLocationAccessDeclined = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+    final boolean coarseLocationAccessDeclined = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+    if (fineLocationAccessDeclined || coarseLocationAccessDeclined)
+    {
 
-									// close dialog
-									dialog.dismiss();
-								} else {
+      // Permission is not granted
+      // Should we show an explanation?
+      if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
+          || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
+      {
+        // Show an explanation to the user *asynchronously* -- don't block
+        // this thread waiting for the user's response! After the user
+        // sees the explanation, try again to request the permission.
+      }
+      else
+      {
+        // No explanation needed; request the permission
+        ActivityCompat.requestPermissions(this,
+            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1
+        );
 
-									// pwds are to short
-									System.out.println("PWDS are to short");
-									// Show message
-									Toast toast = Toast.makeText(context,
-											R.string.emPinToShort,
-											Toast.LENGTH_SHORT);
-									toast.show();
-								}
-							}
-						} else {
-							// old pwd is not right
-							System.out
-									.println("old PWD is not right - database: "
-											+ oldPwdString
-											+ " your entered: "
-											+ oldPwd.getText().toString());
-							// Show message
-							Toast toast = Toast.makeText(context,
-									R.string.emOldPinNotRight,
-									Toast.LENGTH_SHORT);
-							toast.show();
-						}
-					}
-				});
+        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+        // app-defined int constant. The callback method gets the
+        // result of the request.
+      }
+    }
+    else
+    {
+      granted = true;
+    }
+    return granted;
+  }
 
-				dialog.show();
-			}
-		});
-	}
+  private boolean isLockActive()
+  {
+    // Database connection and get saved state of lock
+    dataSource.open();
+    boolean active = dataSource.isLockActive();
+    dataSource.close();
+    return active;
+  }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+  private void setLockActive(boolean active)
+  {
+    dataSource.open();
+    dataSource.setLockActive(active);
+    dataSource.close();
+  }
 
-	/**
-	 * Method is called when toggle button is clicked
-	 */
-	public void onToggleClicked(View view) {
-		// Is the toggle on?
-		boolean on = ((ToggleButton) view).isChecked();
+  private String getPassword()
+  {
+    dataSource.open();
+    String pwd = dataSource.getPwd();
+    dataSource.close();
 
-		if (on) {
-			// cellphone lock is on
-
-			dataSource.open();
-			String pwd = dataSource.getPwd();
-			dataSource.close();
-
-			if (pwd != null) {
-
-				// hide Button
-				bSetPwd.setVisibility(View.GONE);
-
-				// start cellphone lock
-				// set running to database
-				dataSource.open();
-				dataSource.setLockActive(true);
-				dataSource.close();
-
-			} else {
-				// old pwd is not right
-				System.out.println("please set pin first");
-
-				tOnOff.setChecked(false);
-
-				// Show message
-				Toast toast = Toast.makeText(context, R.string.emSetPwd,
-						Toast.LENGTH_SHORT);
-				toast.show();
-			}
-
-		} else {
-			// cellphone off
-
-			// custom dialog
-			final Dialog dialog = new Dialog(context);
-			dialog.setContentView(R.layout.enter_pwd_dialog);
-			dialog.setTitle(R.string.enterPwd);
-			dialog.setCancelable(false);
-
-			// set the custom dialog components
-			final EditText pwd = (EditText) dialog.findViewById(R.id.enterPwd);
-
-			// get old PWD from Database
-			dataSource.open();
-			final String savedPwd = dataSource.getPwd();
-			dataSource.close();
-
-			Button submit = (Button) dialog.findViewById(R.id.bSubmitPwd);
-			submit.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					if (pwd.getText().toString().equals(savedPwd)) {
-						// show Button
-						bSetPwd.setVisibility(View.VISIBLE);
-
-						// stop cellphone lock
-						// save not running to data base
-						dataSource.open();
-						dataSource.setLockActive(false);
-						dataSource.close();
-
-					} else {
-						// can't stop cellphone lock
-						tOnOff.setChecked(true);
-
-						System.out.println("Wrong old pin. The right one is "
-								+ savedPwd);
-
-						// Show message
-						Toast toast = Toast.makeText(context,
-								R.string.emWrongPin, Toast.LENGTH_SHORT);
-						toast.show();
-					}
-					// close dialog
-					dialog.dismiss();
-				}
-			});
-			dialog.show();
-		}
-	}
+    return pwd;
+  }
 }
