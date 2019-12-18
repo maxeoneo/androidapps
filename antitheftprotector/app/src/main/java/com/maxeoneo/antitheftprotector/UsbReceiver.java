@@ -1,15 +1,18 @@
 package com.maxeoneo.antitheftprotector;
 
+import android.Manifest;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 
 public class UsbReceiver extends BroadcastReceiver
@@ -57,15 +60,13 @@ public class UsbReceiver extends BroadcastReceiver
       public void onProviderEnabled(String provider)
       {
         // register gps provider, updates max every min
-        locationManager.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER, 60000, 50, this);
+        requestLocationUpdates(LocationManager.GPS_PROVIDER, Manifest.permission.ACCESS_FINE_LOCATION);
       }
 
       public void onProviderDisabled(String provider)
       {
         // register network provider, updates max every min
-        locationManager.requestLocationUpdates(
-            LocationManager.NETWORK_PROVIDER, 60000, 50, this);
+        requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Manifest.permission.ACCESS_COARSE_LOCATION);
       }
 
       @Override
@@ -89,15 +90,12 @@ public class UsbReceiver extends BroadcastReceiver
           .isProviderEnabled(LocationManager.GPS_PROVIDER))
       {
         System.out.println("GPS is enabled");
-        locationManager.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER, 60000, 50,
-            locationListener);
+        requestLocationUpdates(LocationManager.GPS_PROVIDER, Manifest.permission.ACCESS_FINE_LOCATION);
       } else
       {
         System.out.println("GPS is disabled");
-        locationManager.requestLocationUpdates(
-            LocationManager.NETWORK_PROVIDER, 60000, 50,
-            locationListener);
+
+        requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Manifest.permission.ACCESS_COARSE_LOCATION);
       }
     }
     dataSource.close();
@@ -105,6 +103,16 @@ public class UsbReceiver extends BroadcastReceiver
     // create and start thread
     AlarmThread at = new AlarmThread(context);
     at.start();
+  }
+
+  private void requestLocationUpdates(String locationProvider, String permission)
+  {
+    if (ContextCompat.checkSelfPermission(context, permission)
+        == PackageManager.PERMISSION_GRANTED)
+    {
+
+      locationManager.requestLocationUpdates(locationProvider, 60000, 50, locationListener);
+    }
   }
 
   /**
