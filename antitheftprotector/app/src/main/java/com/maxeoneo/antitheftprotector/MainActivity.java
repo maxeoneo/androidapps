@@ -1,9 +1,14 @@
 package com.maxeoneo.antitheftprotector;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.View;
@@ -29,11 +34,9 @@ public class MainActivity extends Activity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    // Database connection and get saved state of lock
     dataSource = new CLDataSource(context);
-    dataSource.open();
-    boolean active = dataSource.isLockActive();
-    dataSource.close();
+
+    boolean active = isLockActive();
 
     // set toggleButton to state from database
     tOnOff = (ToggleButton) findViewById(R.id.tOnOff);
@@ -67,38 +70,41 @@ public class MainActivity extends Activity
 
     if (on)
     {
-      // cellphone lock is on
+      String pwd = getPassword();
 
-      dataSource.open();
-      String pwd = dataSource.getPwd();
-      dataSource.close();
-
-      if (pwd != null)
+      if (pwd != "")
       {
+        // cellphone lock is on
 
-        // hide Button
-        bSetPwd.setVisibility(View.GONE);
-
-        // start cellphone lock
-        // set running to database
         dataSource.open();
-        dataSource.setLockActive(true);
+        final boolean sendLocation = dataSource.isLockActive();
         dataSource.close();
 
-      } else
+        if (!sendLocation || locationPermissionsGranted())
+        {
+          activateLock();
+        }
+        else
+        {
+          tOnOff.setChecked(false);
+
+          // Show message
+          Toast toast = Toast.makeText(context, R.string.emNoPermissions, Toast.LENGTH_SHORT);
+          toast.show();
+        }
+      }
+      else
       {
         // old pwd is not right
-        System.out.println("please set pin first");
-
         tOnOff.setChecked(false);
 
         // Show message
-        Toast toast = Toast.makeText(context, R.string.emSetPwd,
-            Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(context, R.string.emSetPwd, Toast.LENGTH_SHORT);
         toast.show();
       }
 
-    } else
+    }
+    else
     {
       // cellphone off
 
@@ -112,9 +118,7 @@ public class MainActivity extends Activity
       final EditText pwd = (EditText) dialog.findViewById(R.id.enterPwd);
 
       // get old PWD from Database
-      dataSource.open();
-      final String savedPwd = dataSource.getPwd();
-      dataSource.close();
+      final String savedPwd = getPassword();
 
       Button submit = (Button) dialog.findViewById(R.id.bSubmitPwd);
       submit.setOnClickListener(new OnClickListener()
@@ -130,11 +134,10 @@ public class MainActivity extends Activity
 
             // stop cellphone lock
             // save not running to data base
-            dataSource.open();
-            dataSource.setLockActive(false);
-            dataSource.close();
+            setLockActive(false);
 
-          } else
+          }
+          else
           {
             // can't stop cellphone lock
             tOnOff.setChecked(true);
@@ -153,5 +156,77 @@ public class MainActivity extends Activity
       });
       dialog.show();
     }
+  }
+
+  private void activateLock()
+  {
+    // hide Button
+    bSetPwd.setVisibility(View.GONE);
+
+    // start cellphone lock
+    // set running to database
+    setLockActive(true);
+  }
+
+  private boolean locationPermissionsGranted()
+  {
+    boolean granted = false;
+
+    final boolean fineLocationAccessDeclined = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+    final boolean coarseLocationAccessDeclined = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+    if (fineLocationAccessDeclined || coarseLocationAccessDeclined)
+    {
+
+      // Permission is not granted
+      // Should we show an explanation?
+      if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
+          || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
+      {
+        // Show an explanation to the user *asynchronously* -- don't block
+        // this thread waiting for the user's response! After the user
+        // sees the explanation, try again to request the permission.
+      }
+      else
+      {
+        // No explanation needed; request the permission
+        ActivityCompat.requestPermissions(this,
+            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1
+        );
+
+        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+        // app-defined int constant. The callback method gets the
+        // result of the request.
+      }
+    }
+    else
+    {
+      granted = true;
+    }
+    return granted;
+  }
+
+  private boolean isLockActive()
+  {
+    // Database connection and get saved state of lock
+    dataSource.open();
+    boolean active = dataSource.isLockActive();
+    dataSource.close();
+    return active;
+  }
+
+  private void setLockActive(boolean active)
+  {
+    dataSource.open();
+    dataSource.setLockActive(active);
+    dataSource.close();
+  }
+
+  private String getPassword()
+  {
+    dataSource.open();
+    String pwd = dataSource.getPwd();
+    dataSource.close();
+
+    return pwd;
   }
 }
