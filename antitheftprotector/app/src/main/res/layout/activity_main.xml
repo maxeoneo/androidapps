@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:orientation="vertical"
-    tools:context=".MainActivity" >
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <ToggleButton
         android:id="@+id/tOnOff"
@@ -13,5 +13,5 @@
         android:onClick="onToggleClicked"
         android:textOff="@string/tOnOffOFF"
         android:textOn="@string/tOnOffON" />
-    
+
 </LinearLayout>
