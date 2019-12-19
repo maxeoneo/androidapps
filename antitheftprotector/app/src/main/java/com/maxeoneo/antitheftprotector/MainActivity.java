@@ -263,7 +263,7 @@ public class MainActivity extends Activity
       {
 
         // oldPwd must be right
-        if (oldPwdString == null
+        if (oldPwdString == ""
             || oldPwdString.equals(oldPwd.getText()
             .toString()))
         {
