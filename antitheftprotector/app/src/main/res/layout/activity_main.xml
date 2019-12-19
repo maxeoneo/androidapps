@@ -13,13 +13,5 @@
         android:onClick="onToggleClicked"
         android:textOff="@string/tOnOffOFF"
         android:textOn="@string/tOnOffON" />
-
-    
-    <Button
-        android:id="@+id/bSetPwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/bOptions" />
     
 </LinearLayout>
