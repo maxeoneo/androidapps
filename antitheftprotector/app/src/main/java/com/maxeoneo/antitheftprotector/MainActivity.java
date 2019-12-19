@@ -374,15 +374,13 @@ public class MainActivity extends Activity
     final boolean coarseLocationAccessDeclined = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
     if (fineLocationAccessDeclined || coarseLocationAccessDeclined)
     {
-
       // Permission is not granted
       // Should we show an explanation?
       if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
           || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
       {
-        // Show an explanation to the user *asynchronously* -- don't block
-        // this thread waiting for the user's response! After the user
-        // sees the explanation, try again to request the permission.
+        Toast toast = Toast.makeText(context, R.string.PermissionExplanation, Toast.LENGTH_LONG);
+        toast.show();
       }
       else
       {
@@ -390,10 +388,6 @@ public class MainActivity extends Activity
         ActivityCompat.requestPermissions(this,
             new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATIONS_PERMISSIONS_REQUEST
         );
-
-        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-        // app-defined int constant. The callback method gets the
-        // result of the request.
       }
     }
     else
@@ -423,8 +417,6 @@ public class MainActivity extends Activity
         }
         return;
       }
-
-      // other 'case' statements for other permssions
     }
   }
 }
