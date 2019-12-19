@@ -261,13 +261,11 @@ public class MainActivity extends Activity
       @Override
       public void onClick(View v)
       {
-
         // oldPwd must be right
         if (oldPwdString == ""
             || oldPwdString.equals(oldPwd.getText()
             .toString()))
         {
-
           // min 4 numbers
           if (newPwd.getText().length() >= 4)
           {
@@ -285,7 +283,6 @@ public class MainActivity extends Activity
 
               // save all options (also when phonenumber
               // is "")
-
               String number = PhoneNumberUtils
                   .formatNumber(phoneNumber.getText()
                       .toString());
@@ -301,9 +298,6 @@ public class MainActivity extends Activity
             }
             else
             {
-              // pwds are not the same
-              System.out.println("PWDS are not the same");
-              // Show message
               Toast toast = Toast.makeText(context,
                   R.string.emNewAndRepeatedEquals,
                   Toast.LENGTH_SHORT);
@@ -312,14 +306,12 @@ public class MainActivity extends Activity
           }
           else
           {
-
             // when new pwd and repeated new pwd are empty
             // save only the other two things
             if (newPwd.getText().toString().equals("")
                 || repeatNewPwd.getText().toString()
                 .equals(""))
             {
-
               String number = PhoneNumberUtils
                   .formatNumber(phoneNumber.getText()
                       .toString());
@@ -335,10 +327,6 @@ public class MainActivity extends Activity
             }
             else
             {
-
-              // pwds are to short
-              System.out.println("PWDS are to short");
-              // Show message
               Toast toast = Toast.makeText(context,
                   R.string.emPinToShort,
                   Toast.LENGTH_SHORT);
@@ -348,13 +336,6 @@ public class MainActivity extends Activity
         }
         else
         {
-          // old pwd is not right
-          System.out
-              .println("old PWD is not right - database: "
-                  + oldPwdString
-                  + " your entered: "
-                  + oldPwd.getText().toString());
-          // Show message
           Toast toast = Toast.makeText(context,
               R.string.emOldPinNotRight,
               Toast.LENGTH_SHORT);
