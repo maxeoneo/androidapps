@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -122,6 +123,10 @@ public class MainActivity extends Activity
       // set the custom dialog components
       final EditText pwd = (EditText) dialog.findViewById(R.id.enterPwd);
 
+      // open keyboard automatically
+      InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+      inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
       // get old PWD from Database
       final String savedPwd = getPassword();
 
@@ -151,6 +156,11 @@ public class MainActivity extends Activity
                 R.string.emWrongPin, Toast.LENGTH_SHORT);
             toast.show();
           }
+
+          // hide keyboard again
+          InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+          inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
           // close dialog
           dialog.dismiss();
         }
