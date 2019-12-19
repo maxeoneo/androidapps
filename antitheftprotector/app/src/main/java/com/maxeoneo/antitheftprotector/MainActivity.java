@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -24,10 +22,18 @@ import android.widget.ToggleButton;
 public class MainActivity extends Activity
 {
 
+  private static final int LOCATIONS_PERMISSIONS_REQUEST = 1;
   private final Context context = this;
   private ToggleButton tOnOff;
   private Button bSetPwd;
   private CLDataSource dataSource;
+
+  private Dialog dialog;
+  private EditText oldPwd;
+  private EditText newPwd;
+  private EditText repeatNewPwd;
+  private ToggleButton tSendLoc;
+  private EditText phoneNumber;
 
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -42,6 +48,17 @@ public class MainActivity extends Activity
     // set toggleButton to state from database
     tOnOff = (ToggleButton) findViewById(R.id.tOnOff);
     tOnOff.setChecked(active);
+
+    // create options dialog
+    dialog = new Dialog(this);
+    dialog.setContentView(R.layout.options_dialog);
+    dialog.setTitle(R.string.bOptions);
+
+    oldPwd = (EditText) dialog.findViewById(R.id.oldPwd);
+    newPwd = (EditText) dialog.findViewById(R.id.newPwd);
+    repeatNewPwd = (EditText) dialog.findViewById(R.id.repeatNewPwd);
+    phoneNumber = (EditText) dialog.findViewById(R.id.phoneNumber);
+    tSendLoc = (ToggleButton) dialog.findViewById(R.id.tSendLoc);
   }
 
   @Override
@@ -52,8 +69,10 @@ public class MainActivity extends Activity
     return true;
   }
 
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    switch (item.getItemId())
+    {
       case R.id.action_settings:
         createOptionsDialog();
         return true;
@@ -180,25 +199,6 @@ public class MainActivity extends Activity
 
   private void createOptionsDialog()
   {
-    // custom dialog
-    final Dialog dialog = new Dialog(this);
-    dialog.setContentView(R.layout.options_dialog);
-    dialog.setTitle(R.string.bOptions);
-
-    // set the custom dialog components
-    final EditText oldPwd = (EditText) dialog
-        .findViewById(R.id.oldPwd);
-
-    final EditText newPwd = (EditText) dialog
-        .findViewById(R.id.newPwd);
-    final EditText repeatNewPwd = (EditText) dialog
-        .findViewById(R.id.repeatNewPwd);
-
-    final ToggleButton tSendLoc = (ToggleButton) dialog
-        .findViewById(R.id.tSendLoc);
-    final EditText phoneNumber = (EditText) dialog
-        .findViewById(R.id.phoneNumber);
-
     // get old PWD from Database
     dataSource.open();
     final String oldPwdString = dataSource.getPwd();
@@ -388,7 +388,7 @@ public class MainActivity extends Activity
       {
         // No explanation needed; request the permission
         ActivityCompat.requestPermissions(this,
-            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1
+            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATIONS_PERMISSIONS_REQUEST
         );
 
         // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
@@ -401,5 +401,30 @@ public class MainActivity extends Activity
       granted = true;
     }
     return granted;
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+  {
+    switch (requestCode)
+    {
+      case LOCATIONS_PERMISSIONS_REQUEST:
+      {
+        // If request is cancelled, the result arrays are empty.
+        if (grantResults.length > 0
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
+          phoneNumber.setVisibility(View.VISIBLE);
+          tSendLoc.setChecked(true);
+        }
+        else
+        {
+          tSendLoc.setChecked(false);
+        }
+        return;
+      }
+
+      // other 'case' statements for other permssions
+    }
   }
 }
