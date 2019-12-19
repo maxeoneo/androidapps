@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -25,7 +26,6 @@ public class MainActivity extends Activity
   private static final int LOCATIONS_PERMISSIONS_REQUEST = 1;
   private final Context context = this;
   private ToggleButton tOnOff;
-  private Button bSetPwd;
   private CLDataSource dataSource;
 
   private Dialog dialog;
@@ -48,6 +48,7 @@ public class MainActivity extends Activity
     // set toggleButton to state from database
     tOnOff = (ToggleButton) findViewById(R.id.tOnOff);
     tOnOff.setChecked(active);
+    tOnOff.setBackgroundColor(active ? Color.RED : Color.WHITE);
 
     // create options dialog
     dialog = new Dialog(this);
@@ -133,13 +134,9 @@ public class MainActivity extends Activity
         {
           if (pwd.getText().toString().equals(savedPwd))
           {
-            // show Button
-            bSetPwd.setVisibility(View.VISIBLE);
-
             // stop cellphone lock
             // save not running to data base
             setLockActive(false);
-
           }
           else
           {
@@ -147,7 +144,7 @@ public class MainActivity extends Activity
             tOnOff.setChecked(true);
 
             System.out.println("Wrong old pin. The right one is "
-                + savedPwd);
+              + savedPwd);
 
             // Show message
             Toast toast = Toast.makeText(context,
@@ -164,9 +161,6 @@ public class MainActivity extends Activity
 
   private void activateLock()
   {
-    // hide Button
-    bSetPwd.setVisibility(View.GONE);
-
     // start cellphone lock
     // set running to database
     setLockActive(true);
@@ -186,6 +180,7 @@ public class MainActivity extends Activity
     dataSource.open();
     dataSource.setLockActive(active);
     dataSource.close();
+    tOnOff.setBackgroundColor(active ? Color.RED : Color.GRAY);
   }
 
   private String getPassword()
