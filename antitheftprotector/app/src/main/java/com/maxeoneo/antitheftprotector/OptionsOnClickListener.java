@@ -52,7 +52,7 @@ public class OptionsOnClickListener implements View.OnClickListener
     final boolean sendLoc = dataSource.isSendLocation();
     dataSource.close();
 
-    if (oldPwdString != null)
+    if (oldPwdString != "")
     {
       oldPwd.setVisibility(View.VISIBLE);
     }
