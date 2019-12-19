@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Cellphone Lock 2</string>
+    <string name="app_name">Anti Theft Protector</string>
     <string name="action_settings">Settings</string>
     <string name="switchLabel">Cellphone Lock</string>
     <string name="oldPwd">old pin</string>
@@ -16,8 +16,8 @@
     <string name="emPinToShort">new pin is to short</string>
     <string name="emOldPinNotRight">old pwd is wrong</string>
     <string name="emWrongPin">wrong pin</string>
-    <string name="tOnOffON">Cellphone Lock is ON!</string>
-    <string name="tOnOffOFF">Cellphone Lock is OFF!</string>
+    <string name="tOnOffON">Lock is ON!</string>
+    <string name="tOnOffOFF">Lock is OFF!</string>
     <string name="tSendLocON">Send Location is ON!</string>
     <string name="tSendLocOFF">Send Location is OFF!</string>
     <string name="phoneNumber">Send sms to which number?</string>
