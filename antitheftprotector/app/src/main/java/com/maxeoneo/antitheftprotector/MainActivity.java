@@ -75,23 +75,7 @@ public class MainActivity extends Activity
       if (pwd != "")
       {
         // cellphone lock is on
-
-        dataSource.open();
-        final boolean sendLocation = dataSource.isLockActive();
-        dataSource.close();
-
-        if (!sendLocation || locationPermissionsGranted())
-        {
-          activateLock();
-        }
-        else
-        {
-          tOnOff.setChecked(false);
-
-          // Show message
-          Toast toast = Toast.makeText(context, R.string.emNoPermissions, Toast.LENGTH_SHORT);
-          toast.show();
-        }
+        activateLock();
       }
       else
       {
@@ -166,43 +150,6 @@ public class MainActivity extends Activity
     // start cellphone lock
     // set running to database
     setLockActive(true);
-  }
-
-  private boolean locationPermissionsGranted()
-  {
-    boolean granted = false;
-
-    final boolean fineLocationAccessDeclined = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
-    final boolean coarseLocationAccessDeclined = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
-    if (fineLocationAccessDeclined || coarseLocationAccessDeclined)
-    {
-
-      // Permission is not granted
-      // Should we show an explanation?
-      if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
-          || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
-      {
-        // Show an explanation to the user *asynchronously* -- don't block
-        // this thread waiting for the user's response! After the user
-        // sees the explanation, try again to request the permission.
-      }
-      else
-      {
-        // No explanation needed; request the permission
-        ActivityCompat.requestPermissions(this,
-            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1
-        );
-
-        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-        // app-defined int constant. The callback method gets the
-        // result of the request.
-      }
-    }
-    else
-    {
-      granted = true;
-    }
-    return granted;
   }
 
   private boolean isLockActive()

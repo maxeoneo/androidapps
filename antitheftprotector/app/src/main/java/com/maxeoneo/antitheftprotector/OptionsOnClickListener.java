@@ -1,7 +1,11 @@
 package com.maxeoneo.antitheftprotector;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.PhoneNumberUtils;
 import android.view.View;
 import android.widget.Button;
@@ -83,7 +87,14 @@ public class OptionsOnClickListener implements View.OnClickListener
 
         if (isChecked)
         {
-          phoneNumber.setVisibility(View.VISIBLE);
+          if (locationPermissionsGranted())
+          {
+            phoneNumber.setVisibility(View.VISIBLE);
+          }
+          else
+          {
+            tSendLoc.setChecked(false);
+          }
         }
         else
         {
@@ -203,5 +214,42 @@ public class OptionsOnClickListener implements View.OnClickListener
     });
 
     dialog.show();
+  }
+
+  private boolean locationPermissionsGranted()
+  {
+    boolean granted = false;
+
+    final boolean fineLocationAccessDeclined = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+    final boolean coarseLocationAccessDeclined = ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+    if (fineLocationAccessDeclined || coarseLocationAccessDeclined)
+    {
+
+      // Permission is not granted
+      // Should we show an explanation?
+      if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION)
+          || ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_COARSE_LOCATION))
+      {
+        // Show an explanation to the user *asynchronously* -- don't block
+        // this thread waiting for the user's response! After the user
+        // sees the explanation, try again to request the permission.
+      }
+      else
+      {
+        // No explanation needed; request the permission
+        ActivityCompat.requestPermissions(activity,
+            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1
+        );
+
+        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+        // app-defined int constant. The callback method gets the
+        // result of the request.
+      }
+    }
+    else
+    {
+      granted = true;
+    }
+    return granted;
   }
 }
