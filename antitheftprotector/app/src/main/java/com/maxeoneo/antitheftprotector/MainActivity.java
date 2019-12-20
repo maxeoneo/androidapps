@@ -33,7 +33,7 @@ public class MainActivity extends Activity
   private EditText oldPwd;
   private EditText newPwd;
   private EditText repeatNewPwd;
-  private ToggleButton tSendLoc;
+  private ToggleButton toggleSendLocation;
   private EditText phoneNumber;
 
   @Override
@@ -73,9 +73,6 @@ public class MainActivity extends Activity
     return false;
   }
 
-  /**
-   * Method is called when toggle button is clicked
-   */
   public void onToggleClicked(View view)
   {
     if (((ToggleButton) view).isChecked())
@@ -163,27 +160,43 @@ public class MainActivity extends Activity
     newPwd = (EditText) dialog.findViewById(R.id.newPwd);
     repeatNewPwd = (EditText) dialog.findViewById(R.id.repeatNewPwd);
     phoneNumber = (EditText) dialog.findViewById(R.id.phoneNumber);
-    tSendLoc = (ToggleButton) dialog.findViewById(R.id.tSendLoc);
+    toggleSendLocation = (ToggleButton) dialog.findViewById(R.id.tSendLoc);
   }
 
   private void showOptionsDialog()
   {
-    // get old PWD from Database
-    dataSource.open();
+    final String oldPwdString = initializeOldPasswordField();
+    final boolean sendLocation = initialtizeToggleButtonSendLocation();
+    initializePhoneNumberFiled(sendLocation);
+    initializeSaveButton(oldPwdString);
+
+    dialog.show();
+  }
+
+  private String initializeOldPasswordField()
+  {
     final String oldPwdString = dataSource.getPassword();
-    final String pNumber = dataSource.getPhoneNumber();
-    final boolean sendLoc = dataSource.getSendLocation();
-    dataSource.close();
-
     setVisibilityOfOldPassword(oldPwdString);
+    return oldPwdString;
+  }
 
-    tSendLoc.setChecked(sendLoc);
+  private void setVisibilityOfOldPassword(String oldPwdString)
+  {
+    if (oldPwdString != "")
+    {
+      oldPwd.setVisibility(View.VISIBLE);
+    }
+    else
+    {
+      oldPwd.setVisibility(View.GONE);
+    }
+  }
 
-    phoneNumber.setText(pNumber);
-    setVisibilityOfPhoneNumber(sendLoc);
-
-    // set method which is called when user clicks toggle button
-    tSendLoc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+  private boolean initialtizeToggleButtonSendLocation()
+  {
+    final boolean sendLoc = dataSource.getSendLocation();
+    toggleSendLocation.setChecked(sendLoc);
+    toggleSendLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
     {
 
       public void onCheckedChanged(CompoundButton buttonView,
@@ -198,7 +211,7 @@ public class MainActivity extends Activity
           }
           else
           {
-            tSendLoc.setChecked(false);
+            toggleSendLocation.setChecked(false);
           }
         }
         else
@@ -207,19 +220,40 @@ public class MainActivity extends Activity
         }
       }
     });
+    return sendLoc;
+  }
 
+  private void initializePhoneNumberFiled(boolean visible)
+  {
+    final String pNumber = dataSource.getPhoneNumber();
+    phoneNumber.setText(pNumber);
+    setVisibilityOfPhoneNumber(visible);
+  }
+
+  private void setVisibilityOfPhoneNumber(boolean visible)
+  {
+    if (visible)
+    {
+      phoneNumber.setVisibility(View.VISIBLE);
+    }
+    else
+    {
+      phoneNumber.setVisibility(View.GONE);
+    }
+  }
+
+  private void initializeSaveButton(final String oldPwdString)
+  {
     Button bSave = (Button) dialog.findViewById(R.id.bSave);
 
-    // if button is clicked, close the custom dialog
-    bSave.setOnClickListener(new View.OnClickListener()
+    bSave.setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View v)
       {
         // oldPwd must be right
         if (oldPwdString == ""
-            || oldPwdString.equals(oldPwd.getText()
-            .toString()))
+            || oldPwdString.equals(oldPwd.getText().toString()))
         {
           // min 4 numbers
           if (newPwd.getText().length() >= 4)
@@ -236,7 +270,7 @@ public class MainActivity extends Activity
               // save all options (also when phonenumber
               // is "")
               String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
-              dataSource.saveOptions(newPwd.getText().toString(), tSendLoc.isChecked(), number);
+              dataSource.saveOptions(newPwd.getText().toString(), toggleSendLocation.isChecked(), number);
 
               // close dialog
               dialog.dismiss();
@@ -262,8 +296,8 @@ public class MainActivity extends Activity
                   .formatNumber(phoneNumber.getText()
                       .toString());
 
-              dataSource.setSendLocation(tSendLoc.isChecked());
-              dataSource.setPhonenumber(number);
+              dataSource.setSendLocation(toggleSendLocation.isChecked());
+              dataSource.setPhoneNumber(number);
 
               // close dialog
               dialog.dismiss();
@@ -286,32 +320,6 @@ public class MainActivity extends Activity
         }
       }
     });
-
-    dialog.show();
-  }
-
-  private void setVisibilityOfPhoneNumber(boolean visible)
-  {
-    if (visible)
-    {
-      phoneNumber.setVisibility(View.VISIBLE);
-    }
-    else
-    {
-      phoneNumber.setVisibility(View.GONE);
-    }
-  }
-
-  private void setVisibilityOfOldPassword(String oldPwdString)
-  {
-    if (oldPwdString != "")
-    {
-      oldPwd.setVisibility(View.VISIBLE);
-    }
-    else
-    {
-      oldPwd.setVisibility(View.GONE);
-    }
   }
 
   void activateLock(boolean active)
@@ -363,11 +371,11 @@ public class MainActivity extends Activity
             && grantResults[0] == PackageManager.PERMISSION_GRANTED)
         {
           phoneNumber.setVisibility(View.VISIBLE);
-          tSendLoc.setChecked(true);
+          toggleSendLocation.setChecked(true);
         }
         else
         {
-          tSendLoc.setChecked(false);
+          toggleSendLocation.setChecked(false);
         }
         return;
       }
