@@ -4,18 +4,20 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -23,10 +25,17 @@ import android.widget.ToggleButton;
 public class MainActivity extends Activity
 {
 
+  private static final int LOCATIONS_PERMISSIONS_REQUEST = 1;
   private final Context context = this;
   private ToggleButton tOnOff;
-  private Button bSetPwd;
   private CLDataSource dataSource;
+
+  private Dialog settingsDialog;
+  private EditText oldPwd;
+  private EditText newPwd;
+  private EditText repeatNewPwd;
+  private ToggleButton toggleSendLocation;
+  private EditText phoneNumber;
 
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -36,20 +45,14 @@ public class MainActivity extends Activity
 
     dataSource = new CLDataSource(context);
 
-    boolean active = isLockActive();
+    boolean active = dataSource.isLockActive();
 
     // set toggleButton to state from database
     tOnOff = (ToggleButton) findViewById(R.id.tOnOff);
     tOnOff.setChecked(active);
+    tOnOff.setBackgroundColor(active ? Color.RED : Color.WHITE);
 
-    // button set pwd
-    bSetPwd = (Button) findViewById(R.id.bSetPwd);
-    // hide set pwd button when active
-    if (active)
-    {
-      bSetPwd.setVisibility(View.GONE);
-    }
-    bSetPwd.setOnClickListener(new OptionsOnClickListener(this));
+    createSettingsDialog();
   }
 
   @Override
@@ -60,38 +63,27 @@ public class MainActivity extends Activity
     return true;
   }
 
-  /**
-   * Method is called when toggle button is clicked
-   */
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    switch (item.getItemId())
+    {
+      case R.id.action_settings:
+        showSettingsDialog();
+        return true;
+    }
+    return false;
+  }
+
   public void onToggleClicked(View view)
   {
-    // Is the toggle on?
-    boolean on = ((ToggleButton) view).isChecked();
-
-    if (on)
+    if (((ToggleButton) view).isChecked())
     {
-      String pwd = getPassword();
+      String pwd = dataSource.getPassword();
 
       if (pwd != "")
       {
         // cellphone lock is on
-
-        dataSource.open();
-        final boolean sendLocation = dataSource.isLockActive();
-        dataSource.close();
-
-        if (!sendLocation || locationPermissionsGranted())
-        {
-          activateLock();
-        }
-        else
-        {
-          tOnOff.setChecked(false);
-
-          // Show message
-          Toast toast = Toast.makeText(context, R.string.emNoPermissions, Toast.LENGTH_SHORT);
-          toast.show();
-        }
+        activateLock(true);
       }
       else
       {
@@ -99,28 +91,27 @@ public class MainActivity extends Activity
         tOnOff.setChecked(false);
 
         // Show message
-        Toast toast = Toast.makeText(context, R.string.emSetPwd, Toast.LENGTH_SHORT);
-        toast.show();
+        showErrorMessage(R.string.emSetPwd, Toast.LENGTH_SHORT);
       }
 
     }
     else
     {
-      // cellphone off
+      final Dialog enterPasswordDialog = new Dialog(context);
+      enterPasswordDialog.setContentView(R.layout.enter_pwd_dialog);
+      enterPasswordDialog.setTitle(R.string.enterPwd);
+      enterPasswordDialog.setCancelable(false);
 
-      // custom dialog
-      final Dialog dialog = new Dialog(context);
-      dialog.setContentView(R.layout.enter_pwd_dialog);
-      dialog.setTitle(R.string.enterPwd);
-      dialog.setCancelable(false);
+      final EditText pwd = (EditText) enterPasswordDialog.findViewById(R.id.enterPwd);
 
-      // set the custom dialog components
-      final EditText pwd = (EditText) dialog.findViewById(R.id.enterPwd);
+      // open keyboard automatically
+      InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+      inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
       // get old PWD from Database
-      final String savedPwd = getPassword();
+      final String savedPwd = dataSource.getPassword();
 
-      Button submit = (Button) dialog.findViewById(R.id.bSubmitPwd);
+      Button submit = (Button) enterPasswordDialog.findViewById(R.id.bSubmitPwd);
       submit.setOnClickListener(new OnClickListener()
       {
 
@@ -129,13 +120,7 @@ public class MainActivity extends Activity
         {
           if (pwd.getText().toString().equals(savedPwd))
           {
-            // show Button
-            bSetPwd.setVisibility(View.VISIBLE);
-
-            // stop cellphone lock
-            // save not running to data base
-            setLockActive(false);
-
+            activateLock(false);
           }
           else
           {
@@ -143,59 +128,237 @@ public class MainActivity extends Activity
             tOnOff.setChecked(true);
 
             System.out.println("Wrong old pin. The right one is "
-                + savedPwd);
+              + savedPwd);
 
             // Show message
-            Toast toast = Toast.makeText(context,
-                R.string.emWrongPin, Toast.LENGTH_SHORT);
-            toast.show();
+            showErrorMessage(R.string.emWrongPin, Toast.LENGTH_SHORT);
           }
-          // close dialog
-          dialog.dismiss();
+
+          // hide keyboard again
+          InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+          inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
+          enterPasswordDialog.dismiss();
         }
       });
-      dialog.show();
+      enterPasswordDialog.show();
     }
   }
 
-  private void activateLock()
+  private void createSettingsDialog()
   {
-    // hide Button
-    bSetPwd.setVisibility(View.GONE);
+    initializeSettingsDialog();
+    initializeSettingsDialogContent();
+  }
 
-    // start cellphone lock
-    // set running to database
-    setLockActive(true);
+  private void initializeSettingsDialogContent()
+  {
+    oldPwd = (EditText) settingsDialog.findViewById(R.id.oldPwd);
+    newPwd = (EditText) settingsDialog.findViewById(R.id.newPwd);
+    repeatNewPwd = (EditText) settingsDialog.findViewById(R.id.repeatNewPwd);
+    phoneNumber = (EditText) settingsDialog.findViewById(R.id.phoneNumber);
+    toggleSendLocation = (ToggleButton) settingsDialog.findViewById(R.id.tSendLoc);
+  }
+
+  private void initializeSettingsDialog()
+  {
+    settingsDialog = new Dialog(this);
+    settingsDialog.setContentView(R.layout.settings_dialog);
+    settingsDialog.setTitle(R.string.bSettings);
+    settingsDialog.setOnDismissListener(new DialogInterface.OnDismissListener()
+    {
+      @Override
+      public void onDismiss(DialogInterface dialog)
+      {
+        oldPwd.getText().clear();
+        newPwd.getText().clear();
+        repeatNewPwd.getText().clear();
+      }
+    });
+  }
+
+  private void showSettingsDialog()
+  {
+    final String oldPwdString = initializeOldPasswordField();
+    final boolean sendLocation = initialtizeToggleButtonSendLocation();
+    initializePhoneNumberFiled(sendLocation);
+    initializeSaveButton(oldPwdString);
+
+    settingsDialog.show();
+  }
+
+  private String initializeOldPasswordField()
+  {
+    final String oldPwdString = dataSource.getPassword();
+    setVisibilityOfOldPassword(oldPwdString);
+    return oldPwdString;
+  }
+
+  private void setVisibilityOfOldPassword(String oldPwdString)
+  {
+    if (oldPwdString != "")
+    {
+      oldPwd.setVisibility(View.VISIBLE);
+    }
+    else
+    {
+      oldPwd.setVisibility(View.GONE);
+    }
+  }
+
+  private boolean initialtizeToggleButtonSendLocation()
+  {
+    final boolean sendLoc = dataSource.getSendLocation();
+    toggleSendLocation.setChecked(sendLoc);
+    toggleSendLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+    {
+
+      public void onCheckedChanged(CompoundButton buttonView,
+                                   boolean isChecked)
+      {
+
+        if (isChecked)
+        {
+          if (locationPermissionsGranted())
+          {
+            setVisibilityOfPhoneNumber(true);
+          }
+          else
+          {
+            toggleSendLocation.setChecked(false);
+          }
+        }
+        else
+        {
+          setVisibilityOfPhoneNumber(false);
+        }
+      }
+    });
+    return sendLoc;
+  }
+
+  private void initializePhoneNumberFiled(boolean visible)
+  {
+    final String pNumber = dataSource.getPhoneNumber();
+    phoneNumber.setText(pNumber);
+    setVisibilityOfPhoneNumber(visible);
+  }
+
+  private void setVisibilityOfPhoneNumber(boolean visible)
+  {
+    if (visible)
+    {
+      phoneNumber.setVisibility(View.VISIBLE);
+    }
+    else
+    {
+      phoneNumber.setVisibility(View.GONE);
+    }
+  }
+
+  private void initializeSaveButton(final String oldPwdString)
+  {
+    Button bSave = (Button) settingsDialog.findViewById(R.id.bSave);
+
+    bSave.setOnClickListener(new OnClickListener()
+    {
+      @Override
+      public void onClick(View v)
+      {
+        if (oldPwdString == ""
+            || oldPwdString.equals(oldPwd.getText().toString()))
+        {
+          if (hasNewPasswordAtLeastFourDigits())
+          {
+            if (newPasswordIsRepeatedCorrectly())
+            {
+              saveNewSettings();
+              settingsDialog.dismiss();
+            }
+            else
+            {
+              showErrorMessage(R.string.emNewAndRepeatedEquals, Toast.LENGTH_SHORT);
+            }
+          }
+          else
+          {
+            if (isPasswordUnchanged())
+            {
+              String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
+              dataSource.setPhoneNumber(number);
+              dataSource.setSendLocation(toggleSendLocation.isChecked());
+
+              settingsDialog.dismiss();
+            }
+            else
+            {
+              showErrorMessage(R.string.emPinToShort, Toast.LENGTH_SHORT);
+            }
+          }
+        }
+        else
+        {
+          showErrorMessage(R.string.emOldPinNotRight, Toast.LENGTH_SHORT);
+        }
+      }
+    });
+  }
+
+  private boolean isPasswordUnchanged()
+  {
+    return newPwd.getText().toString().isEmpty()
+        && repeatNewPwd.getText().toString().isEmpty();
+  }
+
+  private void showErrorMessage(int translationId, int lengthShort)
+  {
+    Toast toast = Toast.makeText(context, translationId, lengthShort);
+    toast.show();
+  }
+
+  private boolean newPasswordIsRepeatedCorrectly()
+  {
+    return newPwd.getText().toString().equals(repeatNewPwd.getText().toString());
+  }
+
+  private void saveNewSettings()
+  {
+    String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
+    dataSource.saveSettings(newPwd.getText().toString(), toggleSendLocation.isChecked(), number);
+  }
+
+  private boolean hasNewPasswordAtLeastFourDigits()
+  {
+    return newPwd.getText().length() >= 4;
+  }
+
+  void activateLock(boolean active)
+  {
+    dataSource.setLockActive(active);
+    tOnOff.setBackgroundColor(active ? Color.RED : Color.GRAY);
   }
 
   private boolean locationPermissionsGranted()
   {
     boolean granted = false;
 
-    final boolean fineLocationAccessDeclined = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
-    final boolean coarseLocationAccessDeclined = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+    final boolean fineLocationAccessDeclined = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+    final boolean coarseLocationAccessDeclined = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
     if (fineLocationAccessDeclined || coarseLocationAccessDeclined)
     {
-
       // Permission is not granted
       // Should we show an explanation?
       if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
           || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
       {
-        // Show an explanation to the user *asynchronously* -- don't block
-        // this thread waiting for the user's response! After the user
-        // sees the explanation, try again to request the permission.
+        showErrorMessage(R.string.PermissionExplanation, Toast.LENGTH_LONG);
       }
       else
       {
         // No explanation needed; request the permission
         ActivityCompat.requestPermissions(this,
-            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1
+            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATIONS_PERMISSIONS_REQUEST
         );
-
-        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-        // app-defined int constant. The callback method gets the
-        // result of the request.
       }
     }
     else
@@ -205,28 +368,26 @@ public class MainActivity extends Activity
     return granted;
   }
 
-  private boolean isLockActive()
+  @Override
+  public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
   {
-    // Database connection and get saved state of lock
-    dataSource.open();
-    boolean active = dataSource.isLockActive();
-    dataSource.close();
-    return active;
-  }
-
-  private void setLockActive(boolean active)
-  {
-    dataSource.open();
-    dataSource.setLockActive(active);
-    dataSource.close();
-  }
-
-  private String getPassword()
-  {
-    dataSource.open();
-    String pwd = dataSource.getPwd();
-    dataSource.close();
-
-    return pwd;
+    switch (requestCode)
+    {
+      case LOCATIONS_PERMISSIONS_REQUEST:
+      {
+        // If request is cancelled, the result arrays are empty.
+        if (grantResults.length > 0
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
+          phoneNumber.setVisibility(View.VISIBLE);
+          toggleSendLocation.setChecked(true);
+        }
+        else
+        {
+          toggleSendLocation.setChecked(false);
+        }
+        return;
+      }
+    }
   }
 }
