@@ -61,28 +61,29 @@ testDebug:
     refs:
       - master
 
-assembleRelease:
-  stage: release
-  script:
-    - >
-      for FOLDER in $BUILD_APPS; do
-        cd $FOLDER
-        echo $KEYSTORE_FILE | base64 -d > my.keystore
-        ./gradlew assembleRelease
-        mv ./app/build/outputs/apk/release/app-release-unsigned.apk ../outputs/$FOLDER.apk
-        cd ..
-      done
-
-  only:
-    refs:
-      - master
-  artifacts:
-    paths:
-      - ./outputs
-      # - ./$CI_COMMIT_REF_NAME/app/build/outputs/apk/release/
-    # - CHANGELOG
-
-    expire_in: 1 week
+## no release on master
+# assembleRelease:
+#   stage: release
+#   script:
+#     - >
+#       for FOLDER in $BUILD_APPS; do
+#         cd $FOLDER
+#         echo $KEYSTORE_FILE | base64 -d > my.keystore
+#         ./gradlew assembleRelease
+#         mv ./app/build/outputs/apk/release/app-release-unsigned.apk ../outputs/$FOLDER.apk
+#         cd ..
+#       done
+#
+#   only:
+#     refs:
+#       - master
+#   artifacts:
+#     paths:
+#       - ./outputs
+#       # - ./$CI_COMMIT_REF_NAME/app/build/outputs/apk/release/
+#     # - CHANGELOG
+#
+#     expire_in: 1 week
 
 
 
