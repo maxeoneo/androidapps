@@ -44,23 +44,14 @@ public class MainActivity extends Activity
 
     dataSource = new CLDataSource(context);
 
-    boolean active = isLockActive();
+    boolean active = dataSource.isLockActive();
 
     // set toggleButton to state from database
     tOnOff = (ToggleButton) findViewById(R.id.tOnOff);
     tOnOff.setChecked(active);
     tOnOff.setBackgroundColor(active ? Color.RED : Color.WHITE);
 
-    // create options dialog
-    dialog = new Dialog(this);
-    dialog.setContentView(R.layout.options_dialog);
-    dialog.setTitle(R.string.bOptions);
-
-    oldPwd = (EditText) dialog.findViewById(R.id.oldPwd);
-    newPwd = (EditText) dialog.findViewById(R.id.newPwd);
-    repeatNewPwd = (EditText) dialog.findViewById(R.id.repeatNewPwd);
-    phoneNumber = (EditText) dialog.findViewById(R.id.phoneNumber);
-    tSendLoc = (ToggleButton) dialog.findViewById(R.id.tSendLoc);
+    createOptionsDialog();
   }
 
   @Override
@@ -76,7 +67,7 @@ public class MainActivity extends Activity
     switch (item.getItemId())
     {
       case R.id.action_settings:
-        createOptionsDialog();
+        showOptionsDialog();
         return true;
     }
     return false;
@@ -87,17 +78,14 @@ public class MainActivity extends Activity
    */
   public void onToggleClicked(View view)
   {
-    // Is the toggle on?
-    boolean on = ((ToggleButton) view).isChecked();
-
-    if (on)
+    if (((ToggleButton) view).isChecked())
     {
-      String pwd = getPassword();
+      String pwd = dataSource.getPassword();
 
       if (pwd != "")
       {
         // cellphone lock is on
-        activateLock();
+        activateLock(true);
       }
       else
       {
@@ -112,8 +100,6 @@ public class MainActivity extends Activity
     }
     else
     {
-      // cellphone off
-
       // custom dialog
       final Dialog dialog = new Dialog(context);
       dialog.setContentView(R.layout.enter_pwd_dialog);
@@ -128,7 +114,7 @@ public class MainActivity extends Activity
       inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
       // get old PWD from Database
-      final String savedPwd = getPassword();
+      final String savedPwd = dataSource.getPassword();
 
       Button submit = (Button) dialog.findViewById(R.id.bSubmitPwd);
       submit.setOnClickListener(new OnClickListener()
@@ -139,9 +125,7 @@ public class MainActivity extends Activity
         {
           if (pwd.getText().toString().equals(savedPwd))
           {
-            // stop cellphone lock
-            // save not running to data base
-            setLockActive(false);
+            activateLock(false);
           }
           else
           {
@@ -169,68 +153,34 @@ public class MainActivity extends Activity
     }
   }
 
-  private void activateLock()
-  {
-    // start cellphone lock
-    // set running to database
-    setLockActive(true);
-  }
-
-  private boolean isLockActive()
-  {
-    // Database connection and get saved state of lock
-    dataSource.open();
-    boolean active = dataSource.isLockActive();
-    dataSource.close();
-    return active;
-  }
-
-  private void setLockActive(boolean active)
-  {
-    dataSource.open();
-    dataSource.setLockActive(active);
-    dataSource.close();
-    tOnOff.setBackgroundColor(active ? Color.RED : Color.GRAY);
-  }
-
-  private String getPassword()
-  {
-    dataSource.open();
-    String pwd = dataSource.getPwd();
-    dataSource.close();
-
-    return pwd;
-  }
-
   private void createOptionsDialog()
+  {
+    dialog = new Dialog(this);
+    dialog.setContentView(R.layout.options_dialog);
+    dialog.setTitle(R.string.bOptions);
+
+    oldPwd = (EditText) dialog.findViewById(R.id.oldPwd);
+    newPwd = (EditText) dialog.findViewById(R.id.newPwd);
+    repeatNewPwd = (EditText) dialog.findViewById(R.id.repeatNewPwd);
+    phoneNumber = (EditText) dialog.findViewById(R.id.phoneNumber);
+    tSendLoc = (ToggleButton) dialog.findViewById(R.id.tSendLoc);
+  }
+
+  private void showOptionsDialog()
   {
     // get old PWD from Database
     dataSource.open();
-    final String oldPwdString = dataSource.getPwd();
-    final String pNumber = dataSource.getPhonenumber();
-    final boolean sendLoc = dataSource.isSendLocation();
+    final String oldPwdString = dataSource.getPassword();
+    final String pNumber = dataSource.getPhoneNumber();
+    final boolean sendLoc = dataSource.getSendLocation();
     dataSource.close();
 
-    if (oldPwdString != "")
-    {
-      oldPwd.setVisibility(View.VISIBLE);
-    }
-    else
-    {
-      oldPwd.setVisibility(View.GONE);
-    }
+    setVisibilityOfOldPassword(oldPwdString);
 
-    // get options from database
-    phoneNumber.setText(pNumber);
     tSendLoc.setChecked(sendLoc);
-    if (sendLoc)
-    {
-      phoneNumber.setVisibility(View.VISIBLE);
-    }
-    else
-    {
-      phoneNumber.setVisibility(View.GONE);
-    }
+
+    phoneNumber.setText(pNumber);
+    setVisibilityOfPhoneNumber(sendLoc);
 
     // set method which is called when user clicks toggle button
     tSendLoc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
@@ -244,7 +194,7 @@ public class MainActivity extends Activity
         {
           if (locationPermissionsGranted())
           {
-            phoneNumber.setVisibility(View.VISIBLE);
+            setVisibilityOfPhoneNumber(true);
           }
           else
           {
@@ -253,7 +203,7 @@ public class MainActivity extends Activity
         }
         else
         {
-          phoneNumber.setVisibility(View.GONE);
+          setVisibilityOfPhoneNumber(false);
         }
       }
     });
@@ -283,19 +233,10 @@ public class MainActivity extends Activity
                     .toString()))
             {
 
-              // save options
-              dataSource.open();
-
               // save all options (also when phonenumber
               // is "")
-              String number = PhoneNumberUtils
-                  .formatNumber(phoneNumber.getText()
-                      .toString());
-              dataSource.saveOptions(newPwd.getText()
-                      .toString(), tSendLoc.isChecked(),
-                  number);
-
-              dataSource.close();
+              String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
+              dataSource.saveOptions(newPwd.getText().toString(), tSendLoc.isChecked(), number);
 
               // close dialog
               dialog.dismiss();
@@ -321,11 +262,8 @@ public class MainActivity extends Activity
                   .formatNumber(phoneNumber.getText()
                       .toString());
 
-              dataSource.open();
-              dataSource.setSendLocation(tSendLoc
-                  .isChecked());
+              dataSource.setSendLocation(tSendLoc.isChecked());
               dataSource.setPhonenumber(number);
-              dataSource.close();
 
               // close dialog
               dialog.dismiss();
@@ -350,6 +288,36 @@ public class MainActivity extends Activity
     });
 
     dialog.show();
+  }
+
+  private void setVisibilityOfPhoneNumber(boolean visible)
+  {
+    if (visible)
+    {
+      phoneNumber.setVisibility(View.VISIBLE);
+    }
+    else
+    {
+      phoneNumber.setVisibility(View.GONE);
+    }
+  }
+
+  private void setVisibilityOfOldPassword(String oldPwdString)
+  {
+    if (oldPwdString != "")
+    {
+      oldPwd.setVisibility(View.VISIBLE);
+    }
+    else
+    {
+      oldPwd.setVisibility(View.GONE);
+    }
+  }
+
+  void activateLock(boolean active)
+  {
+    dataSource.setLockActive(active);
+    tOnOff.setBackgroundColor(active ? Color.RED : Color.GRAY);
   }
 
   private boolean locationPermissionsGranted()

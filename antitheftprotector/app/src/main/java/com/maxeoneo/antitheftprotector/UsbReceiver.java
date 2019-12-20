@@ -77,10 +77,10 @@ public class UsbReceiver extends BroadcastReceiver
 
     dataSource.open();
     // only if lock is active and send location is switch
-    if (dataSource.isLockActive() && dataSource.isSendLocation())
+    if (dataSource.isLockActive() && dataSource.getSendLocation())
     {
       // get phonenumber and number of seconds from database
-      number = dataSource.getPhonenumber();
+      number = dataSource.getPhoneNumber();
 
 
       // register provider, updates max every min)

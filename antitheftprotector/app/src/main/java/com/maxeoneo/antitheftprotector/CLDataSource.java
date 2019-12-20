@@ -27,18 +27,23 @@ public class CLDataSource
     dbHelper.close();
   }
 
-  /**
-   * Method to save PWD in the database
-   */
-  public void savePwd(String pwd)
+  public void savePassword(String pwd)
   {
-    saveAll(pwd, isLockActive(), isSendLocation(), getPhonenumber());
+    open();
+    saveAll(pwd, isLockActive(), querySendLocation(), queryPhoneNumber());
+    close();
   }
 
-  /**
-   * Method to get PWD from database
-   */
-  public String getPwd()
+  public String getPassword()
+  {
+    open();
+    final String pwd = queryPassword();
+    close();
+
+    return pwd;
+  }
+
+  private String queryPassword()
   {
     String[] columns = new String[]{CLSQLiteHelper.COLUMN_PWD};
     Cursor cursor = db.query(CLSQLiteHelper.TABLE_NAME, columns,
@@ -53,18 +58,22 @@ public class CLDataSource
     return pwd;
   }
 
-  /**
-   * Method to save the lock state in Database
-   */
   public void setLockActive(boolean active)
   {
-    saveAll(getPwd(), active, isSendLocation(), getPhonenumber());
+    open();
+    saveAll(queryPassword(), active, querySendLocation(), queryPhoneNumber());
+    close();
   }
 
-  /**
-   * Method to get the lock state from database
-   */
   public boolean isLockActive()
+  {
+    open();
+    final boolean active = queryLockActive();
+    close();
+    return active;
+  }
+
+  private boolean queryLockActive()
   {
     String[] columns = new String[]{CLSQLiteHelper.COLUMN_IS_ACTIVE};
     Cursor cursor = db.query(CLSQLiteHelper.TABLE_NAME, columns,
@@ -83,10 +92,15 @@ public class CLDataSource
     return false;
   }
 
-  /**
-   * get sendLocation from database
-   */
-  public boolean isSendLocation()
+  public boolean getSendLocation()
+  {
+    open();
+    final boolean sendLocation = querySendLocation();
+    close();
+    return sendLocation;
+  }
+
+  private boolean querySendLocation()
   {
     String[] columns = new String[]{CLSQLiteHelper.COLUMN_IS_SEND_LOCATION};
     Cursor cursor = db.query(CLSQLiteHelper.TABLE_NAME, columns,
@@ -107,10 +121,15 @@ public class CLDataSource
     return false;
   }
 
-  /**
-   * get saved phonenumber from database
-   */
-  public String getPhonenumber()
+  public String getPhoneNumber()
+  {
+    open();
+    final String phoneNumber = queryPhoneNumber();
+    close();
+    return phoneNumber;
+  }
+
+  private String queryPhoneNumber()
   {
     String[] columns = new String[]{CLSQLiteHelper.COLUMN_PHONENUMBER};
     Cursor cursor = db.query(CLSQLiteHelper.TABLE_NAME, columns,
@@ -126,34 +145,27 @@ public class CLDataSource
     return number;
   }
 
-  /**
-   * save only location
-   */
   public void setSendLocation(boolean sendLoaction)
   {
-    saveAll(getPwd(), isLockActive(), sendLoaction, getPhonenumber());
+    open();
+    saveAll(queryPassword(), isLockActive(), sendLoaction, queryPhoneNumber());
+    close();
   }
 
-  /**
-   * save only phone number
-   */
   public void setPhonenumber(String phonenumber)
   {
-    saveAll(getPwd(), isLockActive(), isSendLocation(), phonenumber);
+    open();
+    saveAll(queryPassword(), isLockActive(), querySendLocation(), phonenumber);
+    close();
   }
 
-
-  /**
-   * save all options
-   */
-  public void saveOptions(String pwd, boolean sendLocation, String phonenumber)
+  public void saveOptions(String pwd, boolean sendLocation, String phoneNumber)
   {
-    saveAll(pwd, isLockActive(), sendLocation, phonenumber);
+    open();
+    saveAll(pwd, isLockActive(), sendLocation, phoneNumber);
+    close();
   }
 
-  /**
-   * save everything
-   */
   private void saveAll(String pwd, boolean active, boolean sendLocation,
                        String phoneNumber)
   {
@@ -183,5 +195,4 @@ public class CLDataSource
         + phoneNumber + "');";
     db.execSQL(sqlCommand);
   }
-
 }
