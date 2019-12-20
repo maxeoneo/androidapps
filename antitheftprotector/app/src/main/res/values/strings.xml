@@ -7,7 +7,7 @@
     <string name="oldPwd">old pin</string>
     <string name="newPwd">new pin</string>
     <string name="repeatNewPwd">repeat the new pin</string>
-    <string name="bOptions">options</string>
+    <string name="bSettings">Settings</string>
     <string name="bSave">save</string>
     <string name="enterPwd">Pin</string>
     <string name="bSubmitPwd">submit</string>

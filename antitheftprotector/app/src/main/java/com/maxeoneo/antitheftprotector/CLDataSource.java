@@ -159,7 +159,7 @@ public class CLDataSource
     close();
   }
 
-  public void saveOptions(String pwd, boolean sendLocation, String phoneNumber)
+  public void saveSettings(String pwd, boolean sendLocation, String phoneNumber)
   {
     open();
     saveAll(pwd, queryLockActive(), sendLocation, phoneNumber);

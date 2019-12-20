@@ -52,7 +52,7 @@ public class MainActivity extends Activity
     tOnOff.setChecked(active);
     tOnOff.setBackgroundColor(active ? Color.RED : Color.WHITE);
 
-    createOptionsDialog();
+    createSettingsDialog();
   }
 
   @Override
@@ -68,7 +68,7 @@ public class MainActivity extends Activity
     switch (item.getItemId())
     {
       case R.id.action_settings:
-        showOptionsDialog();
+        showSettingsDialog();
         return true;
     }
     return false;
@@ -145,11 +145,26 @@ public class MainActivity extends Activity
     }
   }
 
-  private void createOptionsDialog()
+  private void createSettingsDialog()
+  {
+    initializeSettingsDialog();
+    initializeSettingsDialogContent();
+  }
+
+  private void initializeSettingsDialogContent()
+  {
+    oldPwd = (EditText) settingsDialog.findViewById(R.id.oldPwd);
+    newPwd = (EditText) settingsDialog.findViewById(R.id.newPwd);
+    repeatNewPwd = (EditText) settingsDialog.findViewById(R.id.repeatNewPwd);
+    phoneNumber = (EditText) settingsDialog.findViewById(R.id.phoneNumber);
+    toggleSendLocation = (ToggleButton) settingsDialog.findViewById(R.id.tSendLoc);
+  }
+
+  private void initializeSettingsDialog()
   {
     settingsDialog = new Dialog(this);
-    settingsDialog.setContentView(R.layout.options_dialog);
-    settingsDialog.setTitle(R.string.bOptions);
+    settingsDialog.setContentView(R.layout.settings_dialog);
+    settingsDialog.setTitle(R.string.bSettings);
     settingsDialog.setOnDismissListener(new DialogInterface.OnDismissListener()
     {
       @Override
@@ -160,15 +175,9 @@ public class MainActivity extends Activity
         repeatNewPwd.getText().clear();
       }
     });
-
-    oldPwd = (EditText) settingsDialog.findViewById(R.id.oldPwd);
-    newPwd = (EditText) settingsDialog.findViewById(R.id.newPwd);
-    repeatNewPwd = (EditText) settingsDialog.findViewById(R.id.repeatNewPwd);
-    phoneNumber = (EditText) settingsDialog.findViewById(R.id.phoneNumber);
-    toggleSendLocation = (ToggleButton) settingsDialog.findViewById(R.id.tSendLoc);
   }
 
-  private void showOptionsDialog()
+  private void showSettingsDialog()
   {
     final String oldPwdString = initializeOldPasswordField();
     final boolean sendLocation = initialtizeToggleButtonSendLocation();
@@ -315,7 +324,7 @@ public class MainActivity extends Activity
   private void saveNewSettings()
   {
     String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
-    dataSource.saveOptions(newPwd.getText().toString(), toggleSendLocation.isChecked(), number);
+    dataSource.saveSettings(newPwd.getText().toString(), toggleSendLocation.isChecked(), number);
   }
 
   private boolean hasNewPasswordAtLeastFourDigits()
