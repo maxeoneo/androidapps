@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ public class MainActivity extends Activity
   private ToggleButton tOnOff;
   private CLDataSource dataSource;
 
-  private Dialog dialog;
+  private Dialog settingsDialog;
   private EditText oldPwd;
   private EditText newPwd;
   private EditText repeatNewPwd;
@@ -90,21 +91,18 @@ public class MainActivity extends Activity
         tOnOff.setChecked(false);
 
         // Show message
-        Toast toast = Toast.makeText(context, R.string.emSetPwd, Toast.LENGTH_SHORT);
-        toast.show();
+        showErrorMessage(R.string.emSetPwd, Toast.LENGTH_SHORT);
       }
 
     }
     else
     {
-      // custom dialog
-      final Dialog dialog = new Dialog(context);
-      dialog.setContentView(R.layout.enter_pwd_dialog);
-      dialog.setTitle(R.string.enterPwd);
-      dialog.setCancelable(false);
+      final Dialog enterPasswordDialog = new Dialog(context);
+      enterPasswordDialog.setContentView(R.layout.enter_pwd_dialog);
+      enterPasswordDialog.setTitle(R.string.enterPwd);
+      enterPasswordDialog.setCancelable(false);
 
-      // set the custom dialog components
-      final EditText pwd = (EditText) dialog.findViewById(R.id.enterPwd);
+      final EditText pwd = (EditText) enterPasswordDialog.findViewById(R.id.enterPwd);
 
       // open keyboard automatically
       InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -113,7 +111,7 @@ public class MainActivity extends Activity
       // get old PWD from Database
       final String savedPwd = dataSource.getPassword();
 
-      Button submit = (Button) dialog.findViewById(R.id.bSubmitPwd);
+      Button submit = (Button) enterPasswordDialog.findViewById(R.id.bSubmitPwd);
       submit.setOnClickListener(new OnClickListener()
       {
 
@@ -133,34 +131,41 @@ public class MainActivity extends Activity
               + savedPwd);
 
             // Show message
-            Toast toast = Toast.makeText(context,
-                R.string.emWrongPin, Toast.LENGTH_SHORT);
-            toast.show();
+            showErrorMessage(R.string.emWrongPin, Toast.LENGTH_SHORT);
           }
 
           // hide keyboard again
           InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
           inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
-          // close dialog
-          dialog.dismiss();
+          enterPasswordDialog.dismiss();
         }
       });
-      dialog.show();
+      enterPasswordDialog.show();
     }
   }
 
   private void createOptionsDialog()
   {
-    dialog = new Dialog(this);
-    dialog.setContentView(R.layout.options_dialog);
-    dialog.setTitle(R.string.bOptions);
+    settingsDialog = new Dialog(this);
+    settingsDialog.setContentView(R.layout.options_dialog);
+    settingsDialog.setTitle(R.string.bOptions);
+    settingsDialog.setOnDismissListener(new DialogInterface.OnDismissListener()
+    {
+      @Override
+      public void onDismiss(DialogInterface dialog)
+      {
+        oldPwd.getText().clear();
+        newPwd.getText().clear();
+        repeatNewPwd.getText().clear();
+      }
+    });
 
-    oldPwd = (EditText) dialog.findViewById(R.id.oldPwd);
-    newPwd = (EditText) dialog.findViewById(R.id.newPwd);
-    repeatNewPwd = (EditText) dialog.findViewById(R.id.repeatNewPwd);
-    phoneNumber = (EditText) dialog.findViewById(R.id.phoneNumber);
-    toggleSendLocation = (ToggleButton) dialog.findViewById(R.id.tSendLoc);
+    oldPwd = (EditText) settingsDialog.findViewById(R.id.oldPwd);
+    newPwd = (EditText) settingsDialog.findViewById(R.id.newPwd);
+    repeatNewPwd = (EditText) settingsDialog.findViewById(R.id.repeatNewPwd);
+    phoneNumber = (EditText) settingsDialog.findViewById(R.id.phoneNumber);
+    toggleSendLocation = (ToggleButton) settingsDialog.findViewById(R.id.tSendLoc);
   }
 
   private void showOptionsDialog()
@@ -170,7 +175,7 @@ public class MainActivity extends Activity
     initializePhoneNumberFiled(sendLocation);
     initializeSaveButton(oldPwdString);
 
-    dialog.show();
+    settingsDialog.show();
   }
 
   private String initializeOldPasswordField()
@@ -244,82 +249,78 @@ public class MainActivity extends Activity
 
   private void initializeSaveButton(final String oldPwdString)
   {
-    Button bSave = (Button) dialog.findViewById(R.id.bSave);
+    Button bSave = (Button) settingsDialog.findViewById(R.id.bSave);
 
     bSave.setOnClickListener(new OnClickListener()
     {
       @Override
       public void onClick(View v)
       {
-        // oldPwd must be right
         if (oldPwdString == ""
             || oldPwdString.equals(oldPwd.getText().toString()))
         {
-          // min 4 numbers
-          if (newPwd.getText().length() >= 4)
+          if (hasNewPasswordAtLeastFourDigits())
           {
-
-            // newPwd and repeatNewPwd must be the same and
-            if (newPwd
-                .getText()
-                .toString()
-                .equals(repeatNewPwd.getText()
-                    .toString()))
+            if (newPasswordIsRepeatedCorrectly())
             {
-
-              // save all options (also when phonenumber
-              // is "")
-              String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
-              dataSource.saveOptions(newPwd.getText().toString(), toggleSendLocation.isChecked(), number);
-
-              // close dialog
-              dialog.dismiss();
-
+              saveNewSettings();
+              settingsDialog.dismiss();
             }
             else
             {
-              Toast toast = Toast.makeText(context,
-                  R.string.emNewAndRepeatedEquals,
-                  Toast.LENGTH_SHORT);
-              toast.show();
+              showErrorMessage(R.string.emNewAndRepeatedEquals, Toast.LENGTH_SHORT);
             }
           }
           else
           {
-            // when new pwd and repeated new pwd are empty
-            // save only the other two things
-            if (newPwd.getText().toString().equals("")
-                || repeatNewPwd.getText().toString()
-                .equals(""))
+            if (isPasswordUnchanged())
             {
-              String number = PhoneNumberUtils
-                  .formatNumber(phoneNumber.getText()
-                      .toString());
-
-              dataSource.setSendLocation(toggleSendLocation.isChecked());
+              String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
               dataSource.setPhoneNumber(number);
+              dataSource.setSendLocation(toggleSendLocation.isChecked());
 
-              // close dialog
-              dialog.dismiss();
+              settingsDialog.dismiss();
             }
             else
             {
-              Toast toast = Toast.makeText(context,
-                  R.string.emPinToShort,
-                  Toast.LENGTH_SHORT);
-              toast.show();
+              showErrorMessage(R.string.emPinToShort, Toast.LENGTH_SHORT);
             }
           }
         }
         else
         {
-          Toast toast = Toast.makeText(context,
-              R.string.emOldPinNotRight,
-              Toast.LENGTH_SHORT);
-          toast.show();
+          showErrorMessage(R.string.emOldPinNotRight, Toast.LENGTH_SHORT);
         }
       }
     });
+  }
+
+  private boolean isPasswordUnchanged()
+  {
+    return newPwd.getText().toString().isEmpty()
+        && repeatNewPwd.getText().toString().isEmpty();
+  }
+
+  private void showErrorMessage(int translationId, int lengthShort)
+  {
+    Toast toast = Toast.makeText(context, translationId, lengthShort);
+    toast.show();
+  }
+
+  private boolean newPasswordIsRepeatedCorrectly()
+  {
+    return newPwd.getText().toString().equals(repeatNewPwd.getText().toString());
+  }
+
+  private void saveNewSettings()
+  {
+    String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
+    dataSource.saveOptions(newPwd.getText().toString(), toggleSendLocation.isChecked(), number);
+  }
+
+  private boolean hasNewPasswordAtLeastFourDigits()
+  {
+    return newPwd.getText().length() >= 4;
   }
 
   void activateLock(boolean active)
@@ -341,8 +342,7 @@ public class MainActivity extends Activity
       if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
           || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
       {
-        Toast toast = Toast.makeText(context, R.string.PermissionExplanation, Toast.LENGTH_LONG);
-        toast.show();
+        showErrorMessage(R.string.PermissionExplanation, Toast.LENGTH_LONG);
       }
       else
       {
