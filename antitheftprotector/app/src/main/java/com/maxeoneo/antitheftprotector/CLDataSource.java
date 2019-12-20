@@ -30,7 +30,7 @@ public class CLDataSource
   public void savePassword(String pwd)
   {
     open();
-    saveAll(pwd, isLockActive(), querySendLocation(), queryPhoneNumber());
+    saveAll(pwd, queryLockActive(), querySendLocation(), queryPhoneNumber());
     close();
   }
 
@@ -148,30 +148,27 @@ public class CLDataSource
   public void setSendLocation(boolean sendLoaction)
   {
     open();
-    saveAll(queryPassword(), isLockActive(), sendLoaction, queryPhoneNumber());
+    saveAll(queryPassword(), queryLockActive(), sendLoaction, queryPhoneNumber());
     close();
   }
 
-  public void setPhonenumber(String phonenumber)
+  public void setPhoneNumber(String phoneNumber)
   {
     open();
-    saveAll(queryPassword(), isLockActive(), querySendLocation(), phonenumber);
+    saveAll(queryPassword(), queryLockActive(), querySendLocation(), phoneNumber);
     close();
   }
 
   public void saveOptions(String pwd, boolean sendLocation, String phoneNumber)
   {
     open();
-    saveAll(pwd, isLockActive(), sendLocation, phoneNumber);
+    saveAll(pwd, queryLockActive(), sendLocation, phoneNumber);
     close();
   }
 
   private void saveAll(String pwd, boolean active, boolean sendLocation,
                        String phoneNumber)
   {
-
-    System.out.println("save Phonenumber: " + phoneNumber);
-
     // convert from boolean to int
     int activeInt = 0;
     if (active)
