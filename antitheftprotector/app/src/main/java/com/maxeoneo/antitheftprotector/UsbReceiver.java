@@ -82,17 +82,14 @@ public class UsbReceiver extends BroadcastReceiver
       // get phonenumber and number of seconds from database
       number = dataSource.getPhoneNumber();
 
-
       // register provider, updates max every min)
       if (locationManager
           .isProviderEnabled(LocationManager.GPS_PROVIDER))
       {
-        System.out.println("GPS is enabled");
         requestLocationUpdates(LocationManager.GPS_PROVIDER, Manifest.permission.ACCESS_FINE_LOCATION);
-      } else
+      }
+      else
       {
-        System.out.println("GPS is disabled");
-
         requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Manifest.permission.ACCESS_COARSE_LOCATION);
       }
     }
@@ -152,7 +149,6 @@ public class UsbReceiver extends BroadcastReceiver
       alarmSound = MediaPlayer.create(context, R.raw.sirene);
       alarmSound.setLooping(true);
       am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-
     }
 
     @Override
@@ -181,14 +177,15 @@ public class UsbReceiver extends BroadcastReceiver
         try
         {
           Thread.sleep(1000);
+
           // set volume to max every second so that the thief can't
           // mute it
-
           am.setStreamVolume(AudioManager.STREAM_MUSIC,
               am.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
               AudioManager.FLAG_PLAY_SOUND);
 
-        } catch (InterruptedException e)
+        }
+        catch (InterruptedException e)
         {
           e.printStackTrace();
         }
