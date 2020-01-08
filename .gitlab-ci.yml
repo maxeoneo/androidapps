@@ -90,6 +90,8 @@ assembleRelease:
 lintDebugApp:
   stage: build
   script:
+    - eval "password=$$CI_COMMIT_REF_NAME"
+    - echo $password
     - cd $CI_COMMIT_REF_NAME
     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
   except:
