@@ -119,9 +119,8 @@ assembleReleaseApp:
   script:
     - cd $CI_COMMIT_REF_NAME
     - eval "pwd=\"\$$CI_COMMIT_REF_NAME\""
-    - echo und das password ist
-    - echo $pwd
-    - echo $KEYSTORE_FILE | base64 -d > my.keystore
+    - echo $KEYSTORE_FILE >> key.txt
+    - base64 -d -i key.txt > my.keystore
     - ./gradlew assembleRelease
       -Pandroid.injected.signing.store.file=$(pwd)/my.keystore
       -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD
