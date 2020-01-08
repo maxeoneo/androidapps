@@ -87,47 +87,46 @@ assembleRelease:
 
 
 # app branches #################################################################
-lintDebugApp:
-  stage: build
-  script:
-    - eval "pwd=\"\$$CI_COMMIT_REF_NAME\""
-    - echo $pwd
-    - cd $CI_COMMIT_REF_NAME
-    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
-  except:
-    refs:
-      - master
-
-assembleDebugApp:
-  stage: build
-  script:
-    - cd $CI_COMMIT_REF_NAME
-    - ./gradlew assembleDebug
-  except:
-    refs:
-      - master
-
-testDebugApp:
-  stage: test
-  script:
-    - cd $CI_COMMIT_REF_NAME
-    - ./gradlew -Pci --console=plain :app:testDebug
-  except:
-    refs:
-      - master
+# lintDebugApp:
+#   stage: build
+#   script:
+#     - cd $CI_COMMIT_REF_NAME
+#     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+#   except:
+#     refs:
+#       - master
+#
+# assembleDebugApp:
+#   stage: build
+#   script:
+#     - cd $CI_COMMIT_REF_NAME
+#     - ./gradlew assembleDebug
+#   except:
+#     refs:
+#       - master
+#
+# testDebugApp:
+#   stage: test
+#   script:
+#     - cd $CI_COMMIT_REF_NAME
+#     - ./gradlew -Pci --console=plain :app:testDebug
+#   except:
+#     refs:
+#       - master
 
 assembleReleaseApp:
   stage: release
   script:
     - cd $CI_COMMIT_REF_NAME
-    - eval "password=$$CI_COMMIT_REF_NAME"
-    - echo $password
+    - eval "pwd=\"\$$CI_COMMIT_REF_NAME\""
+    - echo und das password ist
+    - echo $pwd
     - echo $KEYSTORE_FILE | base64 -d > my.keystore
     - ./gradlew assembleRelease
       -Pandroid.injected.signing.store.file=$(pwd)/my.keystore
       -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD
       -Pandroid.injected.signing.key.alias=$CI_COMMIT_REF_NAME
-      -Pandroid.injected.signing.key.password=$password
+      -Pandroid.injected.signing.key.password=$pwd
 
     - mv ./app/build/outputs/apk/release/app-release-unsigned.apk ../outputs/$CI_COMMIT_REF_NAME.apk
   except:
