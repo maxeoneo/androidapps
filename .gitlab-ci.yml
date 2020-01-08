@@ -118,12 +118,14 @@ assembleReleaseApp:
   stage: release
   script:
     - cd $CI_COMMIT_REF_NAME
+    - eval "password=$$CI_COMMIT_REF_NAME"
+    - echo $password
     - echo $KEYSTORE_FILE | base64 -d > my.keystore
     - ./gradlew assembleRelease
       -Pandroid.injected.signing.store.file=$(pwd)/my.keystore
       -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD
-      -Pandroid.injected.signing.key.alias=$KEY_ALIAS
-      # -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+      -Pandroid.injected.signing.key.alias=$CI_COMMIT_REF_NAME
+      -Pandroid.injected.signing.key.password=$password
 
     - mv ./app/build/outputs/apk/release/app-release-unsigned.apk ../outputs/$CI_COMMIT_REF_NAME.apk
   except:
