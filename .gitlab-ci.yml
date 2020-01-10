@@ -124,6 +124,7 @@ assembleReleaseApp:
     - eval "PASSWORD=\"\$$CI_COMMIT_REF_NAME\""
     - echo $KEYSTORE_FILE > key.txt
     - cat key.txt | base64 -d > my.keystore
+    - cat my.keystore
     - echo $PASSWORD
     - echo $KEYSTORE_PASSWORD
     - ./gradlew assembleRelease
