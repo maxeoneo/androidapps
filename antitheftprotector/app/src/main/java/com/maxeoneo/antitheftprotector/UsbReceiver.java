@@ -162,27 +162,20 @@ public class UsbReceiver extends BroadcastReceiver
 
       if (dataSource.isLockActive())
       {
-
-        // set volume to max
-        am.setStreamVolume(AudioManager.STREAM_MUSIC,
-            am.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
-            AudioManager.FLAG_PLAY_SOUND);
+        setVolumeToMax();
         alarmSound.start();
         System.out.println("ALARM");
       }
 
-      // play until lock isn't acitve any more
+      // play until lock isn't active any more
       while (dataSource.isLockActive())
       {
         try
         {
           Thread.sleep(1000);
 
-          // set volume to max every second so that the thief can't
-          // mute it
-          am.setStreamVolume(AudioManager.STREAM_MUSIC,
-              am.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
-              AudioManager.FLAG_PLAY_SOUND);
+          // set volume to max every second so that the thief can't mute it
+          setVolumeToMax();
 
         }
         catch (InterruptedException e)
@@ -204,6 +197,13 @@ public class UsbReceiver extends BroadcastReceiver
 
       // close source;
       dataSource.close();
+    }
+
+    private void setVolumeToMax()
+    {
+      am.setStreamVolume(AudioManager.STREAM_MUSIC,
+          am.getStreamMaxVolume(AudioManager.STREAM_MUSIC),
+          AudioManager.FLAG_PLAY_SOUND);
     }
   }
 }
