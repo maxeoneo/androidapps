@@ -128,7 +128,7 @@ assembleReleaseApp:
      # -Pandroid.injected.signing.key.password=$PASSWORD
     - APP_PATH="./app/build/outputs/apk/release/app-release-unsigned.apk"
 
-    - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my.keystore $APP_PATH $CI_COMMIT_REF_NAME
+    - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my.keystore -storepass $KEYSTORE_PASSWORD $APP_PATH $CI_COMMIT_REF_NAME
     - zipalign -p -f -v 4 $APP_PATH ../outputs/$CI_COMMIT_REF_NAME.apk
 
     # - mv $APP_PATH ../outputs/$CI_COMMIT_REF_NAME_unsigned.apk
