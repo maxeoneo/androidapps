@@ -10,17 +10,8 @@ android {
         targetSdkVersion 29
     }
 
-//    signingConfigs {
-//        release {
-//            storeFile file("***REMOVED***")
-//            storePassword "***REMOVED***"
-//            keyAlias "antitheftprotector"    
-//        }
-//    }
-
     buildTypes {
         release {
-//            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
