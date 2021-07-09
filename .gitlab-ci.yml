@@ -117,6 +117,7 @@ testDebugApp:
 assembleReleaseApp:
   stage: release
   script:
+    - echo $KEYSTORE_FILE
     - cd $CI_COMMIT_REF_NAME
     - eval "KEYPASS=\"\$$CI_COMMIT_REF_NAME\""
     - echo $KEYSTORE_FILE > key.txt
