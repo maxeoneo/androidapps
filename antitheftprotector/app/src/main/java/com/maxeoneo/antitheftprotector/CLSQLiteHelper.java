@@ -16,7 +16,7 @@ public class CLSQLiteHelper extends SQLiteOpenHelper
   public static final String COLUMN_PWD = "pwd";
   public static final String COLUMN_IS_ACTIVE = "isActive";
   public static final String COLUMN_IS_SEND_LOCATION = "isSendLocation";
-  public static final String COLUMN_PHONENUMBER = "phonenumber";
+  public static final String COLUMN_EMAIL_ADDRESS = "emailAddress";
 
   public CLSQLiteHelper(Context context)
   {
@@ -30,7 +30,7 @@ public class CLSQLiteHelper extends SQLiteOpenHelper
         + COLUMN_ID + " INTEGER primary key, " + COLUMN_PWD
         + " VARCHAR(255), " + COLUMN_IS_ACTIVE
         + " INTEGER NOT NULL DEFAULT 0, " + COLUMN_IS_SEND_LOCATION
-        + " INTEGER NOT NULL DEFAULT 0, " + COLUMN_PHONENUMBER
+        + " INTEGER NOT NULL DEFAULT 0, " + COLUMN_EMAIL_ADDRESS
         + " VARCHAR(255));");
   }
 

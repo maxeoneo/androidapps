@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.maxeoneo.antitheftprotector"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="com.maxeoneo.antitheftprotector">
 
     <!-- register permission for internet -->
-    <uses-permission android:name="android.permission.INTERNET" />
+<!--    <uses-permission android:name="android.permission.INTERNET" />-->
 
-    <!-- Permissions for Location -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <!-- Permissions for sending sms -->
-    <uses-permission xmlns:android="http://schemas.android.com/apk/res/android"
-        android:name="android.permission.SEND_SMS" />
-    <uses-permission xmlns:android="http://schemas.android.com/apk/res/android"
-        android:name="android.permission.WRITE_SMS" />
+<!--    &lt;!&ndash; Permissions for Location &ndash;&gt;-->
+<!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+<!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
 
 
     <application

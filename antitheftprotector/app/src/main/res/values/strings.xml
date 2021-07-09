@@ -20,7 +20,9 @@
     <string name="tOnOffOFF">Lock is OFF!</string>
     <string name="tSendLocON">Send Location is ON!</string>
     <string name="tSendLocOFF">Send Location is OFF!</string>
-    <string name="phoneNumber">Send sms to which number?</string>
+    <string name="emailAddress">Send Location to this email address</string>
     <string name="PermissionExplanation">We need the locations permissions to send location informations.</string>
+    <string name="EmailSubject">Device is locked and moving</string>
+    <string name="EmailText">The current location of the device is:</string>
 
 </resources>

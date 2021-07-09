@@ -27,28 +27,27 @@
    	    android:id="@+id/repeatNewPwd"
    	    android:layout_width="match_parent"
    	    android:layout_height="wrap_content"
-   	    android:ems="10"
+   	    android:ems="15"
    	    android:hint="@string/repeatNewPwd"
    	    android:inputType="numberPassword" />
    	
-   	<ToggleButton
-        android:id="@+id/tSendLoc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textOff="@string/tSendLocOFF"
-        android:textOn="@string/tSendLocON" />
-   	
-   	<EditText
-   	    android:id="@+id/phoneNumber"
-   	    android:layout_width="match_parent"
-   	    android:layout_height="wrap_content"
-   	    android:ems="10"
-   	    android:hint="@string/phoneNumber"
-   	    android:inputType="phone"
-   	    android:digits="0123456789+"  />
+<!--   	<ToggleButton-->
+<!--        android:id="@+id/tSendLoc"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:textOff="@string/tSendLocOFF"-->
+<!--        android:textOn="@string/tSendLocON" />-->
 
-   	<Button
+<!--	<EditText-->
+<!--		android:id="@+id/emailAddress"-->
+<!--		android:layout_width="match_parent"-->
+<!--		android:layout_height="wrap_content"-->
+<!--		android:ems="10"-->
+<!--		android:hint="@string/emailAddress"-->
+<!--		android:inputType="textEmailAddress" />-->
+
+	<Button
         android:id="@+id/bSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

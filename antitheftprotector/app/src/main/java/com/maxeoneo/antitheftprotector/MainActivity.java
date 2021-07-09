@@ -35,7 +35,7 @@ public class MainActivity extends Activity
   private EditText newPwd;
   private EditText repeatNewPwd;
   private ToggleButton toggleSendLocation;
-  private EditText phoneNumber;
+  private EditText emailAddress;
 
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -156,8 +156,8 @@ public class MainActivity extends Activity
     oldPwd = (EditText) settingsDialog.findViewById(R.id.oldPwd);
     newPwd = (EditText) settingsDialog.findViewById(R.id.newPwd);
     repeatNewPwd = (EditText) settingsDialog.findViewById(R.id.repeatNewPwd);
-    phoneNumber = (EditText) settingsDialog.findViewById(R.id.phoneNumber);
-    toggleSendLocation = (ToggleButton) settingsDialog.findViewById(R.id.tSendLoc);
+//    emailAddress = (EditText) settingsDialog.findViewById(R.id.emailAddress);
+//    toggleSendLocation = (ToggleButton) settingsDialog.findViewById(R.id.tSendLoc);
   }
 
   private void initializeSettingsDialog()
@@ -239,8 +239,8 @@ public class MainActivity extends Activity
 
   private void initializePhoneNumberFiled(boolean visible)
   {
-    final String pNumber = dataSource.getPhoneNumber();
-    phoneNumber.setText(pNumber);
+    final String pNumber = dataSource.getEmailAddress();
+    emailAddress.setText(pNumber);
     setVisibilityOfPhoneNumber(visible);
   }
 
@@ -248,11 +248,11 @@ public class MainActivity extends Activity
   {
     if (visible)
     {
-      phoneNumber.setVisibility(View.VISIBLE);
+      emailAddress.setVisibility(View.VISIBLE);
     }
     else
     {
-      phoneNumber.setVisibility(View.GONE);
+      emailAddress.setVisibility(View.GONE);
     }
   }
 
@@ -284,8 +284,8 @@ public class MainActivity extends Activity
           {
             if (isPasswordUnchanged())
             {
-              String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
-              dataSource.setPhoneNumber(number);
+              String number = PhoneNumberUtils.formatNumber(emailAddress.getText().toString());
+              dataSource.setEmailAddress(number);
               dataSource.setSendLocation(toggleSendLocation.isChecked());
 
               settingsDialog.dismiss();
@@ -323,7 +323,7 @@ public class MainActivity extends Activity
 
   private void saveNewSettings()
   {
-    String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
+    String number = PhoneNumberUtils.formatNumber(emailAddress.getText().toString());
     dataSource.saveSettings(newPwd.getText().toString(), toggleSendLocation.isChecked(), number);
   }
 
@@ -379,7 +379,7 @@ public class MainActivity extends Activity
         if (grantResults.length > 0
             && grantResults[0] == PackageManager.PERMISSION_GRANTED)
         {
-          phoneNumber.setVisibility(View.VISIBLE);
+          emailAddress.setVisibility(View.VISIBLE);
           toggleSendLocation.setChecked(true);
         }
         else

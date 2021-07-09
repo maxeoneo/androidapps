@@ -20,7 +20,8 @@
     <string name="tOnOffOFF">Schutz is AUS!</string>
     <string name="tSendLocON">Standort senden is AN!</string>
     <string name="tSendLocOFF">Standort senden is AUS!</string>
-    <string name="phoneNumber">SMS an welche Nummer senden?</string>
+    <string name="emailAddress">Standort and diese E-Mail Adresse senden</string>
     <string name="PermissionExplanation">Wir brauchen die Standord-Berechtigungen um den Standord senden zu können.</string>
-
+    <string name="EmailSubject">Das Gerät ist gesperrt und wird bewegt</string>
+    <string name="EmailText">Der aktuelle Standort des Geräts ist:</string>
 </resources>

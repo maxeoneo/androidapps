@@ -13,7 +13,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
-import android.telephony.SmsManager;
 
 public class UsbReceiver extends BroadcastReceiver
 {
@@ -22,8 +21,7 @@ public class UsbReceiver extends BroadcastReceiver
   private CLDataSource dataSource;
 
   // fields for sending location
-  private String number = "";
-  private SmsManager smsManager;
+  private String mailAddress = "";
   private LocationManager locationManager;
   private LocationListener locationListener;
   private Location oldLocation = null;
@@ -34,105 +32,110 @@ public class UsbReceiver extends BroadcastReceiver
     this.context = context;
     this.dataSource = new CLDataSource(context);
 
-
-    // get default sms manager
-    smsManager = SmsManager.getDefault();
-
-
-    locationManager = (LocationManager) context
-        .getSystemService(Context.LOCATION_SERVICE);
-    locationListener = new LocationListener()
-    {
-
-      public void onLocationChanged(Location location)
-      {
-
-        // only send sms when old location and new location has a
-        // big enough distance
-        if (oldLocation == null || oldLocation.distanceTo(location) > 100)
-        {
-          oldLocation = location;
-          sendLocation(location);
-        }
-
-      }
-
-      public void onProviderEnabled(String provider)
-      {
-        // register gps provider, updates max every min
-        requestLocationUpdates(LocationManager.GPS_PROVIDER, Manifest.permission.ACCESS_FINE_LOCATION);
-      }
-
-      public void onProviderDisabled(String provider)
-      {
-        // register network provider, updates max every min
-        requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Manifest.permission.ACCESS_COARSE_LOCATION);
-      }
-
-      @Override
-      public void onStatusChanged(String arg0, int arg1, Bundle arg2)
-      {
-      }
-    };
-
-    dataSource.open();
-    // only if lock is active and send location is switch
-    if (dataSource.isLockActive() && dataSource.getSendLocation())
-    {
-      // get phonenumber and number of seconds from database
-      number = dataSource.getPhoneNumber();
-
-      // register provider, updates max every min)
-      if (locationManager
-          .isProviderEnabled(LocationManager.GPS_PROVIDER))
-      {
-        requestLocationUpdates(LocationManager.GPS_PROVIDER, Manifest.permission.ACCESS_FINE_LOCATION);
-      }
-      else
-      {
-        requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Manifest.permission.ACCESS_COARSE_LOCATION);
-      }
-    }
-    dataSource.close();
+//    prepareForSendingLocation(context);
 
     // create and start thread
     AlarmThread at = new AlarmThread(context);
     at.start();
   }
 
-  private void requestLocationUpdates(String locationProvider, String permission)
-  {
-    if (ContextCompat.checkSelfPermission(context, permission)
-        == PackageManager.PERMISSION_GRANTED)
-    {
-
-      locationManager.requestLocationUpdates(locationProvider, 60000, 50, locationListener);
-    }
-  }
+//  private void prepareForSendingLocation(Context context) {
+//    locationManager = (LocationManager) context
+//        .getSystemService(Context.LOCATION_SERVICE);
+//    locationListener = new LocationListener()
+//    {
+//
+//      public void onLocationChanged(Location location)
+//      {
+//
+//        // only send email when old location and new location has a
+//        // big enough distance
+//        if (oldLocation == null || oldLocation.distanceTo(location) > 100)
+//        {
+//          oldLocation = location;
+//          sendLocation(location);
+//        }
+//
+//      }
+//
+//      public void onProviderEnabled(String provider)
+//      {
+//        // register gps provider, updates max every min
+//        requestLocationUpdates(LocationManager.GPS_PROVIDER, Manifest.permission.ACCESS_FINE_LOCATION);
+//      }
+//
+//      public void onProviderDisabled(String provider)
+//      {
+//        // register network provider, updates max every min
+//        requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Manifest.permission.ACCESS_COARSE_LOCATION);
+//      }
+//
+//      @Override
+//      public void onStatusChanged(String arg0, int arg1, Bundle arg2)
+//      {
+//      }
+//    };
+//
+//    dataSource.open();
+//    // only if lock is active and send location is switch
+//    if (dataSource.isLockActive() && dataSource.getSendLocation())
+//    {
+//      // get phonenumber and number of seconds from database
+//      mailAddress = dataSource.getEmailAddress();
+//
+//      // register provider, updates max every min)
+//      if (locationManager
+//          .isProviderEnabled(LocationManager.GPS_PROVIDER))
+//      {
+//        requestLocationUpdates(LocationManager.GPS_PROVIDER, Manifest.permission.ACCESS_FINE_LOCATION);
+//      }
+//      else
+//      {
+//        requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Manifest.permission.ACCESS_COARSE_LOCATION);
+//      }
+//    }
+//    dataSource.close();
+//  }
+//
+//  private void requestLocationUpdates(String locationProvider, String permission)
+//  {
+//    if (ContextCompat.checkSelfPermission(context, permission)
+//        == PackageManager.PERMISSION_GRANTED)
+//    {
+//
+//      locationManager.requestLocationUpdates(locationProvider, 60000, 50, locationListener);
+//    }
+//  }
 
   /**
-   * Method to send sms with location.
+   * Method to send mail with location.
    */
-  private void sendLocation(Location loc)
-  {
-    if (!number.equals(""))
-    {
-
-      // send sms
-      String SENT = "android.telephony.SmsManager.STATUS_ON_ICC_SENT";
-      PendingIntent sentPI = PendingIntent.getBroadcast(context, 0,
-          new Intent(SENT), 0);
-      String smsText = "CELLPHONE LOCK ALARM: \nThe Location of the cellphone is: "
-          + "\nLatitude: "
-          + loc.getLatitude()
-          + "\nLongitude: "
-          + loc.getLongitude();
-      smsManager.sendTextMessage(number, null, smsText,
-          sentPI, null);
-      System.out.println("Send sms to " + number + ": ");
-      System.out.println(smsText);
-    }
-  }
+//  private void sendLocation(Location loc)
+//  {
+//    if (!mailAddress.equals(""))
+//    {
+//      // send email
+//      String emailText = context.getResources().getString(R.string.EmailText)
+//          + "\nLatitude: "
+//          + loc.getLatitude()
+//          + "\nLongitude: "
+//          + loc.getLongitude();
+//
+//      System.out.println("Send email to " + mailAddress + ": ");
+//      System.out.println(emailText);
+//
+//      Intent i = new Intent(Intent.ACTION_SEND);
+//      i.setType("message/rfc822");
+//      i.putExtra(Intent.EXTRA_EMAIL  , new String[]{mailAddress});
+//      i.putExtra(Intent.EXTRA_SUBJECT, context.getResources().getString(R.string.app_name) + ": " + context.getResources().getString(R.string.EmailSubject));
+//      i.putExtra(Intent.EXTRA_TEXT   , emailText);
+//      try {
+//        context.startActivity(Intent.createChooser(i, "Send mail..."));
+//      } catch (android.content.ActivityNotFoundException ex) {
+//        Toast.makeText(MyActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+//      }
+//    }
+//  }
 
   /**
    * Thread for the alarm
