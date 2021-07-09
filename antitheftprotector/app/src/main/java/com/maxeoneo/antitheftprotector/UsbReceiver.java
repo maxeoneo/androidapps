@@ -188,7 +188,7 @@ public class UsbReceiver extends BroadcastReceiver
       }
 
       // stop updating location
-      locationManager.removeUpdates(locationListener);
+//      locationManager.removeUpdates(locationListener);
 
       // stop alarm
       alarmSound.stop();
