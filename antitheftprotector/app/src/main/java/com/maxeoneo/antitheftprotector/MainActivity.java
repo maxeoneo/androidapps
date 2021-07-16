@@ -8,8 +8,8 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,8 +34,8 @@ public class MainActivity extends Activity
   private EditText oldPwd;
   private EditText newPwd;
   private EditText repeatNewPwd;
-  private ToggleButton toggleSendLocation;
-  private EditText phoneNumber;
+//  private ToggleButton toggleSendLocation;
+//  private EditText emailAddress;
 
   @Override
   protected void onCreate(Bundle savedInstanceState)
@@ -156,8 +156,8 @@ public class MainActivity extends Activity
     oldPwd = (EditText) settingsDialog.findViewById(R.id.oldPwd);
     newPwd = (EditText) settingsDialog.findViewById(R.id.newPwd);
     repeatNewPwd = (EditText) settingsDialog.findViewById(R.id.repeatNewPwd);
-    phoneNumber = (EditText) settingsDialog.findViewById(R.id.phoneNumber);
-    toggleSendLocation = (ToggleButton) settingsDialog.findViewById(R.id.tSendLoc);
+//    emailAddress = (EditText) settingsDialog.findViewById(R.id.emailAddress);
+//    toggleSendLocation = (ToggleButton) settingsDialog.findViewById(R.id.tSendLoc);
   }
 
   private void initializeSettingsDialog()
@@ -180,8 +180,8 @@ public class MainActivity extends Activity
   private void showSettingsDialog()
   {
     final String oldPwdString = initializeOldPasswordField();
-    final boolean sendLocation = initialtizeToggleButtonSendLocation();
-    initializePhoneNumberFiled(sendLocation);
+//    final boolean sendLocation = initialtizeToggleButtonSendLocation();
+//    initializePhoneNumberFiled(sendLocation);
     initializeSaveButton(oldPwdString);
 
     settingsDialog.show();
@@ -206,55 +206,55 @@ public class MainActivity extends Activity
     }
   }
 
-  private boolean initialtizeToggleButtonSendLocation()
-  {
-    final boolean sendLoc = dataSource.getSendLocation();
-    toggleSendLocation.setChecked(sendLoc);
-    toggleSendLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-    {
+//  private boolean initialtizeToggleButtonSendLocation()
+//  {
+//    final boolean sendLoc = dataSource.getSendLocation();
+//    toggleSendLocation.setChecked(sendLoc);
+//    toggleSendLocation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+//    {
+//
+//      public void onCheckedChanged(CompoundButton buttonView,
+//                                   boolean isChecked)
+//      {
+//
+//        if (isChecked)
+//        {
+//          if (locationPermissionsGranted())
+//          {
+//            setVisibilityOfEmailAddress(true);
+//          }
+//          else
+//          {
+//            toggleSendLocation.setChecked(false);
+//          }
+//        }
+//        else
+//        {
+//          setVisibilityOfEmailAddress(false);
+//        }
+//      }
+//    });
+//    return sendLoc;
+//  }
 
-      public void onCheckedChanged(CompoundButton buttonView,
-                                   boolean isChecked)
-      {
-
-        if (isChecked)
-        {
-          if (locationPermissionsGranted())
-          {
-            setVisibilityOfPhoneNumber(true);
-          }
-          else
-          {
-            toggleSendLocation.setChecked(false);
-          }
-        }
-        else
-        {
-          setVisibilityOfPhoneNumber(false);
-        }
-      }
-    });
-    return sendLoc;
-  }
-
-  private void initializePhoneNumberFiled(boolean visible)
-  {
-    final String pNumber = dataSource.getPhoneNumber();
-    phoneNumber.setText(pNumber);
-    setVisibilityOfPhoneNumber(visible);
-  }
-
-  private void setVisibilityOfPhoneNumber(boolean visible)
-  {
-    if (visible)
-    {
-      phoneNumber.setVisibility(View.VISIBLE);
-    }
-    else
-    {
-      phoneNumber.setVisibility(View.GONE);
-    }
-  }
+//  private void initializeEmailAddressField(boolean visible)
+//  {
+//    final String pNumber = dataSource.getEmailAddress();
+//    emailAddress.setText(pNumber);
+//    setVisibilityOfEmailAddress(visible);
+//  }
+//
+//  private void setVisibilityOfEmailAddress(boolean visible)
+//  {
+//    if (visible)
+//    {
+//      emailAddress.setVisibility(View.VISIBLE);
+//    }
+//    else
+//    {
+//      emailAddress.setVisibility(View.GONE);
+//    }
+//  }
 
   private void initializeSaveButton(final String oldPwdString)
   {
@@ -284,9 +284,9 @@ public class MainActivity extends Activity
           {
             if (isPasswordUnchanged())
             {
-              String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
-              dataSource.setPhoneNumber(number);
-              dataSource.setSendLocation(toggleSendLocation.isChecked());
+//              String number = PhoneNumberUtils.formatNumber(emailAddress.getText().toString());
+//              dataSource.setEmailAddress(number);
+//              dataSource.setSendLocation(toggleSendLocation.isChecked());
 
               settingsDialog.dismiss();
             }
@@ -323,8 +323,9 @@ public class MainActivity extends Activity
 
   private void saveNewSettings()
   {
-    String number = PhoneNumberUtils.formatNumber(phoneNumber.getText().toString());
-    dataSource.saveSettings(newPwd.getText().toString(), toggleSendLocation.isChecked(), number);
+//    final String mail = emailAddress.getText().toString();
+//    dataSource.saveSettings(newPwd.getText().toString(), toggleSendLocation.isChecked(), number);
+    dataSource.saveSettings(newPwd.getText().toString(), false, "");
   }
 
   private boolean hasNewPasswordAtLeastFourDigits()
@@ -338,56 +339,56 @@ public class MainActivity extends Activity
     tOnOff.setBackgroundColor(active ? Color.RED : Color.GRAY);
   }
 
-  private boolean locationPermissionsGranted()
-  {
-    boolean granted = false;
+//  private boolean locationPermissionsGranted()
+//  {
+//    boolean granted = false;
+//
+//    final boolean fineLocationAccessDeclined = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+//    final boolean coarseLocationAccessDeclined = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
+//    if (fineLocationAccessDeclined || coarseLocationAccessDeclined)
+//    {
+//      // Permission is not granted
+//      // Should we show an explanation?
+//      if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
+//          || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
+//      {
+//        showErrorMessage(R.string.PermissionExplanation, Toast.LENGTH_LONG);
+//      }
+//      else
+//      {
+//        // No explanation needed; request the permission
+//        ActivityCompat.requestPermissions(this,
+//            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATIONS_PERMISSIONS_REQUEST
+//        );
+//      }
+//    }
+//    else
+//    {
+//      granted = true;
+//    }
+//    return granted;
+//  }
 
-    final boolean fineLocationAccessDeclined = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED;
-    final boolean coarseLocationAccessDeclined = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED;
-    if (fineLocationAccessDeclined || coarseLocationAccessDeclined)
-    {
-      // Permission is not granted
-      // Should we show an explanation?
-      if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
-          || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION))
-      {
-        showErrorMessage(R.string.PermissionExplanation, Toast.LENGTH_LONG);
-      }
-      else
-      {
-        // No explanation needed; request the permission
-        ActivityCompat.requestPermissions(this,
-            new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATIONS_PERMISSIONS_REQUEST
-        );
-      }
-    }
-    else
-    {
-      granted = true;
-    }
-    return granted;
-  }
-
-  @Override
-  public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-  {
-    switch (requestCode)
-    {
-      case LOCATIONS_PERMISSIONS_REQUEST:
-      {
-        // If request is cancelled, the result arrays are empty.
-        if (grantResults.length > 0
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-        {
-          phoneNumber.setVisibility(View.VISIBLE);
-          toggleSendLocation.setChecked(true);
-        }
-        else
-        {
-          toggleSendLocation.setChecked(false);
-        }
-        return;
-      }
-    }
-  }
+//  @Override
+//  public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+//  {
+//    switch (requestCode)
+//    {
+//      case LOCATIONS_PERMISSIONS_REQUEST:
+//      {
+//        // If request is cancelled, the result arrays are empty.
+//        if (grantResults.length > 0
+//            && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+//        {
+//          emailAddress.setVisibility(View.VISIBLE);
+//          toggleSendLocation.setChecked(true);
+//        }
+//        else
+//        {
+//          toggleSendLocation.setChecked(false);
+//        }
+//        return;
+//      }
+//    }
+//  }
 }

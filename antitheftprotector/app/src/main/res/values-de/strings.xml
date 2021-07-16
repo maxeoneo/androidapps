@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Diebstahl-Schützer</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="switchLabel">Gerät schützen</string>
+    <string name="oldPwd">alter Pin</string>
+    <string name="newPwd">neuer Pin</string>
+    <string name="repeatNewPwd">Neuen Pin wiederholen</string>
+    <string name="bSettings">Einstellungen</string>
+    <string name="bSave">Speichern</string>
+    <string name="enterPwd">Pin</string>
+    <string name="bSubmitPwd">Bestätigen</string>
+    <string name="emSetPwd">Bitte stellen Sie zuerst einen Pin ein</string>
+    <string name="emNewAndRepeatedEquals">der neue Pin und die Wiederholung müssen übereinstimmen</string>
+    <string name="emPinToShort">Der neue Pin ist zu kurz</string>
+    <string name="emOldPinNotRight">Der alte Pin ist falsch</string>
+    <string name="emWrongPin">Pin falsch</string>
+    <string name="tOnOffON">Schutz ist AN!</string>
+    <string name="tOnOffOFF">Schutz is AUS!</string>
+    <string name="tSendLocON">Standort senden is AN!</string>
+    <string name="tSendLocOFF">Standort senden is AUS!</string>
+    <string name="emailAddress">Standort and diese E-Mail Adresse senden</string>
+    <string name="PermissionExplanation">Wir brauchen die Standord-Berechtigungen um den Standord senden zu können.</string>
+    <string name="EmailSubject">Das Gerät ist gesperrt und wird bewegt</string>
+    <string name="EmailText">Der aktuelle Standort des Geräts ist:</string>
+</resources>

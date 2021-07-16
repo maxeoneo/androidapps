@@ -24,5 +24,4 @@
     <string name="PermissionExplanation">We need the locations permissions to send location informations.</string>
     <string name="EmailSubject">Device is locked and moving</string>
     <string name="EmailText">The current location of the device is:</string>
-
 </resources>

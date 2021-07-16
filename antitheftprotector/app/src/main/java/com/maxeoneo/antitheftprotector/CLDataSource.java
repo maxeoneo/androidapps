@@ -30,7 +30,7 @@ public class CLDataSource
   public void savePassword(String pwd)
   {
     open();
-    saveAll(pwd, queryLockActive(), querySendLocation(), queryPhoneNumber());
+    saveAll(pwd, queryLockActive(), querySendLocation(), queryEmailAddress());
     close();
   }
 
@@ -61,7 +61,7 @@ public class CLDataSource
   public void setLockActive(boolean active)
   {
     open();
-    saveAll(queryPassword(), active, querySendLocation(), queryPhoneNumber());
+    saveAll(queryPassword(), active, querySendLocation(), queryEmailAddress());
     close();
   }
 
@@ -121,53 +121,53 @@ public class CLDataSource
     return false;
   }
 
-  public String getPhoneNumber()
+  public String getEmailAddress()
   {
     open();
-    final String phoneNumber = queryPhoneNumber();
+    final String emailAddress = queryEmailAddress();
     close();
-    return phoneNumber;
+    return emailAddress;
   }
 
-  private String queryPhoneNumber()
+  private String queryEmailAddress()
   {
-    String[] columns = new String[]{CLSQLiteHelper.COLUMN_PHONENUMBER};
+    String[] columns = new String[]{CLSQLiteHelper.COLUMN_EMAIL_ADDRESS};
     Cursor cursor = db.query(CLSQLiteHelper.TABLE_NAME, columns,
         CLSQLiteHelper.COLUMN_ID + " = 1", null, null, null, null);
 
-    String number = "";
+    String emailAddress = "";
 
     if (cursor.moveToFirst())
     {
-      number = cursor.getString(0);
+      emailAddress = cursor.getString(0);
     }
-    System.out.println("Get phonenumber: " + number);
-    return number;
+    System.out.println("Get email address: " + emailAddress);
+    return emailAddress;
   }
 
   public void setSendLocation(boolean sendLoaction)
   {
     open();
-    saveAll(queryPassword(), queryLockActive(), sendLoaction, queryPhoneNumber());
+    saveAll(queryPassword(), queryLockActive(), sendLoaction, queryEmailAddress());
     close();
   }
 
-  public void setPhoneNumber(String phoneNumber)
+  public void setEmailAddress(String emailAddress)
   {
     open();
-    saveAll(queryPassword(), queryLockActive(), querySendLocation(), phoneNumber);
+    saveAll(queryPassword(), queryLockActive(), querySendLocation(), emailAddress);
     close();
   }
 
-  public void saveSettings(String pwd, boolean sendLocation, String phoneNumber)
+  public void saveSettings(String pwd, boolean sendLocation, String emailAddress)
   {
     open();
-    saveAll(pwd, queryLockActive(), sendLocation, phoneNumber);
+    saveAll(pwd, queryLockActive(), sendLocation, emailAddress);
     close();
   }
 
   private void saveAll(String pwd, boolean active, boolean sendLocation,
-                       String phoneNumber)
+                       String emailAddress)
   {
     // convert from boolean to int
     int activeInt = 0;
@@ -187,9 +187,9 @@ public class CLDataSource
         + ", " + CLSQLiteHelper.COLUMN_PWD + ", "
         + CLSQLiteHelper.COLUMN_IS_ACTIVE + ", "
         + CLSQLiteHelper.COLUMN_IS_SEND_LOCATION + ", "
-        + CLSQLiteHelper.COLUMN_PHONENUMBER + ") VALUES (1, " + pwd
+        + CLSQLiteHelper.COLUMN_EMAIL_ADDRESS + ") VALUES (1, " + pwd
         + ", " + activeInt + ", " + sendLocationInt + ", '"
-        + phoneNumber + "');";
+        + emailAddress + "');";
     db.execSQL(sqlCommand);
   }
 }
