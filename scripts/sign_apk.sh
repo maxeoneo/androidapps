@@ -3,11 +3,17 @@
 appname=""
 
 if [ $# == 1 ]
+then
+  if [ $1 == "--help" ]
   then
-    appname=$1
+    echo "call from the root folder of the repo"
+    echo "useage: create_ney_key.sh <appname>"
   else
-    echo "Wrong call: exactle one parameter appname needed"
-    exit
+    appname=$1
+  fi  
+else
+  echo "Wrong call: exactle one parameter appname needed"
+  exit
 fi
 
 cd $appname/app/build/outputs/apk/release
