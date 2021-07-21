@@ -12,7 +12,7 @@
         
         <!-- register main activity -->
         <activity
-            android:name="androidlab.com.maxeoneo.todolistsimple.MainActivity"
+            android:name="com.maxeoneo.todolistsimple.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
         
         <!-- register add activity -->
         <activity
-            android:name="androidlab.com.maxeoneo.todolistsimple.AddActivity"
+            android:name="com.maxeoneo.todolistsimple.AddActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="androidlab.exercise3_1.MainActivity" />
@@ -33,7 +33,7 @@
         
         <!-- register edit activity -->
         <activity
-            android:name="androidlab.com.maxeoneo.todolistsimple.EditActivity"
+            android:name="com.maxeoneo.todolistsimple.EditActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="androidlab.exercise3_1.MainActivity" />
@@ -42,7 +42,7 @@
         </activity>
         
         <!-- register the widget -->
-        <receiver android:name="androidlab.com.maxeoneo.todolistsimple.TodoWidgetProvider" >
+        <receiver android:name="com.maxeoneo.todolistsimple.TodoWidgetProvider" >
             <intent-filter >
                 <action 
                     android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -54,7 +54,8 @@
         </receiver>
         
         <!-- register service -->
-        <service android:name="androidlab.com.maxeoneo.todolistsimple.TodoService" />
+        <service android:name="add
+        git com.maxeoneo.todolistsimple.TodoService" />
     </application>
 
 </manifest>
