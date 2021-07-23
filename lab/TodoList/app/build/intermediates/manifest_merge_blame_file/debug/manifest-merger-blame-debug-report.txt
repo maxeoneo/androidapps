@@ -1,0 +1,481 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.maxeoneo.TodoWhenAndWhere"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="22"
+8-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml
+10
+11    <!-- uses openGL -->
+12    <uses-feature
+12-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:9:5-11:35
+13        android:glEsVersion="0x00020000"
+13-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:10:9-41
+14        android:required="true" />
+14-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:11:9-32
+15
+16    <!-- register permission for internet -->
+17    <uses-permission android:name="android.permission.INTERNET" />
+17-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:14:5-67
+17-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:14:22-64
+18
+19    <!-- register permission for reading contacts -->
+20    <uses-permission android:name="android.permission.READ_CONTACTS" />
+20-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:17:5-72
+20-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:17:22-69
+21    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+21-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:20:5-81
+21-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:20:22-78
+22    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+22-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:21:5-98
+22-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:21:22-95
+23    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+23-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:22:5-81
+23-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:22:22-78
+24    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+24-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:23:5-79
+24-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:23:22-76
+25    <uses-permission android:name="andoidlab.exercise4_1.permission.MAPS_RECEIVE" />
+25-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:25:5-85
+25-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:25:22-82
+26
+27    <permission
+27-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:27:5-29:47
+28        android:name="androidlab.exercise4_1.permission.MAPS_RECEIVE"
+28-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:28:9-70
+29        android:protectionLevel="signature" />
+29-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:29:9-44
+30
+31    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Optional permission for Analytics to run. -->
+31-->[com.google.android.gms:play-services-ads-lite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/636400677b36658af94ff36af47e0d3b/jetified-play-services-ads-lite-12.0.1/AndroidManifest.xml:24:5-79
+31-->[com.google.android.gms:play-services-ads-lite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/636400677b36658af94ff36af47e0d3b/jetified-play-services-ads-lite-12.0.1/AndroidManifest.xml:24:22-76
+32    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create GCM registration tokens -->
+32-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:27:5-68
+32-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:27:22-65
+33    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+33-->[com.google.android.gms:play-services-gcm:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/6983a168cace694804404e26e7aa1cfa/jetified-play-services-gcm-12.0.1/AndroidManifest.xml:23:5-82
+33-->[com.google.android.gms:play-services-gcm:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/6983a168cace694804404e26e7aa1cfa/jetified-play-services-gcm-12.0.1/AndroidManifest.xml:23:22-79
+34
+35    <permission
+35-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:28:5-30:47
+36        android:name="com.maxeoneo.TodoWhenAndWhere.permission.C2D_MESSAGE"
+36-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:29:9-63
+37        android:protectionLevel="signature" />
+37-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:30:9-44
+38
+39    <uses-permission android:name="com.maxeoneo.TodoWhenAndWhere.permission.C2D_MESSAGE" />
+39-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:32:5-79
+39-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:32:22-76
+40
+41    <application
+41-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:31:5-110:19
+42        android:allowBackup="true"
+42-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:32:9-35
+43        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+43-->[androidx.core:core:1.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/704168206db443cc6a8404f53cd4e417/core-1.0.0/AndroidManifest.xml:22:18-86
+44        android:debuggable="true"
+45        android:icon="@drawable/ic_launcher"
+45-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:33:9-45
+46        android:label="@string/app_name"
+46-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:34:9-41
+47        android:testOnly="true"
+48        android:theme="@style/AppTheme" >
+48-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:35:9-40
+49
+50        <!-- register library for google maps -->
+51        <uses-library android:name="com.google.android.maps" />
+51-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:38:9-64
+51-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:38:23-61
+52
+53        <!-- register main activity -->
+54        <activity
+54-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:41:9-49:20
+55            android:name="androidlab.exercise4_1.MainActivity"
+55-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:42:13-63
+56            android:label="@string/app_name" >
+56-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:43:13-45
+57            <intent-filter>
+57-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:44:13-48:29
+58                <action android:name="android.intent.action.MAIN" />
+58-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:45:17-69
+58-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:45:25-66
+59
+60                <category android:name="android.intent.category.LAUNCHER" />
+60-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:47:17-77
+60-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:47:27-74
+61            </intent-filter>
+62        </activity>
+63
+64        <!-- register add activity -->
+65        <activity
+65-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:52:9-59:20
+66            android:name="androidlab.exercise4_1.AddActivity"
+66-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:53:13-62
+67            android:label="@string/app_name" >
+67-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:54:13-45
+68            <intent-filter>
+68-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:55:13-58:29
+69                <action android:name="androidlab.exercise4_1.MainActivity" />
+69-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:56:17-78
+69-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:56:25-75
+70
+71                <category android:name="android.intent.category.DEFAULT" />
+71-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:57:17-76
+71-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:57:27-73
+72            </intent-filter>
+73        </activity>
+74
+75        <!-- register edit activity -->
+76        <activity
+76-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:62:9-69:20
+77            android:name="androidlab.exercise4_1.EditActivity"
+77-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:63:13-63
+78            android:label="@string/app_name" >
+78-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:64:13-45
+79            <intent-filter>
+79-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:55:13-58:29
+80                <action android:name="androidlab.exercise4_1.MainActivity" />
+80-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:56:17-78
+80-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:56:25-75
+81
+82                <category android:name="android.intent.category.DEFAULT" />
+82-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:57:17-76
+82-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:57:27-73
+83            </intent-filter>
+84        </activity>
+85
+86        <!-- register map activity -->
+87        <activity
+87-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:72:9-81:20
+88            android:name="androidlab.exercise4_1.AddGpsWithMapActivity"
+88-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:73:13-72
+89            android:label="@string/app_name" >
+89-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:74:13-45
+90            <intent-filter>
+90-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:75:13-80:29
+91                <action android:name="androidlab.exercise4_1.AddActivity" />
+91-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:76:17-77
+91-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:76:25-74
+92                <action android:name="androidlab.exercise4_1.EditActivity" />
+92-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:77:17-78
+92-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:77:25-75
+93
+94                <category android:name="android.intent.category.DEFAULT" />
+94-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:57:17-76
+94-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:57:27-73
+95            </intent-filter>
+96        </activity>
+97
+98        <!-- register the widget -->
+99        <receiver android:name="androidlab.exercise4_1.TodoWidgetProvider" >
+99-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:85:9-93:20
+99-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:85:19-52
+100            <intent-filter>
+100-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:86:13-88:29
+101                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+101-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:87:17-84
+101-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:87:25-81
+102            </intent-filter>
+103
+104            <meta-data
+104-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:90:13-92:55
+105                android:name="android.appwidget.provider"
+105-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:91:17-58
+106                android:resource="@xml/widget_info" />
+106-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:92:17-52
+107        </receiver>
+108
+109        <!-- register todo service -->
+110        <service android:name="androidlab.exercise4_1.TodoService" />
+110-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:96:9-70
+110-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:96:18-67
+111
+112        <!-- register location service -->
+113        <service android:name="androidlab.exercise4_1.CheckLocationService" />
+113-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:99:9-79
+113-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:99:18-76
+114
+115        <meta-data
+115-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:101:9-103:71
+116            android:name="androidlab.exercise4_1.v2.API_KEY"
+116-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:102:13-61
+117            android:value="AIzaSyCaooIOdq9IjzTZTIyt3Vmno7pTk7LZcnM" />
+117-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:103:13-68
+118        <meta-data
+118-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:105:9-107:69
+119            android:name="com.google.android.gms.version"
+119-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:106:13-58
+120            android:value="@integer/google_play_services_version" />
+120-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:107:13-66
+121
+122        <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
+123        <activity
+123-->[com.google.android.gms:play-services-ads-lite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/636400677b36658af94ff36af47e0d3b/jetified-play-services-ads-lite-12.0.1/AndroidManifest.xml:29:9-33:64
+124            android:name="com.google.android.gms.ads.AdActivity"
+124-->[com.google.android.gms:play-services-ads-lite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/636400677b36658af94ff36af47e0d3b/jetified-play-services-ads-lite-12.0.1/AndroidManifest.xml:30:13-65
+125            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+125-->[com.google.android.gms:play-services-ads-lite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/636400677b36658af94ff36af47e0d3b/jetified-play-services-ads-lite-12.0.1/AndroidManifest.xml:31:13-122
+126            android:exported="false"
+126-->[com.google.android.gms:play-services-ads-lite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/636400677b36658af94ff36af47e0d3b/jetified-play-services-ads-lite-12.0.1/AndroidManifest.xml:32:13-37
+127            android:theme="@android:style/Theme.Translucent" />
+127-->[com.google.android.gms:play-services-ads-lite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/636400677b36658af94ff36af47e0d3b/jetified-play-services-ads-lite-12.0.1/AndroidManifest.xml:33:13-61
+128
+129        <receiver
+129-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:30:9-34:20
+130            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+130-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:31:13-78
+131            android:enabled="true"
+131-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:32:13-35
+132            android:exported="false" >
+132-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:33:13-37
+133        </receiver>
+134
+135        <service
+135-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:36:9-39:40
+136            android:name="com.google.android.gms.analytics.AnalyticsService"
+136-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:37:13-77
+137            android:enabled="true"
+137-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:38:13-35
+138            android:exported="false" />
+138-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:39:13-37
+139        <service
+139-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:40:9-44:72
+140            android:name="com.google.android.gms.analytics.AnalyticsJobService"
+140-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:41:13-80
+141            android:enabled="true"
+141-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:42:13-35
+142            android:exported="false"
+142-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:43:13-37
+143            android:permission="android.permission.BIND_JOB_SERVICE" />
+143-->[com.google.android.gms:play-services-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/32a1b5d6f14b10621f4aab3b404a136c/jetified-play-services-analytics-12.0.1/AndroidManifest.xml:44:13-69
+144
+145        <activity
+145-->[com.google.android.gms:play-services-appinvite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4dcc262e7970b06da6d5216eb2de3835/jetified-play-services-appinvite-12.0.1/AndroidManifest.xml:25:9-34:20
+146            android:name="com.google.android.gms.appinvite.PreviewActivity"
+146-->[com.google.android.gms:play-services-appinvite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4dcc262e7970b06da6d5216eb2de3835/jetified-play-services-appinvite-12.0.1/AndroidManifest.xml:26:13-76
+147            android:exported="true"
+147-->[com.google.android.gms:play-services-appinvite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4dcc262e7970b06da6d5216eb2de3835/jetified-play-services-appinvite-12.0.1/AndroidManifest.xml:27:13-36
+148            android:theme="@style/Theme.AppInvite.Preview" >
+148-->[com.google.android.gms:play-services-appinvite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4dcc262e7970b06da6d5216eb2de3835/jetified-play-services-appinvite-12.0.1/AndroidManifest.xml:28:13-59
+149            <intent-filter>
+149-->[com.google.android.gms:play-services-appinvite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4dcc262e7970b06da6d5216eb2de3835/jetified-play-services-appinvite-12.0.1/AndroidManifest.xml:29:13-33:29
+150                <action android:name="com.google.android.gms.appinvite.ACTION_PREVIEW" />
+150-->[com.google.android.gms:play-services-appinvite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4dcc262e7970b06da6d5216eb2de3835/jetified-play-services-appinvite-12.0.1/AndroidManifest.xml:30:17-90
+150-->[com.google.android.gms:play-services-appinvite:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4dcc262e7970b06da6d5216eb2de3835/jetified-play-services-appinvite-12.0.1/AndroidManifest.xml:30:25-87
+151
+152                <category android:name="android.intent.category.DEFAULT" />
+152-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:57:17-76
+152-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:57:27-73
+153            </intent-filter>
+154        </activity>
+155        <activity
+155-->[com.google.android.gms:play-services-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/1ebfea8c81dd293357d5cd1c534d873e/jetified-play-services-auth-12.0.1/AndroidManifest.xml:23:9-27:75
+156            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+156-->[com.google.android.gms:play-services-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/1ebfea8c81dd293357d5cd1c534d873e/jetified-play-services-auth-12.0.1/AndroidManifest.xml:24:13-93
+157            android:excludeFromRecents="true"
+157-->[com.google.android.gms:play-services-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/1ebfea8c81dd293357d5cd1c534d873e/jetified-play-services-auth-12.0.1/AndroidManifest.xml:25:13-46
+158            android:exported="false"
+158-->[com.google.android.gms:play-services-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/1ebfea8c81dd293357d5cd1c534d873e/jetified-play-services-auth-12.0.1/AndroidManifest.xml:26:13-37
+159            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+159-->[com.google.android.gms:play-services-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/1ebfea8c81dd293357d5cd1c534d873e/jetified-play-services-auth-12.0.1/AndroidManifest.xml:27:13-72
+160        <!--
+161            Service handling Google Sign-In user revocation. For apps that do not integrate with
+162            Google Sign-In, this service will never be started.
+163        -->
+164        <service
+164-->[com.google.android.gms:play-services-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/1ebfea8c81dd293357d5cd1c534d873e/jetified-play-services-auth-12.0.1/AndroidManifest.xml:33:9-36:110
+165            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+165-->[com.google.android.gms:play-services-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/1ebfea8c81dd293357d5cd1c534d873e/jetified-play-services-auth-12.0.1/AndroidManifest.xml:34:13-89
+166            android:exported="true"
+166-->[com.google.android.gms:play-services-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/1ebfea8c81dd293357d5cd1c534d873e/jetified-play-services-auth-12.0.1/AndroidManifest.xml:35:13-36
+167            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" />
+167-->[com.google.android.gms:play-services-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/1ebfea8c81dd293357d5cd1c534d873e/jetified-play-services-auth-12.0.1/AndroidManifest.xml:36:13-107
+168
+169        <receiver android:name="com.google.android.gms.cast.framework.media.MediaIntentReceiver" />
+169-->[com.google.android.gms:play-services-cast-framework:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/a2a72bcf5f9dded55b752e6cde3f180d/jetified-play-services-cast-framework-12.0.1/AndroidManifest.xml:8:9-100
+169-->[com.google.android.gms:play-services-cast-framework:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/a2a72bcf5f9dded55b752e6cde3f180d/jetified-play-services-cast-framework-12.0.1/AndroidManifest.xml:8:19-97
+170
+171        <service android:name="com.google.android.gms.cast.framework.media.MediaNotificationService" />
+171-->[com.google.android.gms:play-services-cast-framework:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/a2a72bcf5f9dded55b752e6cde3f180d/jetified-play-services-cast-framework-12.0.1/AndroidManifest.xml:10:9-104
+171-->[com.google.android.gms:play-services-cast-framework:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/a2a72bcf5f9dded55b752e6cde3f180d/jetified-play-services-cast-framework-12.0.1/AndroidManifest.xml:10:18-101
+172        <service android:name="com.google.android.gms.cast.framework.ReconnectionService" />
+172-->[com.google.android.gms:play-services-cast-framework:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/a2a72bcf5f9dded55b752e6cde3f180d/jetified-play-services-cast-framework-12.0.1/AndroidManifest.xml:11:9-93
+172-->[com.google.android.gms:play-services-cast-framework:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/a2a72bcf5f9dded55b752e6cde3f180d/jetified-play-services-cast-framework-12.0.1/AndroidManifest.xml:11:18-90
+173
+174        <activity
+174-->[com.google.firebase:firebase-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/cee52cc2830cecd75c2dc7c311e29611/jetified-firebase-auth-12.0.1/AndroidManifest.xml:23:9-29:75
+175            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+175-->[com.google.firebase:firebase-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/cee52cc2830cecd75c2dc7c311e29611/jetified-firebase-auth-12.0.1/AndroidManifest.xml:24:13-85
+176            android:excludeFromRecents="true"
+176-->[com.google.firebase:firebase-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/cee52cc2830cecd75c2dc7c311e29611/jetified-firebase-auth-12.0.1/AndroidManifest.xml:25:13-46
+177            android:exported="true"
+177-->[com.google.firebase:firebase-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/cee52cc2830cecd75c2dc7c311e29611/jetified-firebase-auth-12.0.1/AndroidManifest.xml:26:13-36
+178            android:launchMode="singleInstance"
+178-->[com.google.firebase:firebase-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/cee52cc2830cecd75c2dc7c311e29611/jetified-firebase-auth-12.0.1/AndroidManifest.xml:27:13-48
+179            android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN"
+179-->[com.google.firebase:firebase-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/cee52cc2830cecd75c2dc7c311e29611/jetified-firebase-auth-12.0.1/AndroidManifest.xml:28:13-102
+180            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+180-->[com.google.firebase:firebase-auth:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/cee52cc2830cecd75c2dc7c311e29611/jetified-firebase-auth-12.0.1/AndroidManifest.xml:29:13-72
+181        <activity
+181-->[com.google.android.gms:play-services-base:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/e2e92b993f568af40b53ac866b8b451e/jetified-play-services-base-12.0.1/AndroidManifest.xml:23:9-26:75
+182            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+182-->[com.google.android.gms:play-services-base:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/e2e92b993f568af40b53ac866b8b451e/jetified-play-services-base-12.0.1/AndroidManifest.xml:24:13-79
+183            android:exported="false"
+183-->[com.google.android.gms:play-services-base:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/e2e92b993f568af40b53ac866b8b451e/jetified-play-services-base-12.0.1/AndroidManifest.xml:25:13-37
+184            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+184-->[com.google.android.gms:play-services-base:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/e2e92b993f568af40b53ac866b8b451e/jetified-play-services-base-12.0.1/AndroidManifest.xml:26:13-72
+185        <!--
+186             FirebaseMessagingService performs security checks at runtime,
+187             no need for explicit permissions despite exported="true"
+188        -->
+189        <service
+189-->[com.google.firebase:firebase-messaging:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/df87baeff8c8c394871a036db5191bce/jetified-firebase-messaging-12.0.1/AndroidManifest.xml:28:9-34:19
+190            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+190-->[com.google.firebase:firebase-messaging:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/df87baeff8c8c394871a036db5191bce/jetified-firebase-messaging-12.0.1/AndroidManifest.xml:29:13-82
+191            android:exported="true" >
+191-->[com.google.firebase:firebase-messaging:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/df87baeff8c8c394871a036db5191bce/jetified-firebase-messaging-12.0.1/AndroidManifest.xml:30:13-36
+192            <intent-filter android:priority="-500" >
+192-->[com.google.firebase:firebase-messaging:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/df87baeff8c8c394871a036db5191bce/jetified-firebase-messaging-12.0.1/AndroidManifest.xml:31:13-33:29
+192-->[com.google.firebase:firebase-messaging:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/df87baeff8c8c394871a036db5191bce/jetified-firebase-messaging-12.0.1/AndroidManifest.xml:31:28-51
+193                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+193-->[com.google.firebase:firebase-messaging:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/df87baeff8c8c394871a036db5191bce/jetified-firebase-messaging-12.0.1/AndroidManifest.xml:32:17-78
+193-->[com.google.firebase:firebase-messaging:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/df87baeff8c8c394871a036db5191bce/jetified-firebase-messaging-12.0.1/AndroidManifest.xml:32:25-75
+194            </intent-filter>
+195        </service>
+196        <service
+196-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:27:9-30:40
+197            android:name="com.google.android.gms.tagmanager.TagManagerService"
+197-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:28:13-79
+198            android:enabled="true"
+198-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:29:13-35
+199            android:exported="false" />
+199-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:30:13-37
+200
+201        <activity
+201-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:32:9-44:20
+202            android:name="com.google.android.gms.tagmanager.TagManagerPreviewActivity"
+202-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:33:13-87
+203            android:exported="true"
+203-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:34:13-36
+204            android:noHistory="true" > <!-- optional, removes the previewActivity from the activity stack. -->
+204-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:35:13-37
+205            <intent-filter>
+205-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:36:13-43:29
+206                <data android:scheme="tagmanager.c.com.maxeoneo.TodoWhenAndWhere" />
+206-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:37:17-72
+206-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:37:23-69
+207
+208                <action android:name="android.intent.action.VIEW" />
+208-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:39:17-69
+208-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:39:25-66
+209
+210                <category android:name="android.intent.category.DEFAULT" />
+210-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:57:17-76
+210-->/home/axe/git/maxeoneo/androidapps/TodoList/app/src/main/AndroidManifest.xml:57:27-73
+211                <category android:name="android.intent.category.BROWSABLE" />
+211-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:42:17-78
+211-->[com.google.android.gms:play-services-tagmanager-api:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/4156af04958719822b7683c7c3d795ef/jetified-play-services-tagmanager-api-12.0.1/AndroidManifest.xml:42:27-75
+212            </intent-filter>
+213        </activity>
+214
+215        <receiver
+215-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:28:9-32:20
+216            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+216-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:29:13-85
+217            android:enabled="true"
+217-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:30:13-35
+218            android:exported="false" >
+218-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:31:13-37
+219        </receiver>
+220        <receiver
+220-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:33:9-41:20
+221            android:name="com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver"
+221-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:34:13-100
+222            android:enabled="true"
+222-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:35:13-35
+223            android:exported="true"
+223-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:36:13-36
+224            android:permission="android.permission.INSTALL_PACKAGES" >
+224-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:37:13-69
+225            <intent-filter>
+225-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:38:13-40:29
+226                <action android:name="com.android.vending.INSTALL_REFERRER" />
+226-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:39:17-79
+226-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:39:25-76
+227            </intent-filter>
+228        </receiver>
+229
+230        <service
+230-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:43:9-46:40
+231            android:name="com.google.android.gms.measurement.AppMeasurementService"
+231-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:44:13-84
+232            android:enabled="true"
+232-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:45:13-35
+233            android:exported="false" />
+233-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:46:13-37
+234        <service
+234-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:47:9-51:72
+235            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+235-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:48:13-87
+236            android:enabled="true"
+236-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:49:13-35
+237            android:exported="false"
+237-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:50:13-37
+238            android:permission="android.permission.BIND_JOB_SERVICE" />
+238-->[com.google.firebase:firebase-analytics:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/9e7319315b8ffef224505c83bd2230e5/jetified-firebase-analytics-12.0.1/AndroidManifest.xml:51:13-69
+239
+240        <receiver
+240-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:35:9-44:20
+241            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+241-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:36:13-78
+242            android:exported="true"
+242-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:37:13-36
+243            android:permission="com.google.android.c2dm.permission.SEND" >
+243-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:38:13-73
+244            <intent-filter>
+244-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:39:13-43:29
+245                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+245-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:40:17-81
+245-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:40:25-78
+246
+247                <category android:name="com.maxeoneo.TodoWhenAndWhere" />
+247-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:42:17-61
+247-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:42:27-58
+248            </intent-filter>
+249        </receiver>
+250        <!--
+251             FirebaseInstanceIdService performs security checks at runtime,
+252             no need for explicit permissions despite exported="true"
+253        -->
+254        <service
+254-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:50:9-56:19
+255            android:name="com.google.firebase.iid.FirebaseInstanceIdService"
+255-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:51:13-77
+256            android:exported="true" >
+256-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:52:13-36
+257            <intent-filter android:priority="-500" >
+257-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:53:13-55:29
+257-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:53:28-51
+258                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+258-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:54:17-80
+258-->[com.google.firebase:firebase-iid:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/148b49cd2a6e0feea5a69a2823083723/jetified-firebase-iid-12.0.1/AndroidManifest.xml:54:25-77
+259            </intent-filter>
+260        </service>
+261
+262        <provider
+262-->[com.google.firebase:firebase-common:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/365c427999b9a9acfb9e7bd0f4f09914/jetified-firebase-common-12.0.1/AndroidManifest.xml:8:9-12:39
+263            android:name="com.google.firebase.provider.FirebaseInitProvider"
+263-->[com.google.firebase:firebase-common:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/365c427999b9a9acfb9e7bd0f4f09914/jetified-firebase-common-12.0.1/AndroidManifest.xml:9:13-77
+264            android:authorities="com.maxeoneo.TodoWhenAndWhere.firebaseinitprovider"
+264-->[com.google.firebase:firebase-common:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/365c427999b9a9acfb9e7bd0f4f09914/jetified-firebase-common-12.0.1/AndroidManifest.xml:10:13-72
+265            android:exported="false"
+265-->[com.google.firebase:firebase-common:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/365c427999b9a9acfb9e7bd0f4f09914/jetified-firebase-common-12.0.1/AndroidManifest.xml:11:13-37
+266            android:initOrder="100" />
+266-->[com.google.firebase:firebase-common:12.0.1] /home/axe/.gradle/caches/transforms-2/files-2.1/365c427999b9a9acfb9e7bd0f4f09914/jetified-firebase-common-12.0.1/AndroidManifest.xml:12:13-36
+267    </application>
+268
+269</manifest>

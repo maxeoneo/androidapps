@@ -1,0 +1,153 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:2:1-60:12
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:2:1-60:12
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:2:1-60:12
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:2:1-60:12
+MERGED from [com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-media-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/859173911b9a39ecbf68ea7c61cc253b/support-media-compat-26.0.0/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-fragment:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/082b6cd53f951136a6b764ec97f2d80a/support-fragment-26.0.0/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-utils:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/307bc1693906adebfcff838c97a32f5a/support-core-utils-26.0.0/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-ui:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/803d4b6a398de2090f0e2336814d5aba/support-core-ui-26.0.0/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/4284c361fafb1f5e84fd3e00cac48401/support-compat-26.0.0/AndroidManifest.xml:17:1-31:12
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:2:1-60:12
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:2:1-60:12
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:2:1-60:12
+	package
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:3:5-42
+		INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+		INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+	android:versionName
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:5:5-30
+		INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+		INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:4:5-28
+		INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+		INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+application
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:7:5-58:19
+MERGED from [com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/859173911b9a39ecbf68ea7c61cc253b/support-media-compat-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/859173911b9a39ecbf68ea7c61cc253b/support-media-compat-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-fragment:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/082b6cd53f951136a6b764ec97f2d80a/support-fragment-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-fragment:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/082b6cd53f951136a6b764ec97f2d80a/support-fragment-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/307bc1693906adebfcff838c97a32f5a/support-core-utils-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/307bc1693906adebfcff838c97a32f5a/support-core-utils-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-ui:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/803d4b6a398de2090f0e2336814d5aba/support-core-ui-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-ui:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/803d4b6a398de2090f0e2336814d5aba/support-core-ui-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/4284c361fafb1f5e84fd3e00cac48401/support-compat-26.0.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/4284c361fafb1f5e84fd3e00cac48401/support-compat-26.0.0/AndroidManifest.xml:25:5-29:19
+	android:label
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:10:9-41
+	android:icon
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:9:9-45
+	android:allowBackup
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:8:9-35
+	android:theme
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:11:9-40
+activity#com.maxeoneo.todolistsimple.MainActivity
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:14:9-22:20
+	android:label
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:16:13-45
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:15:13-68
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:17:13-21:29
+action#android.intent.action.MAIN
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:18:17-69
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:18:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:20:17-77
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:20:27-74
+activity#com.maxeoneo.todolistsimple.AddActivity
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:25:9-32:20
+	android:label
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:27:13-45
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:26:13-67
+intent-filter#action:name:androidlab.exercise3_1.MainActivity+category:name:android.intent.category.DEFAULT
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:28:13-31:29
+action#androidlab.exercise3_1.MainActivity
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:29:17-78
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:29:25-75
+category#android.intent.category.DEFAULT
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:30:17-76
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:30:27-73
+activity#com.maxeoneo.todolistsimple.EditActivity
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:35:9-42:20
+	android:label
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:37:13-45
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:36:13-68
+receiver#com.maxeoneo.todolistsimple.TodoWidgetProvider
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:45:9-54:20
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:45:19-80
+intent-filter#action:name:android.appwidget.action.APPWIDGET_UPDATE
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:46:13-49:29
+action#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:47:17-48:80
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:48:21-77
+meta-data#android.appwidget.provider
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:51:13-53:55
+	android:resource
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:53:17-52
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:52:17-58
+service#com.maxeoneo.todolistsimple.TodoService
+ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:57:9-75
+	android:name
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:57:18-72
+uses-sdk
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+MERGED from [com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-media-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/859173911b9a39ecbf68ea7c61cc253b/support-media-compat-26.0.0/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/859173911b9a39ecbf68ea7c61cc253b/support-media-compat-26.0.0/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-fragment:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/082b6cd53f951136a6b764ec97f2d80a/support-fragment-26.0.0/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/082b6cd53f951136a6b764ec97f2d80a/support-fragment-26.0.0/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-core-utils:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/307bc1693906adebfcff838c97a32f5a/support-core-utils-26.0.0/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/307bc1693906adebfcff838c97a32f5a/support-core-utils-26.0.0/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/803d4b6a398de2090f0e2336814d5aba/support-core-ui-26.0.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/803d4b6a398de2090f0e2336814d5aba/support-core-ui-26.0.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/4284c361fafb1f5e84fd3e00cac48401/support-compat-26.0.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/4284c361fafb1f5e84fd3e00cac48401/support-compat-26.0.0/AndroidManifest.xml:21:5-23:58
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:23:9-51
+	android:targetSdkVersion
+		INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+		INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+		ADDED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+		INJECTED from /home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/859173911b9a39ecbf68ea7c61cc253b/support-media-compat-26.0.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/859173911b9a39ecbf68ea7c61cc253b/support-media-compat-26.0.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-fragment:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/082b6cd53f951136a6b764ec97f2d80a/support-fragment-26.0.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-fragment:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/082b6cd53f951136a6b764ec97f2d80a/support-fragment-26.0.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/307bc1693906adebfcff838c97a32f5a/support-core-utils-26.0.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/307bc1693906adebfcff838c97a32f5a/support-core-utils-26.0.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-ui:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/803d4b6a398de2090f0e2336814d5aba/support-core-ui-26.0.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-ui:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/803d4b6a398de2090f0e2336814d5aba/support-core-ui-26.0.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/4284c361fafb1f5e84fd3e00cac48401/support-compat-26.0.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/4284c361fafb1f5e84fd3e00cac48401/support-compat-26.0.0/AndroidManifest.xml:26:9-28:38
+	android:value
+		ADDED from [com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:28:13-35
+	android:name
+		ADDED from [com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:27:13-51
