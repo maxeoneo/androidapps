@@ -1,0 +1,4 @@
+#Fri Jul 23 21:35:18 CEST 2021
+base.0=/home/axe/git/maxeoneo/androidapps/todolistsimple/app/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
