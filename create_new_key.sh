@@ -11,4 +11,4 @@ if [ $# == 1 ]
 fi
 
 keytool -genkey -alias $appname -keystore $KEYSTORE -storetype PKCS12 -keyalg RSA -storepass $KEYSTORE_PASSWORD -validity 365000 -keysize 2048
-keytool -keypasswd -keystore $KEYSTORE
+keytool -keypasswd -keystore $KEYSTORE -storepass $KEYSTORE_PASSWORD -alias $appname
