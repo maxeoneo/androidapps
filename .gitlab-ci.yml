@@ -1,7 +1,7 @@
 image: jangrewe/gitlab-ci-android
 
 variables:
-  BUILD_APPS: "antitheftprotector calculator rollingdice todolistsimple"
+  BUILD_APPS: "antitheftprotector calculator rollingdice"
 
 before_script:
   - mkdir outputs
@@ -26,8 +26,8 @@ lintDebug:
   stage: build
   script:
     - >
-      for FOLDER in $BUILD_APPS; do
-        cd $FOLDER
+      for APPNAME in $BUILD_APPS; do
+        cd $APPNAME
         ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
         cd ..
       done
@@ -39,8 +39,8 @@ assembleDebug:
   stage: build
   script:
     - >
-      for FOLDER in $BUILD_APPS; do
-        cd $FOLDER
+      for APPNAME in $BUILD_APPS; do
+        cd $APPNAME
         ./gradlew assembleDebug
         cd ..
       done
@@ -52,8 +52,8 @@ testDebug:
   stage: test
   script:
     - >
-      for FOLDER in $BUILD_APPS; do
-        cd $FOLDER
+      for APPNAME in $BUILD_APPS; do
+        cd $APPNAME
         ./gradlew -Pci --console=plain :app:testDebug
         cd ..
       done
@@ -65,11 +65,10 @@ assembleRelease:
   stage: release
   script:
     - >
-      for FOLDER in $BUILD_APPS; do
-        cd $FOLDER
-        echo $KEYSTORE_FILE | base64 -d > my.keystore
+      for APPNAME in $BUILD_APPS; do
+        cd $APPNAME
         ./gradlew assembleRelease
-        mv ./app/build/outputs/apk/release/app-release-unsigned.apk ../outputs/$FOLDER.apk
+        mv ./app/build/outputs/apk/release/app-release-unsigned.apk ../outputs/$APPNAME.apk
         cd ..
       done
 

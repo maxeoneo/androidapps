@@ -1,0 +1,26 @@
+com/maxeoneo/todolistsimple/ItemsDataSource.java
+ com.maxeoneo.todolistsimple.ItemsDataSource
+com/maxeoneo/todolistsimple/BuildConfig.java
+ com.maxeoneo.todolistsimple.BuildConfig
+com/maxeoneo/todolistsimple/TodoWidgetProvider.java
+ com.maxeoneo.todolistsimple.TodoWidgetProvider
+com/maxeoneo/todolistsimple/AddActivity.java
+ com.maxeoneo.todolistsimple.AddActivity
+ com.maxeoneo.todolistsimple.AddActivity$1
+ com.maxeoneo.todolistsimple.AddActivity$2
+com/maxeoneo/todolistsimple/EditActivity.java
+ com.maxeoneo.todolistsimple.EditActivity
+ com.maxeoneo.todolistsimple.EditActivity$1
+ com.maxeoneo.todolistsimple.EditActivity$2
+com/maxeoneo/todolistsimple/Item.java
+ com.maxeoneo.todolistsimple.Item
+com/maxeoneo/todolistsimple/ItemSQLiteHelper.java
+ com.maxeoneo.todolistsimple.ItemSQLiteHelper
+com/maxeoneo/todolistsimple/TodoService.java
+ com.maxeoneo.todolistsimple.TodoService
+ com.maxeoneo.todolistsimple.TodoService$ServiceThread
+com/maxeoneo/todolistsimple/MainActivity.java
+ com.maxeoneo.todolistsimple.MainActivity
+ com.maxeoneo.todolistsimple.MainActivity$1
+ com.maxeoneo.todolistsimple.MainActivity$DeleteOnClickListener
+ com.maxeoneo.todolistsimple.MainActivity$EditOnClickListener

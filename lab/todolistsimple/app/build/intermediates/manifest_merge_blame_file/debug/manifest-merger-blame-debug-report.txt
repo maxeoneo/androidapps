@@ -1,0 +1,115 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.maxeoneo.todolistsimple"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="18"
+8-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml
+10
+11    <application
+11-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:7:5-58:19
+12        android:allowBackup="true"
+12-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:8:9-35
+13        android:debuggable="true"
+14        android:icon="@drawable/ic_launcher"
+14-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:9:9-45
+15        android:label="@string/app_name"
+15-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:10:9-41
+16        android:testOnly="true"
+17        android:theme="@style/AppTheme" >
+17-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:11:9-40
+18
+19        <!-- register main activity -->
+20        <activity
+20-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:14:9-22:20
+21            android:name="com.maxeoneo.todolistsimple.MainActivity"
+21-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:15:13-68
+22            android:label="@string/app_name" >
+22-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:16:13-45
+23            <intent-filter>
+23-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:17:13-21:29
+24                <action android:name="android.intent.action.MAIN" />
+24-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:18:17-69
+24-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:18:25-66
+25
+26                <category android:name="android.intent.category.LAUNCHER" />
+26-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:20:17-77
+26-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:20:27-74
+27            </intent-filter>
+28        </activity>
+29
+30        <!-- register add activity -->
+31        <activity
+31-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:25:9-32:20
+32            android:name="com.maxeoneo.todolistsimple.AddActivity"
+32-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:26:13-67
+33            android:label="@string/app_name" >
+33-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:27:13-45
+34            <intent-filter>
+34-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:28:13-31:29
+35                <action android:name="androidlab.exercise3_1.MainActivity" />
+35-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:29:17-78
+35-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:29:25-75
+36
+37                <category android:name="android.intent.category.DEFAULT" />
+37-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:30:17-76
+37-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:30:27-73
+38            </intent-filter>
+39        </activity>
+40
+41        <!-- register edit activity -->
+42        <activity
+42-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:35:9-42:20
+43            android:name="com.maxeoneo.todolistsimple.EditActivity"
+43-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:36:13-68
+44            android:label="@string/app_name" >
+44-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:37:13-45
+45            <intent-filter>
+45-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:28:13-31:29
+46                <action android:name="androidlab.exercise3_1.MainActivity" />
+46-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:29:17-78
+46-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:29:25-75
+47
+48                <category android:name="android.intent.category.DEFAULT" />
+48-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:30:17-76
+48-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:30:27-73
+49            </intent-filter>
+50        </activity>
+51
+52        <!-- register the widget -->
+53        <receiver android:name="com.maxeoneo.todolistsimple.TodoWidgetProvider" >
+53-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:45:9-54:20
+53-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:45:19-80
+54            <intent-filter>
+54-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:46:13-49:29
+55                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+55-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:47:17-48:80
+55-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:48:21-77
+56            </intent-filter>
+57
+58            <meta-data
+58-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:51:13-53:55
+59                android:name="android.appwidget.provider"
+59-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:52:17-58
+60                android:resource="@xml/widget_info" />
+60-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:53:17-52
+61        </receiver>
+62
+63        <!-- register service -->
+64        <service android:name="com.maxeoneo.todolistsimple.TodoService" />
+64-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:57:9-75
+64-->/home/axe/git/maxeoneo/androidapps/todolistsimple/app/src/main/AndroidManifest.xml:57:18-72
+65
+66        <meta-data
+66-->[com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:26:9-28:38
+67            android:name="android.support.VERSION"
+67-->[com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:27:13-51
+68            android:value="26.0.0" />
+68-->[com.android.support:support-v4:26.0.0] /home/axe/.gradle/caches/transforms-2/files-2.1/14adcceed0d22940ee4c400a50a86989/support-v4-26.0.0/AndroidManifest.xml:28:13-35
+69    </application>
+70
+71</manifest>
