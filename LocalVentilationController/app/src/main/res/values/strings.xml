@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">LocalVentilationController</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="connection_header">Connection</string>
+
+    <!-- Messages Preferences -->
+    <string name="url_title">URL of your ventilation (Can be a local ip)</string>
+
 </resources>

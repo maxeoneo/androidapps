@@ -1,11 +1,15 @@
 package com.maxeoneo.localventilationcontroller
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.WebSettings
 import android.webkit.WebView
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
+
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +23,10 @@ class MainActivity : AppCompatActivity() {
     settings.loadWithOverviewMode = true
     settings.javaScriptEnabled = true
     settings.domStorageEnabled = true
-    webView.loadUrl("http://192.168.178.46/#dashboard-dashboard-page")
+
+    val sharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+    val url: String = sharedPref.getString("url", "http://192.168.178.46").toString()
+    webView.loadUrl(url);
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -33,7 +40,12 @@ class MainActivity : AppCompatActivity() {
     // automatically handle clicks on the Home/Up button, so long
     // as you specify a parent activity in AndroidManifest.xml.
     return when (item.itemId) {
-      R.id.action_settings -> true
+      R.id.action_settings -> {
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
+
+        return true;
+      };
       else -> super.onOptionsItemSelected(item)
     }
   }
