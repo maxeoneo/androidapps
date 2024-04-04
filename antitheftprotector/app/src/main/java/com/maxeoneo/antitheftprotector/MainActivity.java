@@ -1,23 +1,17 @@
 package com.maxeoneo.antitheftprotector;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -65,9 +59,7 @@ public class MainActivity extends Activity
 
   public boolean onOptionsItemSelected(MenuItem item)
   {
-    switch (item.getItemId())
-    {
-      case R.id.action_settings:
+    if (item.getItemId() == R.id.action_settings) {
         showSettingsDialog();
         return true;
     }
