@@ -1,13 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    namespace "com.maxeoneo.calculator"
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.maxeoneo.calculator"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 34
+        versionCode=3
+        versionName="1.2"
     }
 
     buildTypes {
@@ -19,6 +21,6 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    compile files('libs/exp4j-0.3.10.jar')
 }
