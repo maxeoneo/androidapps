@@ -1,19 +1,10 @@
-image: jangrewe/gitlab-ci-android
+image: theimpulson/gitlab-ci-android
 
 variables:
   BUILD_APPS: "antitheftprotector calculator rollingdice"
 
 before_script:
   - mkdir outputs
-
-
-#   - export GRADLE_USER_HOME=$(pwd)/RollingDice/.gradle
-#   - chmod +x ./RollingDice/gradlew
-
-# cache:
-#   key: ${CI_PROJECT_ID}
-#   paths:
-#     - .gradle/
 
 stages:
   - build
@@ -67,8 +58,8 @@ assembleRelease:
     - >
       for APPNAME in $BUILD_APPS; do
         cd $APPNAME
-        ./gradlew assembleRelease
-        mv ./app/build/outputs/apk/release/app-release-unsigned.apk ../outputs/$APPNAME.apk
+        ./gradlew bundleRelease
+        mv ./app/build/outputs/apk/release/app-release.aab ../outputs/$APPNAME.aab
         cd ..
       done
 
