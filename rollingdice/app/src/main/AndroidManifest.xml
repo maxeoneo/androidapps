@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.maxeoneo.rollingdice"
-    android:versionCode="2"
-    android:versionName="1.1">
+    package="com.maxeoneo.rollingdice">
 
 
     <!-- Add feature openGl ES 2.0 -->
