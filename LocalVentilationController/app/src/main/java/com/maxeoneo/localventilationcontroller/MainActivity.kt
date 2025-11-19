@@ -1,4 +1,4 @@
-package com.maxeoneo.localventilationcontroller
+package com.maxeoneo.localventilation
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

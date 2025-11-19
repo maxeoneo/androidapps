@@ -1,4 +1,4 @@
-package com.maxeoneo.localventilationcontroller
+package com.maxeoneo.localventilation
 
 import org.junit.Test
 

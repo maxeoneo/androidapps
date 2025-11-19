@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace "com.maxeoneo.localventilationcontroller"
+    namespace "com.maxeoneo.localventilation"
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.maxeoneo.localventilationcontroller"
+        applicationId "com.maxeoneo.localventilation"
         minSdk 28
         versionCode 2
         versionName "1.1"
