@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 //the following imports are from the external library exp4j-0.3.10.jar for the calculation
-import com.maxeoneo.calculator.R;
+import com.maxeoneo.acalc.R;
 
 import de.congrace.exp4j.Calculable;
 import de.congrace.exp4j.ExpressionBuilder;

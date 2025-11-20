@@ -1,4 +1,4 @@
-package com.maxeoneo.antitheftprotector;
+package com.maxeoneo.antitheftprotection;
 
 import android.content.Context;
 import android.database.Cursor;

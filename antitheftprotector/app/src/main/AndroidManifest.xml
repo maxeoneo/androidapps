@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.maxeoneo.antitheftprotector">
+    package="com.maxeoneo.antitheftprotection">
 
     <!-- register permission for internet -->
 <!--    <uses-permission android:name="android.permission.INTERNET" />-->
@@ -18,7 +18,7 @@
 
         <!-- register activity -->
         <activity
-            android:name="com.maxeoneo.antitheftprotector.MainActivity"
+            android:name="com.maxeoneo.antitheftprotection.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +29,7 @@
 
         <!-- register receiver waiting for disconnect usb cable -->
         <receiver
-            android:name="com.maxeoneo.antitheftprotector.UsbReceiver"
+            android:name="com.maxeoneo.antitheftprotection.UsbReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

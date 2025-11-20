@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.maxeoneo.calculator"
-    compileSdkVersion 34
+    namespace "com.maxeoneo.acalc"
+    compileSdkVersion 36
 
     defaultConfig {
-        applicationId "com.maxeoneo.calculator"
+        applicationId "com.maxeoneo.acalc"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 36
         versionCode=3
         versionName="1.2"
     }

@@ -1,4 +1,4 @@
-package com.maxeoneo.antitheftprotector;
+package com.maxeoneo.antitheftprotection;
 
 import android.app.Activity;
 import android.app.Dialog;
