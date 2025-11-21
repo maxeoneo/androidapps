@@ -1,4 +1,4 @@
-package com.maxeoneo.rollingdice;
+package com.maxeoneo.rollthedice;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

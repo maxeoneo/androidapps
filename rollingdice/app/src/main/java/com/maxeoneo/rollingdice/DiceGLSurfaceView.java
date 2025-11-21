@@ -1,4 +1,4 @@
-package com.maxeoneo.rollingdice;
+package com.maxeoneo.rollthedice;
 
 import android.content.Context;
 import android.media.MediaPlayer;
