@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Guide - LocalVentilationController</title>
+    <!-- Import Roboto font to match Android look -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary-color: #6200EE;
+            --primary-dark: #3700B3;
+            --accent-color: #03DAC6;
+            --text-dark: #333333;
+            --text-gray: #666666;
+            --bg-gray: #f5f5f5;
+            --android-green: #009688; /* For the 'Connection' text */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-gray);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Hero / Header Section */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.75rem;
+            font-weight: 500;
+        }
+
+        header p {
+            margin-top: 0.5rem;
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Step Cards */
+        .step-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .step-card {
+                flex-direction: row;
+                text-align: left;
+                align-items: flex-start;
+            }
+
+            .step-content {
+                flex: 1;
+                padding-right: 2rem;
+            }
+
+            .step-visual {
+                flex: 0 0 250px;
+            }
+        }
+
+        .step-number {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        /* --- CSS MOCKUP STYLES --- */
+        .mock-phone {
+            width: 260px;
+            height: 460px;
+            background: #fff;
+            border: 10px solid #222;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Android Header */
+        .mock-header {
+            background-color: var(--primary-color);
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: white;
+            font-weight: 500;
+            font-size: 18px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 5;
+            justify-content: space-between;
+        }
+
+        .mock-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Toolbar (Icons row) */
+        .mock-toolbar {
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            background: white;
+            border-bottom: 1px solid #eee;
+        }
+
+        .mock-icon {
+            color: #757575;
+        }
+
+        /* App Content Area */
+        .mock-body {
+            flex: 1;
+            background: #fafafa;
+            padding: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .mock-section-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 12px;
+        }
+
+        .mock-btn {
+            background-color: #20629B; /* Blue from screenshot */
+            color: white;
+            padding: 12px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            border-radius: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .mock-btn.light { background-color: #29B6F6; }
+
+        /* Dropdown Menu Style */
+        .mock-dropdown {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border-radius: 2px;
+            width: 140px;
+            z-index: 20;
+            padding: 8px 0;
+        }
+
+        .mock-dropdown-item {
+            padding: 12px 16px;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .mock-dropdown-item:hover {
+            background-color: #eee;
+        }
+
+        /* Settings Item */
+        .mock-settings-group {
+            margin-top: 10px;
+        }
+        .mock-settings-header {
+            color: var(--android-green);
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .mock-settings-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .mock-settings-title {
+            font-size: 16px;
+            color: #222;
+        }
+        .mock-settings-sub {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Dialog Box */
+        .mock-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        .mock-dialog {
+            background: white;
+            width: 85%;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .mock-dialog h3 {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .mock-input {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid var(--accent-color);
+            padding: 8px 0;
+            font-size: 16px;
+            outline: none;
+            margin-bottom: 25px;
+        }
+        .mock-dialog-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+        }
+        .mock-text-btn {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* Pulse Animation */
+        .target-click {
+            position: relative;
+            display: inline-block;
+        }
+
+        .pulse-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid #ffeb3b; /* Yellow for high contrast */
+            box-shadow: 0 0 10px #ffeb3b;
+            animation: pulse 1.8s infinite;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2.0); opacity: 0; }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Setup Guide</h1>
+    <p>Connect your ventilation controller in 4 simple steps.</p>
+</header>
+
+<div class="container">
+
+    <!-- Step 1 -->
+    <div class="step-card">
+        <div class="step-content">
+            <span class="step-number">1</span>
+            <h2>Open Menu</h2>
+            <p>On the main dashboard, look at the purple header bar at the very top.</p>
+            <p>Tap the <strong>three vertical dots</strong> in the top-right corner.</p>
+        </div>
+        <div class="step-visual">
+            <!-- CSS Mockup Step 1 -->
+            <div class="mock-phone">
+                <div class="mock-header">
+                    <span style="font-size: 16px;">LocalVentilationCont...</span>
+
+                    <!-- Target: 3-Dots Menu -->
+                    <div style="position: relative;">
+                        <i data-lucide="more-vertical" size="24"></i>
+                        <div class="pulse-circle"></div>
+                    </div>
+                </div>
+                <!-- Navigation Toolbar -->
+                <div class="mock-toolbar">
+                    <i data-lucide="home" class="mock-icon" size="24"></i>
+                    <i data-lucide="info" class="mock-icon" size="24"></i>
+                    <i data-lucide="list-checks" class="mock-icon" size="24"></i>
+                    <i data-lucide="wrench" class="mock-icon" size="24"></i>
+                    <i data-lucide="settings" class="mock-icon" size="24"></i>
+                </div>
+
+                <div class="mock-body">
+                    <div class="mock-section-title">Ventilation profiles</div>
+                    <div class="mock-btn">
+                        <span>AT HOME</span>
+                        <i data-lucide="fan" size="16"></i>
+                    </div>
+                    <div class="mock-btn light">AWAY</div>
+                    <div class="mock-btn light">BOOST</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step-card">
+        <div class="step-content">
+            <span class="step-number">2</span>
+            <h2>Select Settings</h2>
+            <p>A small menu will appear in the corner.</p>
+            <p>Tap the <strong>Settings</strong> option in the list.</p>
+        </div>
+        <div class="step-visual">
+            <!-- CSS Mockup Step 2 -->
+            <div class="mock-phone">
+                <div class="mock-header">
+                    <span style="font-size: 16px;">LocalVentilationCont...</span>
+                    <i data-lucide="more-vertical" size="24"></i>
+                </div>
+
+                <!-- Dropdown Overlay -->
+                <div class="mock-body" style="position: relative;">
+                    <div class="mock-dropdown">
+                        <!-- Target: Settings Item in Dropdown -->
+                        <div class="mock-dropdown-item" style="position: relative; background-color: #f0f0f0;">
+                            Settings
+                            <div class="pulse-circle" style="left: 50%; top: 50%;"></div>
+                        </div>
+                        <div class="mock-dropdown-item">About</div>
+                        <div class="mock-dropdown-item">Help</div>
+                    </div>
+
+                    <!-- Blurred background content -->
+                    <div style="opacity: 0.5;">
+                        <div class="mock-section-title">Ventilation profiles</div>
+                        <div class="mock-btn">
+                            <span>AT HOME</span>
+                            <i data-lucide="fan" size="16"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step-card">
+        <div class="step-content">
+            <span class="step-number">3</span>
+            <h2>Select Connection URL</h2>
+            <p>In the Settings screen, locate the "Connection" section.</p>
+            <p>Tap on <strong>"URL of your ventilation"</strong> to open the IP address dialog.</p>
+        </div>
+        <div class="step-visual">
+            <!-- CSS Mockup Step 3 -->
+            <div class="mock-phone">
+                <div class="mock-header">
+                    <div class="mock-header-left">
+                        <i data-lucide="arrow-left" size="24"></i>
+                        <span>SettingsActivity</span>
+                    </div>
+                </div>
+                <div class="mock-body" style="background: white;">
+                    <div class="mock-settings-group">
+                        <div class="mock-settings-header">Connection</div>
+
+                        <!-- Target: URL Item -->
+                        <div class="mock-settings-item" style="position: relative;">
+                            <div class="mock-settings-title">URL of your ventilation (Can be a local ip)</div>
+                            <div class="mock-settings-sub">Not set</div>
+                            <div class="pulse-circle"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step-card">
+        <div class="step-content">
+            <span class="step-number">4</span>
+            <h2>Enter Private IP Address</h2>
+            <p>A popup dialog will appear.</p>
+            <p>Type your device's <strong>Private IP Address</strong> (e.g., <code>192.168.178.46</code>) into the line.</p>
+            <p>Tap <strong>OK</strong> to save.</p>
+        </div>
+        <div class="step-visual">
+            <!-- CSS Mockup Step 4 -->
+            <div class="mock-phone">
+                <div class="mock-header">
+                    <div class="mock-header-left">
+                        <i data-lucide="arrow-left" size="24"></i>
+                        <span>SettingsActivity</span>
+                    </div>
+                </div>
+                <div class="mock-body" style="background: white;">
+                    <div class="mock-settings-group">
+                        <div class="mock-settings-header">Connection</div>
+                        <div class="mock-settings-item">
+                            <div class="mock-settings-title">URL of your ventilation (Can be a local ip)</div>
+                            <div class="mock-settings-sub">Not set</div>
+                        </div>
+                    </div>
+
+                    <!-- Overlay Dialog -->
+                    <div class="mock-overlay">
+                        <div class="mock-dialog">
+                            <h3>URL of your ventilation (Can be a local ip)</h3>
+                            <input type="text" class="mock-input" value="192.168.178.46">
+                            <div class="mock-dialog-actions">
+                                <div class="mock-text-btn">CANCEL</div>
+                                <div style="position: relative;">
+                                    <div class="mock-text-btn">OK</div>
+                                    <div class="pulse-circle" style="width:30px; height:30px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>&copy; Local Ventilation Controller Help</p>
+</footer>
+
+<script>
+    // Initialize Icons
+    lucide.createIcons();
+</script>
+</body>
+</html>
