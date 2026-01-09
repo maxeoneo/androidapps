@@ -15,6 +15,26 @@ public class Dice {
 
 	// colors
 	private final static float[] BLACK = new float[] { 0.0f, 0.0f, 0.0f, 1.0f};
+    private static final int[][] faceBoarders = {
+        {0,1,2,3},      // front
+        {4,5,6,7},      // back
+        {0,8,4,9},      // left
+        {2,10,6,11},    // right
+        {3,8,7,10},      // top
+        {1,11,5,9}       // bottom
+    };
+
+    public void highlightFace(int face) {
+        for (int i = 0; i < boarders.length; i++) {
+            boolean highlight = false;
+            if (face >= 0) {
+                for (int idx : faceBoarders[face]) {
+                    if (idx == i) highlight = true;
+                }
+            }
+            boarders[i].setColor(highlight ? RED : BLACK);
+        }
+    }
 	private final static float[] WHITE = new float[] { 1.0f, 1.0f, 1.0f, 1.0f };
 	private final static float[] GREEN = new float[] { 0.0f, 1.0f, 0.0f, 1.0f};
 	private final static float[] RED = new float[] { 1.0f, 0.0f, 0.0f, 1.0f};
@@ -56,7 +76,7 @@ public class Dice {
     // number of coordinates per vertex in this array
     static final int COORDS_PER_VERTEX = 3;
  
-    static float cubeCoords[] = {
+    static float[] cubeCoords = {
     		// FRONT
             -0.5f,  0.5f, 0.5f,   // top left
             -0.5f, -0.5f, 0.5f,   // bottom left
@@ -72,7 +92,7 @@ public class Dice {
  	
     
     
-    private final short drawOrder[] = {
+    private final short[] drawOrder = {
             0,1,2, 0,2,3, //Front
 			2,3,6, 3,6,7, //Right
 			4,5,6, 4,6,7, //Back
@@ -82,15 +102,15 @@ public class Dice {
 			};
     
     // boarder lines of the cube
-   	private Line[] boarders = new Line[12];
+   	private final Line[] boarders = new Line[12];
    	
    	// dots of the dice
-   	private Circle[] dotsOfDice = new Circle[21];
+   	private final Circle[] dotsOfDice = new Circle[21];
 
     private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
 
-    private float cubeColor[] = WHITE;
-    private float boarderColor[] = BLACK;
+    private final float[] cubeColor = WHITE;
+    private final float[] boarderColor = BLACK;
 
     
     /**
@@ -180,7 +200,6 @@ public class Dice {
                 GLES20.GL_TRIANGLES, drawOrder.length,
                 GLES20.GL_UNSIGNED_SHORT, drawListBuffer);
 
-       
         // Draw the dots of the dice
         for (Circle dot : dotsOfDice) {
         	if (dot != null) {

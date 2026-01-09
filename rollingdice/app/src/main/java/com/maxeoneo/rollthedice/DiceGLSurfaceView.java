@@ -67,7 +67,8 @@ public class DiceGLSurfaceView extends GLSurfaceView {
 				// play first sound
 				loopSound.start();
 
-				mRenderer.setCasting(true);
+				mRenderer.resetHighlight();
+mRenderer.setCasting(true);
 				start = System.currentTimeMillis();
 
 				// cast the dice

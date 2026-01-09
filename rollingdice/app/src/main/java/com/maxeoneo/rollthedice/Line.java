@@ -43,6 +43,11 @@ public class Line {
 
 	// Set color with red, green, blue and alpha (opacity) values
 	float color[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+public void setColor(float[] color) {
+    if (color != null && color.length == 4) {
+        this.color = color;
+    }
+}
 
 	public Line(float[] lineCoords, float[] color){
 		VertexCount = lineCoords.length / COORDS_PER_VERTEX;
@@ -109,7 +114,8 @@ public class Line {
 
 
 	    // Draw the Line
-	    GLES20.glDrawArrays(GLES20.GL_LINES, 0, VertexCount);
+	    GLES20.glLineWidth(8.0f);
+        GLES20.glDrawArrays(GLES20.GL_LINES, 0, VertexCount);
 
 	    // Disable vertex array
 	    GLES20.glDisableVertexAttribArray(PositionHandle);

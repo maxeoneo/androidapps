@@ -17,6 +17,45 @@ public class DiceRenderer implements GLSurfaceView.Renderer {
 	private boolean casting = false;
 	private static final String TAG = "MyGLRenderer";
 	private Dice mCube;
+public void resetHighlight() {
+    if (mCube != null) mCube.highlightFace(-1);
+}
+
+private int lastTopFace = -1;
+// Map rotation to face index (0=front, 1=back, 2=left, 3=right, 4=top, 5=bottom)
+private int getTopFace() {
+    // Face normals: front(0,0,1), back(0,0,-1), left(-1,0,0), right(1,0,0), top(0,1,0), bottom(0,-1,0)
+    float[][] normals = {
+        {0,0,1},   // front
+        {0,0,-1},  // back
+        {-1,0,0},  // left
+        {1,0,0},   // right
+        {0,1,0},   // top
+        {0,-1,0}   // bottom
+    };
+    float[] result = new float[4];
+    float maxZ = -Float.MAX_VALUE;
+    int bestFace = 0;
+    // Combine view and rotation matrix to get model-view
+    float[] modelView = new float[16];
+    Matrix.multiplyMM(modelView, 0, mViewMatrix, 0, mRotationMatrix, 0);
+    for (int i = 0; i < 6; i++) {
+        // Transform normal by modelView matrix
+        float nx = normals[i][0], ny = normals[i][1], nz = normals[i][2];
+        result[0] = modelView[0]*nx + modelView[4]*ny + modelView[8]*nz;
+        result[1] = modelView[1]*nx + modelView[5]*ny + modelView[9]*nz;
+        result[2] = modelView[2]*nx + modelView[6]*ny + modelView[10]*nz;
+        // Z component in view space
+        if (result[2] > maxZ) {
+            maxZ = result[2];
+            bestFace = i;
+        }
+    }
+    // Always highlight the best face
+    return bestFace;
+}
+
+
 
 	// mMVPMatrix is an abbreviation for "Model View Projection Matrix"
 	private final float[] mMVPMatrix = new float[16];
@@ -87,8 +126,16 @@ public class DiceRenderer implements GLSurfaceView.Renderer {
 		alreadyRotatedX = alreadyRotatedX % 90;
 		alreadyRotatedY = alreadyRotatedY % 90;
 		
-		// Draw cube
-		mCube.draw(scratch);
+		// Highlight the top face's boarders after casting
+		int topFace = getTopFace();
+        // Always ensure topFace is valid (0-5)
+        if (topFace < 0 || topFace > 5) topFace = 0;
+        // Always highlight, even if unchanged
+        if (!casting) {
+            mCube.highlightFace(topFace);
+            lastTopFace = topFace;
+        }
+        mCube.draw(scratch);
 	}
 
 	@Override
